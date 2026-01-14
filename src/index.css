@@ -104,11 +104,31 @@
   }
   
   .btn-primary {
-    @apply bg-primary-500 text-white shadow-btn-primary hover:bg-primary-400 hover:shadow-btn-primary-hover focus:ring-primary-500;
+    @apply bg-primary-500 text-white shadow-btn-primary focus:ring-primary-500;
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      @apply bg-primary-400 shadow-btn-primary-hover;
+    }
+  }
+
+  .btn-primary:active {
+    @apply transform scale-95 bg-primary-600 shadow-none;
   }
   
   .btn-secondary {
-    @apply bg-transparent border border-border-default text-text-primary hover:border-primary-500 hover:text-primary-400 focus:ring-border-default;
+    @apply bg-transparent border border-border-default text-text-primary focus:ring-border-default;
+  }
+
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      @apply border-primary-500 text-primary-400;
+    }
+  }
+
+  .btn-secondary:active {
+    @apply bg-white/5 border-primary-500 text-primary-500 transform scale-95;
   }
 
   .section-title {
@@ -121,15 +141,28 @@
 
   .card-glass {
     @apply relative overflow-hidden rounded-xl transition-all duration-300
-    bg-white/5 backdrop-blur-[20px] border border-white/10 border-t-white/20 shadow-lg
-    hover:-translate-y-2 hover:shadow-[0_12px_32px_rgba(10,132,255,0.3)] hover:border-primary-500/30;
+    bg-white/5 backdrop-blur-[20px] border border-white/10 border-t-white/20 shadow-lg;
+  }
+  
+  @media (hover: hover) {
+    .card-glass:hover {
+      @apply -translate-y-2 shadow-[0_12px_32px_rgba(10,132,255,0.3)] border-primary-500/30;
+    }
   }
 
-  /* Light mode overrides for card-glass are handled via the theme layer or specific data-theme selectors if needed, 
-     but since we use semantic variables, we might need manual overrides for the specific 'white/5' parts if variables aren't used there.
-     Let's add specific light mode support using the data-theme attribute. */
+  .card-glass:active {
+    @apply scale-[0.98] bg-white/10 border-primary-500/50 shadow-[0_0_20px_rgba(10,132,255,0.2)];
+  }
+
+  /* Light mode overrides for card-glass */
   [data-theme="light"] .card-glass {
-    @apply bg-white/80 border-black/5 shadow-md hover:shadow-[0_12px_32px_rgba(10,132,255,0.3)] hover:border-primary-500/30;
+    @apply bg-white/80 border-black/5 shadow-md;
+  }
+  
+  @media (hover: hover) {
+    [data-theme="light"] .card-glass:hover {
+      @apply shadow-[0_12px_32px_rgba(10,132,255,0.3)] border-primary-500/30;
+    }
   }
 }
 

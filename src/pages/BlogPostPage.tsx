@@ -5,14 +5,14 @@ import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
 export const BlogPostPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const { data } = useCMS();
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const post = data.posts.find(p => p.id.toString() === id);
+  const post = data.posts.find(p => p.slug === slug);
 
   if (!post) {
     return (

@@ -31,9 +31,9 @@ const AppContent = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<BlogPostPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/portfolio/:id" element={<ProjectPage />} />
+            <Route path="/portfolio/:slug" element={<ProjectPage />} />
           </Routes>
         </main>
 

@@ -5,14 +5,14 @@ import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
 export const ProjectPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const { data } = useCMS();
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const project = data.projects.find(p => p.id.toString() === id);
+  const project = data.projects.find(p => p.slug === slug);
 
   if (!project) {
     return (

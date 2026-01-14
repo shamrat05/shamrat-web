@@ -7,24 +7,31 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Calculate scroll progress
-      const totalScroll = document.documentElement.scrollTop;
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scroll = `${totalScroll / windowHeight}`;
-      const progress = Number(scroll);
-      
-      setScrollProgress(progress);
+    let animationFrameId: number;
 
-      if (totalScroll > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
+    const handleScroll = () => {
+      animationFrameId = requestAnimationFrame(() => {
+        // Calculate scroll progress
+        const totalScroll = document.documentElement.scrollTop;
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scroll = `${totalScroll / windowHeight}`;
+        const progress = Number(scroll);
+        
+        setScrollProgress(progress);
+
+        if (totalScroll > 300) {
+          setShowBackToTop(true);
+        } else {
+          setShowBackToTop(false);
+        }
+      });
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const scrollToTop = () => {

@@ -22,6 +22,7 @@ export interface ContactInfo {
 
 export interface Project {
   id: string | number;
+  slug: string;
   title: string;
   category: string;
   image: string;
@@ -38,6 +39,7 @@ export interface Project {
 
 export interface BlogPost {
   id: string | number;
+  slug: string;
   title: string;
   date: string;
   readTime: string;

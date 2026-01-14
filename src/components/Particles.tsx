@@ -1,56 +1,97 @@
 import React, { useEffect, useRef } from 'react';
 
 export const Particles: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const container = containerRef.current;
-    // Increase particle count for better visibility
-    const particleCount = window.innerWidth < 768 ? 15 : 40;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    container.innerHTML = '';
-
-    const createParticle = () => {
-      const particle = document.createElement('div');
-      
-      const size = Math.random() * 6 + 2; // Slightly larger
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      // Increased opacity
-      const opacity = Math.random() * 0.6 + 0.2; 
-      const duration = Math.random() * 20 + 10;
-      const delay = Math.random() * 5;
-      
-      particle.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: #0A84FF; /* Hardcoded primary-500 to ensure visibility */
-        border-radius: 50%;
-        opacity: ${opacity};
-        left: ${x}%;
-        top: ${y}%;
-        animation: float ${duration}s linear infinite;
-        animation-delay: -${delay}s; /* Start immediately at random point */
-        pointer-events: none;
-        box-shadow: 0 0 10px rgba(10, 132, 255, 0.3); /* Glow effect */
-      `;
-      
-      container.appendChild(particle);
+    let animationFrameId: number;
+    let particles: Particle[] = [];
+    
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
     };
 
-    for (let i = 0; i < particleCount; i++) {
-      createParticle();
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      
+      constructor() {
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
+        this.size = Math.random() * 3 + 1; // 1 to 4px
+        this.speedX = Math.random() * 0.5 - 0.25; // Slow movement
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Wrap around screen
+        if (this.x > canvas!.width) this.x = 0;
+        else if (this.x < 0) this.x = canvas!.width;
+        
+        if (this.y > canvas!.height) this.y = 0;
+        else if (this.y < 0) this.y = canvas!.height;
+      }
+
+      draw() {
+        if (!ctx) return;
+        ctx.fillStyle = `rgba(10, 132, 255, ${this.opacity})`; // primary-500
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
+
+    const initParticles = () => {
+      const particleCount = window.innerWidth < 768 ? 20 : 50;
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    };
+
+    const animate = () => {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
-    <div 
-      ref={containerRef} 
-      className="absolute inset-0 z-0 overflow-hidden pointer-events-none" 
-      aria-hidden="true" 
+    <canvas 
+      ref={canvasRef} 
+      className="absolute inset-0 z-0 pointer-events-none"
+      aria-hidden="true"
     />
   );
 };

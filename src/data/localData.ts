@@ -22,18 +22,19 @@ export const localData: CMSData = {
   contact: {
     email: "shamrat.r.h@gmail.com",
     phone: "+88 01727-805705",
-    linkedin: "linkedin.com/in/shamrat5",
+    linkedin: "https://linkedin.com/in/shamrat5",
     location: "Azimpur, Dhaka, Bangladesh"
   },
   projects: [
     {
       id: 1,
+      slug: "digital-marketing-strategy",
       title: "Digital Marketing Strategy & Campaign",
       category: "marketing",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
       description: "Developed comprehensive digital marketing strategy for metal industry products.",
       tags: ["Digital Marketing", "Market Research", "Strategy Development"],
-      link: "/portfolio/1",
+      link: "/portfolio/digital-marketing-strategy",
       technologies: ["Google Analytics", "Facebook Ads", "SEMrush"],
       challenge: "Establishing digital presence in a traditional market.",
       solution: "Implemented multi-channel approach with targeted campaigns.",
@@ -41,82 +42,90 @@ export const localData: CMSData = {
     },
     {
       id: 2,
+      slug: "email-marketing-automation",
       title: "Email Marketing Automation",
       category: "marketing",
       image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop",
       description: "Designed and implemented automated email marketing campaigns using HubSpot.",
       tags: ["Email Marketing", "HubSpot", "Marketing Automation"],
-      link: "/portfolio/2"
+      link: "/portfolio/email-marketing-automation"
     },
     {
       id: 3,
+      slug: "customer-journey-analytics",
       title: "Customer Journey Analytics",
       category: "analytics",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
       description: "Analyzed customer touchpoints and service delivery across banking outlets.",
       tags: ["Customer Analytics", "Journey Mapping", "UX Research"],
-      link: "/portfolio/3"
+      link: "/portfolio/customer-journey-analytics"
     },
     {
       id: 4,
+      slug: "banking-operations-optimization",
       title: "Banking Operations Process Optimization",
       category: "operations",
       image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop",
       description: "Led initiative to optimize operational workflows across 62 districts.",
       tags: ["Process Improvement", "Automation", "Stakeholder Management"],
-      link: "/portfolio/4"
+      link: "/portfolio/banking-operations-optimization"
     },
     {
       id: 5,
+      slug: "cross-functional-team-coordination",
       title: "Cross-Functional Team Coordination",
       category: "operations",
       image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
       description: "Led coordination between field teams, outlet owners, and bank stakeholders.",
       tags: ["Team Leadership", "Stakeholder Management", "Issue Resolution"],
-      link: "/portfolio/5"
+      link: "/portfolio/cross-functional-team-coordination"
     },
     {
       id: 6,
+      slug: "banking-analytics-dashboard",
       title: "Banking Operations Analytics Dashboard",
       category: "analytics",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
       description: "Comprehensive Power BI dashboard analyzing performance metrics across 551+ banking outlets.",
       tags: ["Power BI", "Data Analytics", "Dashboard Design"],
-      link: "/portfolio/6"
+      link: "/portfolio/banking-analytics-dashboard"
     }
   ],
   posts: [
     {
       id: 1,
+      slug: "seo-cheat-sheet-2025",
       title: "The Ultimate SEO Cheat Sheet: How to Rank on Google and AI Search in 2025",
       date: "Dec 2, 2025",
       readTime: "4 min read",
       category: "SEO & Marketing",
       image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&h=400&fit=crop",
       description: "A comprehensive guide to SEO best practices for 2025, covering technical SEO, content optimization, and strategies for appearing in AI search results.",
-      link: "/blog/1",
+      link: "/blog/seo-cheat-sheet-2025",
       content: "<p>Full content would go here...</p>",
       tags: ["SEO", "AI", "Marketing"]
     },
     {
       id: 2,
+      slug: "data-driven-operations",
       title: "Data-Driven Decision Making in Operations",
       date: "Dec 5, 2025",
       readTime: "2 min read",
       category: "Data Analytics",
       image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=400&fit=crop",
       description: "How leveraging data analytics can transform operational efficiency and drive better business outcomes, with insights from managing 551+ banking outlets.",
-      link: "/blog/2"
+      link: "/blog/data-driven-operations"
     },
     {
       id: 3,
+      slug: "future-digital-banking-bangladesh",
       title: "The Future of Digital Banking in Bangladesh",
       date: "Dec 8, 2025",
       readTime: "2 min read",
       category: "Digital Transformation",
       image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&h=400&fit=crop",
       description: "Exploring how digital transformation is reshaping the banking landscape in Bangladesh, and what it means for traditional banking operations and customer experience.",
-      link: "/blog/3"
+      link: "/blog/future-digital-banking-bangladesh"
     }
   ],
   experience: [
