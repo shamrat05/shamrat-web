@@ -4,6 +4,8 @@ import { ArrowLeft, ExternalLink, Github, Layers } from 'lucide-react';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
+import { SEO } from '../components/SEO';
+
 export const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data } = useCMS();
@@ -27,6 +29,14 @@ export const ProjectPage: React.FC = () => {
 
   return (
     <div className="pt-28 min-h-screen bg-bg-page relative">
+      <SEO 
+        title={project.title}
+        description={project.description}
+        image={project.image}
+        url={project.link}
+        type="article"
+        tags={project.tags}
+      />
       <Particles />
       
       <div className="container relative z-10 py-12">

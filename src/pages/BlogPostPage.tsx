@@ -4,6 +4,8 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
+import { SEO } from '../components/SEO';
+
 export const BlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data } = useCMS();
@@ -27,6 +29,15 @@ export const BlogPostPage: React.FC = () => {
 
   return (
     <div className="pt-28 min-h-screen bg-bg-page relative">
+      <SEO 
+        title={post.title}
+        description={post.description}
+        image={post.image}
+        url={post.link}
+        type="article"
+        publishedTime={post.date}
+        tags={post.tags}
+      />
       <Particles />
       
       <div className="container relative z-10 py-12">
