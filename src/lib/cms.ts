@@ -1,10 +1,21 @@
 import { localData } from '../data/localData';
 import type { CMSData, Project, BlogPost } from '../types/cms';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// Only use external API if explicitly configured
+// In production/Vercel: no API_URL env var → use local data (no network access attempts)
+// In development with server: set VITE_API_URL → use external API
+// When migrating away from Vercel: set VITE_API_URL → use external API
+const API_URL = import.meta.env.VITE_API_URL;
+const USE_EXTERNAL_API = !!API_URL && API_URL !== 'undefined';
 
 class CMSService {
   async getData(): Promise<CMSData> {
+    // If no external API configured, use local data immediately (no network calls)
+    if (!USE_EXTERNAL_API) {
+      return localData;
+    }
+
+    // External API is configured, attempt to fetch
     try {
       const response = await fetch(`${API_URL}/api/cms`);
       if (!response.ok) {
