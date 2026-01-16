@@ -29,7 +29,7 @@ export const Hero: React.FC = React.memo(() => {
             </p>
             
             <div className="flex gap-4 justify-center md:justify-start flex-wrap">
-              <a href="#featured-projects" className="btn btn-primary">View My Work</a>
+              <a href="#featured-projects" className="btn btn-secondary">View My Work</a>
               <a href="#contact" className="btn btn-secondary">Get In Touch</a>
             </div>
           </div>
