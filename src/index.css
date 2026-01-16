@@ -142,6 +142,15 @@
   .card-glass {
     @apply relative overflow-hidden rounded-xl transition-all duration-300
     bg-white/5 backdrop-blur-[20px] border border-white/10 border-t-white/20 shadow-lg;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  
+  @media (max-width: 768px) {
+    .card-glass {
+      backdrop-filter: blur(10px); /* Reduce blur on mobile for perf */
+      -webkit-backdrop-filter: blur(10px);
+    }
   }
   
   @media (hover: hover) {
@@ -169,6 +178,7 @@
 @layer utilities {
   .contain-layout {
     contain: content;
+    content-visibility: auto; /* Helps browser skip rendering off-screen content */
   }
 
   .hero-gradient {
@@ -182,6 +192,9 @@
     );
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
+    /* Optimize gradient animation */
+    will-change: transform; 
+    transform: translateZ(0);
   }
 
   @keyframes gradientBG {
@@ -190,6 +203,7 @@
     100% { background-position: 0% 50%; }
   }
 
+  /* ... animations ... */
   .animate-blob {
     animation: blob 7s infinite;
   }
@@ -250,6 +264,17 @@
       0 4px 24px -1px rgba(0, 0, 0, 0.2), 
       0 0 0 1px rgba(255, 255, 255, 0.1) inset,
       0 20px 40px rgba(0,0,0,0.1); /* Deeper shadow */
+      
+    /* Performance optimization */
+    transform: translateZ(0);
+  }
+  
+  /* Mobile optimization for glass panels */
+  @media (max-width: 768px) {
+    .glass-panel {
+      backdrop-filter: blur(20px) saturate(120%);
+      -webkit-backdrop-filter: blur(20px) saturate(120%);
+    }
   }
   
   [data-theme="light"] .glass-panel {

@@ -7,13 +7,15 @@ export const Particles: React.FC = React.memo(() => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create PIXI Application
+    // Create PIXI Application with performance optimizations
     const app = new PIXI.Application({
       backgroundAlpha: 0,
       resizeTo: window,
-      antialias: true,
+      antialias: false, // Disable antialias for mobile performance (negligible difference for moving particles)
       autoDensity: true,
-      resolution: window.devicePixelRatio || 1,
+      // Cap resolution to 2 to avoid excessive processing on high-DPI (3x/4x) mobile screens
+      resolution: Math.min(window.devicePixelRatio || 1, 2),
+      powerPreference: 'high-performance', // Request discrete GPU
     });
 
     // Append canvas to container
@@ -21,14 +23,16 @@ export const Particles: React.FC = React.memo(() => {
 
     // Particle logic
     const particles: PIXI.Graphics[] = [];
-    const particleCount = window.innerWidth < 768 ? 10 : 30;
+    // Adjust particle count based on screen size for performance
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 15 : 40;
     
     // Create particles
     for (let i = 0; i < particleCount; i++) {
       const graphics = new PIXI.Graphics();
       graphics.beginFill(0x0A84FF); // Primary blue color
-      // Random size between 1 and 4
-      const size = Math.random() * 3 + 1;
+      // Random size between 1 and 3 (slightly smaller for sharpness without AA)
+      const size = Math.random() * 2 + 1;
       graphics.drawCircle(0, 0, size);
       graphics.endFill();
       
@@ -37,7 +41,11 @@ export const Particles: React.FC = React.memo(() => {
       (graphics as any).vy = Math.random() * 0.5 - 0.25;
       graphics.x = Math.random() * app.screen.width;
       graphics.y = Math.random() * app.screen.height;
-      graphics.alpha = Math.random() * 0.5 + 0.1;
+      // Lower alpha slightly for better blending
+      graphics.alpha = Math.random() * 0.4 + 0.1;
+
+      // Cache as bitmap to avoid re-rasterizing geometry every frame (Huge performance boost)
+      graphics.cacheAsBitmap = true;
 
       app.stage.addChild(graphics);
       particles.push(graphics);
@@ -45,22 +53,22 @@ export const Particles: React.FC = React.memo(() => {
 
     // Animation Loop
     app.ticker.add(() => {
-      particles.forEach((p) => {
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         p.x += (p as any).vx;
         p.y += (p as any).vy;
 
         // Wrap around screen
-        if (p.x < 0) p.x = app.screen.width;
-        if (p.x > app.screen.width) p.x = 0;
-        if (p.y < 0) p.y = app.screen.height;
-        if (p.y > app.screen.height) p.y = 0;
-      });
+        if (p.x < -10) p.x = app.screen.width + 10;
+        if (p.x > app.screen.width + 10) p.x = -10;
+        if (p.y < -10) p.y = app.screen.height + 10;
+        if (p.y > app.screen.height + 10) p.y = -10;
+      }
     });
 
-    // Handle resize specifically for particle regeneration or bounds
-    // (PIXI handles canvas resize via resizeTo, but we might want to adjust particles if screen changes drastically)
+    // Handle resize
     const handleResize = () => {
-       // Optional: adjust particle count or positions if needed
+       // PIXI resizeTo handles canvas sizing, we just let particles wrap naturally
     };
     window.addEventListener('resize', handleResize);
 
@@ -76,6 +84,11 @@ export const Particles: React.FC = React.memo(() => {
       ref={containerRef} 
       className="absolute inset-0 z-0 pointer-events-none" 
       aria-hidden="true"
+      style={{
+        // Hardware acceleration hint for the container
+        transform: 'translateZ(0)',
+        contain: 'paint layout'
+      }}
     />
   );
 });
