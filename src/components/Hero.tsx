@@ -1,9 +1,12 @@
 import React from 'react';
 import { Particles } from './Particles';
 import { useCMS } from '../hooks/useCMS';
+import { useTranslation } from 'react-i18next';
+import { LazyImage } from './LazyImage';
 
 export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
+  const { t } = useTranslation();
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-24 md:pt-[72px] z-0">
@@ -20,7 +23,7 @@ export const Hero: React.FC = React.memo(() => {
                 {data.hero.name}
               </span>
               <span className="block text-xl md:text-3xl text-primary-500 font-medium">
-                {data.hero.title}
+                {t('hero.role')}
               </span>
             </h1>
             
@@ -29,18 +32,17 @@ export const Hero: React.FC = React.memo(() => {
             </p>
             
             <div className="flex gap-4 justify-center md:justify-start flex-wrap">
-              <a href="#featured-projects" className="btn btn-secondary">View My Work</a>
-              <a href="#contact" className="btn btn-secondary">Get In Touch</a>
+              <a href="#featured-projects" className="btn btn-secondary">{t('hero.btn_work')}</a>
+              <a href="#contact" className="btn btn-secondary">{t('hero.btn_contact')}</a>
             </div>
           </div>
           
           <div className="hero-image flex justify-center items-center">
             <div className="relative w-[280px] h-[280px] md:w-[325px] md:h-[325px]">
-              <img 
+              <LazyImage 
                 src={data.hero.image} 
                 alt={`${data.hero.name} - ${data.hero.title}`} 
-                className="w-full h-full rounded-full object-cover border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 
-                loading="lazy"
+                className="w-full h-full rounded-full border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 
               />
               <div className="absolute -inset-5 bg-gradient-to-br from-primary-500 to-primary-400 rounded-full opacity-20 -z-0 animate-[glowPulse_4s_ease-in-out_infinite_alternate]"></div>
             </div>

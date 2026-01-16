@@ -1,11 +1,30 @@
-import React from 'react';
-import { Send, Mail, MapPin, Phone, Linkedin, Info } from 'lucide-react';
+import React, { useState } from 'react';
+import { Send, Mail, MapPin, Phone, Linkedin, Info, Copy, Check } from 'lucide-react';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
+import { LocalTime } from './LocalTime';
+import confetti from 'canvas-confetti';
 
 export const Contact: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const handleCopy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+    alert('Message sent! (Simulation)');
+  };
   
   return (
     <section 
@@ -19,64 +38,84 @@ export const Contact: React.FC = React.memo(() => {
           <p className="section-subtitle">Let's discuss how we can work together</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
           {/* Contact Info */}
-          <div className="flex flex-col gap-8">
-            {[
-              {
-                icon: Mail,
-                label: 'Email',
-                value: data.contact.email,
-                href: `mailto:${data.contact.email}`,
-              },
-              {
-                icon: Phone,
-                label: 'Phone',
-                value: data.contact.phone,
-                href: `tel:${data.contact.phone}`,
-              },
-              {
-                icon: Linkedin,
-                label: 'LinkedIn',
-                value: data.contact.linkedin.replace('https://', ''),
-                href: data.contact.linkedin,
-              },
-              {
-                icon: MapPin,
-                label: 'Location',
-                value: data.contact.location,
-                href: null,
-              },
-            ].map((contact, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-6 p-8 card-glass"
-              >
-                <div className="w-12 h-12 bg-primary-900 rounded-lg flex items-center justify-center text-primary-500 shrink-0">
-                  <contact.icon size={20} />
+          <div className="p-8 card-glass h-full flex flex-col gap-8">
+            <div>
+              <h3 className="text-xl font-bold text-text-primary mb-6">Contact Information</h3>
+              <LocalTime />
+            </div>
+
+            <div className="flex flex-col gap-6 flex-grow justify-center">
+              {[
+                {
+                  icon: Mail,
+                  label: 'Email',
+                  value: data.contact.email,
+                  href: `mailto:${data.contact.email}`,
+                  copyValue: data.contact.email
+                },
+                {
+                  icon: Phone,
+                  label: 'Phone',
+                  value: data.contact.phone,
+                  href: `tel:${data.contact.phone}`,
+                  copyValue: data.contact.phone
+                },
+                {
+                  icon: Linkedin,
+                  label: 'LinkedIn',
+                  value: data.contact.linkedin.replace('https://', ''),
+                  href: data.contact.linkedin,
+                  copyValue: data.contact.linkedin
+                },
+                {
+                  icon: MapPin,
+                  label: 'Location',
+                  value: data.contact.location,
+                  href: null,
+                  copyValue: data.contact.location
+                },
+              ].map((contact, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-5 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5 group"
+                >
+                  <div className="w-12 h-12 bg-primary-900/50 rounded-xl flex items-center justify-center text-primary-500 shrink-0 border border-primary-500/20">
+                    <contact.icon size={22} />
+                  </div>
+                  <div className="flex-grow">
+                    <h4 className="text-sm font-medium text-text-secondary mb-0.5">{contact.label}</h4>
+                    {contact.href ? (
+                      <a href={contact.href} className="text-base font-semibold text-text-primary hover:text-primary-500 transition-colors">
+                        {contact.value}
+                      </a>
+                    ) : (
+                      <p className="text-base font-semibold text-text-primary">{contact.value}</p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => handleCopy(contact.copyValue, contact.label)}
+                    className="p-2 text-text-secondary hover:text-primary-500 opacity-0 group-hover:opacity-100 transition-all"
+                    title="Copy to clipboard"
+                  >
+                    {copied === contact.label ? <Check size={18} /> : <Copy size={18} />}
+                  </button>
                 </div>
-                <div>
-                  <h4 className="text-text-primary font-bold mb-1">{contact.label}</h4>
-                  {contact.href ? (
-                    <a href={contact.href} className="text-text-secondary hover:text-primary-500 transition-colors">
-                      {contact.value}
-                    </a>
-                  ) : (
-                    <p className="text-text-secondary">{contact.value}</p>
-                  )}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Contact Form */}
-          <div className="p-8 card-glass">
-            <form 
-              action={`mailto:${data.contact.email}`}
-              method="post" 
-              encType="text/plain"
-              className="flex flex-col gap-6"
-            >
+                    <div className="p-8 card-glass h-full">
+                      <h3 className="text-xl font-bold text-text-primary mb-6">Send a Message</h3>
+                      <form 
+                        onSubmit={handleSubmit}
+                        action={`mailto:${data.contact.email}`}
+                        method="post" 
+                        encType="text/plain"
+                        className="flex flex-col gap-6"
+                      >
               <div className="space-y-6">
                 <div>
                   <input

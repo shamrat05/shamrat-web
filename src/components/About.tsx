@@ -2,6 +2,7 @@ import React from 'react';
 import { GraduationCap, Briefcase, Heart } from 'lucide-react';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
+import { ScrollReveal } from './ScrollReveal';
 
 export const About: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
@@ -19,9 +20,11 @@ export const About: React.FC = React.memo(() => {
           <p className="section-subtitle">Passionate about creating impact through strategic thinking and data-driven solutions.</p>
         </div>
         
-        <div className="max-w-[900px] mx-auto text-center mb-16 text-lg leading-relaxed text-text-secondary">
+        <div className="max-w-[900px] mx-auto text-center mb-16 text-lg leading-relaxed text-text-secondary flex flex-col items-center">
           {data.about.description.map((paragraph, idx) => (
-            <p key={idx} className="mb-6">{paragraph}</p>
+            <ScrollReveal key={idx} width="100%">
+              <p className="mb-6">{paragraph}</p>
+            </ScrollReveal>
           ))}
         </div>
         

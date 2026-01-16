@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Tag, Share2, ChevronRight, Home } from 'lucide-react';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
 import { SEO } from '../components/SEO';
+import { useCodeCopy } from '../hooks/useCodeCopy';
+import { calculateReadingTime } from '../utils/readingTime';
+import { LikeButton } from '../components/LikeButton';
+import { ShareSelection } from '../components/ShareSelection';
 
 const BlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -15,6 +19,25 @@ const BlogPostPage: React.FC = () => {
   }, []);
 
   const post = data.posts.find(p => p.slug === slug);
+  useCodeCopy(post?.content);
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post?.title,
+          text: post?.description,
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      // Fallback to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  };
 
   if (!post) {
     return (
@@ -27,8 +50,11 @@ const BlogPostPage: React.FC = () => {
     );
   }
 
+  const readTime = post.readTime || calculateReadingTime(post.content || '');
+
   return (
     <div className="pt-28 min-h-screen bg-bg-page relative">
+      <ShareSelection />
       <SEO 
         title={post.title}
         description={post.description}
@@ -41,12 +67,34 @@ const BlogPostPage: React.FC = () => {
       <Particles />
       
       <div className="container relative z-10 py-12">
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-2 text-sm text-text-secondary mb-8">
+          <Link to="/" className="hover:text-primary-500 transition-colors flex items-center gap-1">
+            <Home size={14} /> Home
+          </Link>
+          <ChevronRight size={14} />
+          <Link to="/blog" className="hover:text-primary-500 transition-colors">Blog</Link>
+          <ChevronRight size={14} />
+          <span className="text-text-primary truncate max-w-[200px] md:max-w-[400px]">{post.title}</span>
+        </div>
+
         <Link to="/blog" className="inline-flex items-center text-primary-500 hover:text-primary-400 mb-8 font-medium transition-colors">
           <ArrowLeft size={20} className="mr-2" />
           Back to Articles
         </Link>
 
-        <article className="max-w-4xl mx-auto">
+        <article className="max-w-4xl mx-auto relative">
+          {/* Share Button (Sticky) */}
+          <div className="fixed bottom-8 left-8 z-40 md:absolute md:top-0 md:left-[-80px] md:bottom-auto">
+            <button 
+              onClick={handleShare}
+              className="p-3 rounded-full bg-bg-surface border border-white/10 shadow-lg text-text-secondary hover:text-primary-500 hover:scale-110 transition-all"
+              title="Share this post"
+            >
+              <Share2 size={20} />
+            </button>
+          </div>
+
           {/* Header */}
           <div className="mb-8 text-center">
             <div className="flex items-center justify-center gap-4 text-sm text-text-secondary mb-4">
@@ -59,7 +107,7 @@ const BlogPostPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-1">
                 <Clock size={14} />
-                <span>{post.readTime}</span>
+                <span>{readTime}</span>
               </div>
             </div>
             
@@ -83,9 +131,13 @@ const BlogPostPage: React.FC = () => {
             dangerouslySetInnerHTML={{ __html: post.content || '' }} 
           />
 
+          <div className="flex justify-center mt-12">
+            <LikeButton slug={post.slug} />
+          </div>
+
           {/* Tags */}
           {post.tags && (
-            <div className="mt-12 flex flex-wrap gap-2 justify-center">
+            <div className="mt-8 flex flex-wrap gap-2 justify-center">
               {post.tags.map(tag => (
                 <span key={tag} className="flex items-center gap-1 px-4 py-2 rounded-full bg-bg-surface border border-white/10 text-sm text-text-secondary">
                   <Tag size={14} />

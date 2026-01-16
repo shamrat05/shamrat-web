@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Languages, Sparkles } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { Typewriter } from './Typewriter';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Navigation: React.FC = () => {
-  const { activeSection, setActiveSection } = usePortfolioStore();
+  const activeSection = usePortfolioStore((state) => state.activeSection);
+  const setActiveSection = usePortfolioStore((state) => state.setActiveSection);
+  const setAiChatOpen = usePortfolioStore((state) => state.setAiChatOpen);
+  const isAiChatOpen = usePortfolioStore((state) => state.isAiChatOpen);
+  
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     // Theme initialization
@@ -28,15 +34,32 @@ export const Navigation: React.FC = () => {
     localStorage.setItem('theme', newTheme);
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'bn' : 'en';
+    i18n.changeLanguage(newLang);
+  };
+
   const navItems = [
-    { label: 'Home', id: 'home', href: '/' },
-    { label: 'About', id: 'about', href: '/#about' },
-    { label: 'Experience', id: 'experience', href: '/#experience' },
-    { label: 'Skills', id: 'skills', href: '/#skills' },
-    { label: 'Portfolio', id: 'projects', href: '/portfolio' },
-    { label: 'Blog', id: 'blog', href: '/blog' },
-    { label: 'Contact', id: 'contact', href: '/#contact' },
+    { label: t('nav.home'), id: 'home', href: '/' },
+    { label: t('nav.about'), id: 'about', href: '/#about' },
+    { label: t('nav.experience'), id: 'experience', href: '/#experience' },
+    { label: t('nav.skills'), id: 'skills', href: '/#skills' },
+    { label: t('nav.portfolio'), id: 'projects', href: '/portfolio' },
+    { label: t('nav.blog'), id: 'blog', href: '/blog' },
+    { label: 'Resume', id: 'resume', href: '/resume' },
+    { label: t('nav.contact'), id: 'contact', href: '/#contact' },
   ];
+
+  // Status Dot Logic
+  const getStatusColor = () => {
+    const now = new Date();
+    const bdHour = parseInt(new Intl.DateTimeFormat('en-US', { 
+      timeZone: 'Asia/Dhaka', 
+      hour: 'numeric', 
+      hour12: false 
+    }).format(now), 10);
+    return (bdHour >= 9 && bdHour < 23) ? 'bg-semantic-success' : 'bg-orange-500';
+  };
 
   const handleNavClick = (id: string, href: string) => {
     if (href.startsWith('/#') || href === '/') {
@@ -85,8 +108,9 @@ export const Navigation: React.FC = () => {
     ">
       <div className="max-w-[1280px] mx-auto px-4 h-[72px] flex items-center justify-between">
         {/* Logo */}
-        <div className="relative flex items-center justify-center cursor-pointer" onClick={() => handleNavClick('home', '/')}>
+        <div className="relative flex items-center justify-center gap-2 cursor-pointer" onClick={() => handleNavClick('home', '/')}>
              <span className="font-heading font-bold text-2xl bg-gradient-to-br from-primary-500 to-primary-400 bg-clip-text text-transparent">SH</span>
+             <span className={`w-2 h-2 rounded-full ${getStatusColor()} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
         </div>
 
         {/* Desktop Menu */}
@@ -96,7 +120,7 @@ export const Navigation: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id, item.href)}
-                className={`relative font-medium text-sm transition-colors duration-300 py-2
+                className={`relative font-medium text-sm transition-colors duration-300 py-2 cursor-pointer
                   ${(activeSection === item.id || location.pathname === item.href) ? 'text-primary-500' : 'text-text-primary hover:text-primary-500'}
                   after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300
                   ${(activeSection === item.id || location.pathname === item.href) ? 'after:w-full' : 'after:w-0 hover:after:w-full'}
@@ -112,6 +136,24 @@ export const Navigation: React.FC = () => {
              <div className="flex items-center text-xs font-mono text-primary-500 bg-primary-500/10 px-2 py-1 rounded min-w-[100px]">
                 <Typewriter />
              </div>
+
+             <button
+                onClick={() => setAiChatOpen(!isAiChatOpen)}
+                className={`p-2 rounded-lg transition-colors flex items-center gap-1 font-mono text-xs uppercase ${isAiChatOpen ? 'text-primary-500 bg-primary-500/10' : 'text-text-primary hover:bg-bg-page hover:text-primary-500'}`}
+                aria-label="Ask AI"
+             >
+                <Sparkles size={16} />
+                AI
+             </button>
+
+             <button
+                onClick={toggleLanguage}
+                className="p-2 rounded-lg text-text-primary hover:bg-bg-page hover:text-primary-500 transition-colors flex items-center gap-1 font-mono text-xs uppercase"
+                aria-label="Toggle language"
+             >
+                <Languages size={16} />
+                {i18n.language === 'en' ? 'BN' : 'EN'}
+             </button>
 
              <button 
                 onClick={toggleTheme}
@@ -129,6 +171,21 @@ export const Navigation: React.FC = () => {
           <div className="flex items-center text-xs font-mono text-primary-500 bg-primary-500/10 px-2 py-1 rounded min-w-[80px] max-w-[100px] overflow-hidden">
              <Typewriter />
           </div>
+
+          <button 
+            onClick={() => setAiChatOpen(!isAiChatOpen)}
+            className={`p-2 rounded-lg transition-colors ${isAiChatOpen ? 'text-primary-500 bg-primary-500/10' : 'text-text-primary hover:bg-bg-page hover:text-primary-500'}`}
+            aria-label="Ask AI"
+          >
+            <Sparkles size={20} />
+          </button>
+
+          <button 
+            onClick={toggleLanguage}
+            className="p-2 rounded-lg text-text-primary hover:bg-bg-page hover:text-primary-500 transition-colors font-mono text-xs uppercase"
+          >
+            {i18n.language === 'en' ? 'BN' : 'EN'}
+          </button>
 
           <button 
             onClick={toggleTheme}

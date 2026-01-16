@@ -4,6 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { CMSModel } from './models/CMS';
 import { seedData } from './seedData';
+import chatRoutes from './routes/chat';
+import ogRoutes from './routes/og';
 
 dotenv.config();
 
@@ -30,6 +32,9 @@ mongoose.connect(MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // API Routes
+app.use('/api/chat', chatRoutes);
+app.use('/api/og', ogRoutes);
+
 app.get('/api/cms', async (req, res) => {
   try {
     const data = await CMSModel.findOne();

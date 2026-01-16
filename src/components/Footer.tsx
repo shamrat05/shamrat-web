@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, ArrowUp } from 'lucide-react';
+import { ShortcutsLegend } from './ShortcutsLegend';
 
 export const Footer: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -74,6 +75,7 @@ export const Footer: React.FC = () => {
         
         <div className="text-center pt-8 border-t border-border-default">
           <p className="text-text-secondary text-sm">&copy; {currentYear} Md. Shamrat Hossain. All rights reserved.</p>
+          <ShortcutsLegend />
         </div>
       </div>
 

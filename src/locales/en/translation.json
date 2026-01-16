@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "role": "Marketing & Operations Professional",
+    "btn_work": "View My Work",
+    "btn_contact": "Get In Touch"
+  },
+  "ai_search": {
+    "placeholder": "Ask anything about me...",
+    "thinking": "Thinking...",
+    "ask": "Ask AI"
+  }
+}

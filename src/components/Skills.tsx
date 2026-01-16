@@ -12,6 +12,7 @@ import {
 import { Radar } from 'react-chartjs-2';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
+import { TechMarquee } from './TechMarquee';
 
 ChartJS.register(
   RadialLinearScale,
@@ -160,7 +161,7 @@ export const Skills: React.FC = React.memo(() => {
         </div>
 
         {/* Certifications */}
-        <div className="mt-20">
+        <div className="mt-20 mb-20">
           <h3 className="text-2xl font-bold text-center text-text-primary mb-12">Certifications & Achievements</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {data.certifications.map((cert, index) => {
@@ -181,6 +182,8 @@ export const Skills: React.FC = React.memo(() => {
           </div>
         </div>
       </div>
+      
+      <TechMarquee />
     </section>
   );
 });

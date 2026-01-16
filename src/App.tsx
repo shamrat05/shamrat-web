@@ -9,6 +9,10 @@ import { Footer } from './components/Footer';
 import { CookieConsent } from './components/CookieConsent';
 import { useAnalytics } from './hooks/useAnalytics';
 import { SectionLoader } from './components/SectionLoader';
+import { AISearch } from './components/AISearch';
+import { CommandPalette } from './components/CommandPalette';
+import { usePageTitle } from './hooks/usePageTitle';
+import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import './index.css';
 
 // Lazy loaded components
@@ -17,10 +21,13 @@ const BlogPage = lazy(() => import('./pages/BlogPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const ProjectPage = lazy(() => import('./pages/ProjectPage'));
+const ResumePage = lazy(() => import('./pages/ResumePage'));
 
 // Component to handle analytics hooks inside Router
 const AppContent = () => {
   useAnalytics(); // Initialize smart tracking
+  usePageTitle(); // Handle dynamic page titles
+  useDynamicFavicon(); // Handle dynamic favicon
   
   return (
     <AnimatePresence mode="wait">
@@ -40,16 +47,20 @@ const AppContent = () => {
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/portfolio/:slug" element={<ProjectPage />} />
+              <Route path="/resume" element={<ResumePage />} />
             </Routes>
           </Suspense>
         </main>
 
         <Footer />
         <CookieConsent />
+        <AISearch />
+        <CommandPalette />
       </motion.div>
     </AnimatePresence>
   );
 };
+
 
 function App() {
   return (

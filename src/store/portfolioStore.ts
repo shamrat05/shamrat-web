@@ -13,11 +13,13 @@ interface PortfolioStore {
   activeSection: string;
   isDarkMode: boolean;
   isLoading: boolean;
+  isAiChatOpen: boolean;
   
   // Actions
   setActiveSection: (section: string) => void;
   setDarkMode: (isDark: boolean) => void;
   setLoading: (isLoading: boolean) => void;
+  setAiChatOpen: (isOpen: boolean) => void;
   setProjects: (projects: Project[]) => void;
   setBlogPosts: (posts: BlogPost[]) => void;
   setSkills: (skills: Skill[]) => void;
@@ -35,11 +37,13 @@ export const usePortfolioStore = create<PortfolioStore>()(
       activeSection: 'home',
       isDarkMode: true,
       isLoading: false,
+      isAiChatOpen: false,
       
       // Actions
       setActiveSection: (section) => set({ activeSection: section }),
       setDarkMode: (isDark) => set({ isDarkMode: isDark }),
       setLoading: (isLoading) => set({ isLoading }),
+      setAiChatOpen: (isOpen) => set({ isAiChatOpen: isOpen }),
       setProjects: (projects) => set({ projects }),
       setBlogPosts: (posts) => set({ blogPosts: posts }),
       setSkills: (skills) => set({ skills }),
@@ -57,12 +61,4 @@ export const useExperiences = () => usePortfolioStore((state) => state.experienc
 export const useActiveSection = () => usePortfolioStore((state) => state.activeSection);
 export const useIsDarkMode = () => usePortfolioStore((state) => state.isDarkMode);
 export const useIsLoading = () => usePortfolioStore((state) => state.isLoading);
-export const usePortfolioActions = () => usePortfolioStore((state) => ({
-  setActiveSection: state.setActiveSection,
-  setDarkMode: state.setDarkMode,
-  setLoading: state.setLoading,
-  setProjects: state.setProjects,
-  setBlogPosts: state.setBlogPosts,
-  setSkills: state.setSkills,
-  setExperiences: state.setExperiences,
-}));
+export const useIsAiChatOpen = () => usePortfolioStore((state) => state.isAiChatOpen);
