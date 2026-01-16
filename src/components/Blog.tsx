@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
 
-export const Blog: React.FC = () => {
+export const Blog: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
 
@@ -81,4 +81,4 @@ export const Blog: React.FC = () => {
       </div>
     </section>
   );
-};
+});

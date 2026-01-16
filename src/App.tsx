@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
@@ -5,14 +6,17 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
-import { HomePage } from './pages/HomePage';
-import { BlogPage } from './pages/BlogPage';
-import { PortfolioPage } from './pages/PortfolioPage';
-import { BlogPostPage } from './pages/BlogPostPage';
-import { ProjectPage } from './pages/ProjectPage';
 import { CookieConsent } from './components/CookieConsent';
 import { useAnalytics } from './hooks/useAnalytics';
+import { SectionLoader } from './components/SectionLoader';
 import './index.css';
+
+// Lazy loaded components
+const HomePage = lazy(() => import('./pages/HomePage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const ProjectPage = lazy(() => import('./pages/ProjectPage'));
 
 // Component to handle analytics hooks inside Router
 const AppContent = () => {
@@ -29,13 +33,15 @@ const AppContent = () => {
         <Navigation />
 
         <main className="flex-grow pt-0">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/portfolio/:slug" element={<ProjectPage />} />
-          </Routes>
+          <Suspense fallback={<div className="h-screen flex items-center justify-center"><SectionLoader /></div>}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/portfolio/:slug" element={<ProjectPage />} />
+            </Routes>
+          </Suspense>
         </main>
 
         <Footer />

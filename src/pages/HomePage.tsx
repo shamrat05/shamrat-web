@@ -9,7 +9,7 @@ const Projects = lazy(() => import('../components/Projects').then(module => ({ d
 const Blog = lazy(() => import('../components/Blog').then(module => ({ default: module.Blog })));
 const Contact = lazy(() => import('../components/Contact').then(module => ({ default: module.Contact })));
 
-export const HomePage: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
@@ -24,3 +24,5 @@ export const HomePage: React.FC = () => {
     </>
   );
 };
+
+export default HomePage;

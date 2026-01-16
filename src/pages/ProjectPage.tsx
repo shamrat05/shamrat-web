@@ -6,7 +6,7 @@ import { useCMS } from '../hooks/useCMS';
 
 import { SEO } from '../components/SEO';
 
-export const ProjectPage: React.FC = () => {
+const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data } = useCMS();
   
@@ -151,3 +151,5 @@ export const ProjectPage: React.FC = () => {
     </div>
   );
 };
+
+export default ProjectPage;

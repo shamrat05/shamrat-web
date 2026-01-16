@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
-export const PortfolioPage: React.FC = () => {
+const PortfolioPage: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const { data } = useCMS();
 
@@ -96,3 +96,5 @@ export const PortfolioPage: React.FC = () => {
     </div>
   );
 };
+
+export default PortfolioPage;

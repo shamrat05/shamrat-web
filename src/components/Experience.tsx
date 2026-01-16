@@ -2,7 +2,7 @@ import React from 'react';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
 
-export const Experience: React.FC = () => {
+export const Experience: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
 
@@ -61,4 +61,4 @@ export const Experience: React.FC = () => {
       </div>
     </section>
   );
-};
+});

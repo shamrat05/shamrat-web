@@ -167,6 +167,10 @@
 }
 
 @layer utilities {
+  .contain-layout {
+    contain: content;
+  }
+
   .hero-gradient {
     position: absolute;
     inset: 0;

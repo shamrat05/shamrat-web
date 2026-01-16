@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
 
-export const BlogPage: React.FC = () => {
+const BlogPage: React.FC = () => {
   const { data } = useCMS();
 
   return (
@@ -77,3 +77,5 @@ export const BlogPage: React.FC = () => {
     </div>
   );
 };
+
+export default BlogPage;

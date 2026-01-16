@@ -3,7 +3,7 @@ import { Send, Mail, MapPin, Phone, Linkedin, Info } from 'lucide-react';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
 
-export const Contact: React.FC = () => {
+export const Contact: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
   
@@ -135,4 +135,4 @@ export const Contact: React.FC = () => {
       </div>
     </section>
   );
-};
+});

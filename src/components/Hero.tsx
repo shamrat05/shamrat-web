@@ -2,7 +2,7 @@ import React from 'react';
 import { Particles } from './Particles';
 import { useCMS } from '../hooks/useCMS';
 
-export const Hero: React.FC = () => {
+export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
 
   return (
@@ -49,4 +49,4 @@ export const Hero: React.FC = () => {
       </div>
     </section>
   );
-};
+});

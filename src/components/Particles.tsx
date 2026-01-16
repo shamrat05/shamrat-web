@@ -1,97 +1,81 @@
 import React, { useEffect, useRef } from 'react';
+import * as PIXI from 'pixi.js';
 
-export const Particles: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export const Particles: React.FC = React.memo(() => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!containerRef.current) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    // Create PIXI Application
+    const app = new PIXI.Application({
+      backgroundAlpha: 0,
+      resizeTo: window,
+      antialias: true,
+      autoDensity: true,
+      resolution: window.devicePixelRatio || 1,
+    });
 
-    let animationFrameId: number;
-    let particles: Particle[] = [];
+    // Append canvas to container
+    containerRef.current.appendChild(app.view as unknown as Node);
+
+    // Particle logic
+    const particles: PIXI.Graphics[] = [];
+    const particleCount = window.innerWidth < 768 ? 10 : 30;
     
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initParticles();
-    };
-
-    class Particle {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      opacity: number;
+    // Create particles
+    for (let i = 0; i < particleCount; i++) {
+      const graphics = new PIXI.Graphics();
+      graphics.beginFill(0x0A84FF); // Primary blue color
+      // Random size between 1 and 4
+      const size = Math.random() * 3 + 1;
+      graphics.drawCircle(0, 0, size);
+      graphics.endFill();
       
-      constructor() {
-        this.x = Math.random() * canvas!.width;
-        this.y = Math.random() * canvas!.height;
-        this.size = Math.random() * 3 + 1; // 1 to 4px
-        this.speedX = Math.random() * 0.5 - 0.25; // Slow movement
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.1;
-      }
+      // Custom properties for animation
+      (graphics as any).vx = Math.random() * 0.5 - 0.25;
+      (graphics as any).vy = Math.random() * 0.5 - 0.25;
+      graphics.x = Math.random() * app.screen.width;
+      graphics.y = Math.random() * app.screen.height;
+      graphics.alpha = Math.random() * 0.5 + 0.1;
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // Wrap around screen
-        if (this.x > canvas!.width) this.x = 0;
-        else if (this.x < 0) this.x = canvas!.width;
-        
-        if (this.y > canvas!.height) this.y = 0;
-        else if (this.y < 0) this.y = canvas!.height;
-      }
-
-      draw() {
-        if (!ctx) return;
-        ctx.fillStyle = `rgba(10, 132, 255, ${this.opacity})`; // primary-500
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      app.stage.addChild(graphics);
+      particles.push(graphics);
     }
 
-    const initParticles = () => {
-      const particleCount = window.innerWidth < 768 ? 20 : 50;
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
-    };
+    // Animation Loop
+    app.ticker.add(() => {
+      particles.forEach((p) => {
+        p.x += (p as any).vx;
+        p.y += (p as any).vy;
 
-    const animate = () => {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
+        // Wrap around screen
+        if (p.x < 0) p.x = app.screen.width;
+        if (p.x > app.screen.width) p.x = 0;
+        if (p.y < 0) p.y = app.screen.height;
+        if (p.y > app.screen.height) p.y = 0;
       });
-      
-      animationFrameId = requestAnimationFrame(animate);
-    };
+    });
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    animate();
+    // Handle resize specifically for particle regeneration or bounds
+    // (PIXI handles canvas resize via resizeTo, but we might want to adjust particles if screen changes drastically)
+    const handleResize = () => {
+       // Optional: adjust particle count or positions if needed
+    };
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      // Clean up PIXI application
+      app.destroy(true, { children: true, texture: true, baseTexture: true });
     };
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 z-0 pointer-events-none"
+    <div 
+      ref={containerRef} 
+      className="absolute inset-0 z-0 pointer-events-none" 
       aria-hidden="true"
     />
   );
-};
+});

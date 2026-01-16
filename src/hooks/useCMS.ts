@@ -1,26 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { cms } from '../lib/cms';
-import type { CMSData } from '../types/cms';
 import { localData } from '../data/localData';
+import type { CMSData } from '../types/cms';
 
 export const useCMS = () => {
-  const [data, setData] = useState<CMSData>(localData);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, isError } = useQuery<CMSData>({
+    queryKey: ['cms-data'],
+    queryFn: () => cms.getData(),
+    initialData: localData,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+  });
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const result = await cms.getData();
-        setData(result);
-      } catch (error) {
-        console.error('Failed to load content:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  return { data, loading };
+  return { 
+    data: data || localData, 
+    loading: isLoading,
+    isError 
+  };
 };
