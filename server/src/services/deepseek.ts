@@ -14,8 +14,9 @@ class DeepSeekPOW {
     const possiblePaths = [
       path.join(__dirname, '../wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Local dev ts-node
       path.join(__dirname, 'wasm/sha3_wasm_bg.7b9ca65ddd.wasm'),    // Built dist
-      path.join(process.cwd(), 'server/src/wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel source?
-      path.join(process.cwd(), 'wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel function root?
+      path.join(process.cwd(), 'server/src/wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel source
+      path.join(process.cwd(), 'wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel root
+      path.join(__dirname, '../../server/src/wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Another variation
     ];
 
     let wasmPath = '';
