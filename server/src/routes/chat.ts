@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { DeepSeekAPI } from '../services/deepseek';
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { message, context } = req.body;
   const token = process.env.DEEPSEEK_TOKEN;
 
