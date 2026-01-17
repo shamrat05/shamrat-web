@@ -1,5 +1,4 @@
 import express from 'express';
-import type { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -36,7 +35,7 @@ mongoose.connect(MONGODB_URI)
 app.use('/api/chat', chatRoutes);
 app.use('/api/og', ogRoutes);
 
-app.get('/api/cms', async (req: Request, res: Response) => {
+app.get('/api/cms', async (req: express.Request, res: express.Response) => {
   try {
     const data = await CMSModel.findOne();
     res.json(data);
@@ -46,7 +45,7 @@ app.get('/api/cms', async (req: Request, res: Response) => {
 });
 
 // Sitemap Endpoint for SEO
-app.get('/sitemap.xml', async (req: Request, res: Response) => {
+app.get('/sitemap.xml', async (req: express.Request, res: express.Response) => {
   try {
     const data = await CMSModel.findOne();
     if (!data) return res.status(404).send('No data found');
