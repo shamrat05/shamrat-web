@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (req: express.Request, res: express.Response) => {
+router.get('/', (req: any, res: any) => {
   const { title } = req.query;
   
   // In a real implementation, we would use 'satori' or 'canvas' to generate an image

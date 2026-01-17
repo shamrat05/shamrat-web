@@ -35,7 +35,7 @@ mongoose.connect(MONGODB_URI)
 app.use('/api/chat', chatRoutes);
 app.use('/api/og', ogRoutes);
 
-app.get('/api/cms', async (req: express.Request, res: express.Response) => {
+app.get('/api/cms', async (req: any, res: any) => {
   try {
     const data = await CMSModel.findOne();
     res.json(data);
@@ -45,7 +45,7 @@ app.get('/api/cms', async (req: express.Request, res: express.Response) => {
 });
 
 // Sitemap Endpoint for SEO
-app.get('/sitemap.xml', async (req: express.Request, res: express.Response) => {
+app.get('/sitemap.xml', async (req: any, res: any) => {
   try {
     const data = await CMSModel.findOne();
     if (!data) return res.status(404).send('No data found');
