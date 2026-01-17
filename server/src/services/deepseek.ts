@@ -4,8 +4,6 @@ import { WASI } from 'wasi';
 import { env } from 'process';
 import axios, { AxiosInstance } from 'axios';
 
-const WASM_PATH = path.join(__dirname, '../wasm/sha3_wasm_bg.7b9ca65ddd.wasm');
-
 class DeepSeekPOW {
   private instance: WebAssembly.Instance | null = null;
   private memory: WebAssembly.Memory | null = null;
@@ -13,7 +11,28 @@ class DeepSeekPOW {
   async init() {
     if (this.instance) return;
 
-    const wasmBuffer = fs.readFileSync(WASM_PATH);
+    const possiblePaths = [
+      path.join(__dirname, '../wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Local dev ts-node
+      path.join(__dirname, 'wasm/sha3_wasm_bg.7b9ca65ddd.wasm'),    // Built dist
+      path.join(process.cwd(), 'server/src/wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel source?
+      path.join(process.cwd(), 'wasm/sha3_wasm_bg.7b9ca65ddd.wasm'), // Vercel function root?
+    ];
+
+    let wasmPath = '';
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        wasmPath = p;
+        console.log("WASM file found at:", wasmPath);
+        break;
+      }
+    }
+
+    if (!wasmPath) {
+      console.error("WASM file not found in any of:", possiblePaths);
+      throw new Error("WASM file not found");
+    }
+
+    const wasmBuffer = fs.readFileSync(wasmPath);
     const wasi = new WASI({ version: 'preview1', args: [], env });
 
     const wasmModule = await WebAssembly.compile(wasmBuffer);

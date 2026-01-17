@@ -47,6 +47,15 @@ router.post('/', async (req: any, res: any) => {
     });
   } catch (error: any) {
     console.error('DeepSeek Chat Error:', error);
+    if (error.response) {
+      console.error('Data:', error.response.data);
+      console.error('Status:', error.response.status);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error config:', error.message);
+    }
+    
     res.status(500).json({ 
       role: 'assistant',
       content: `Error: ${error.response?.data?.message || error.message || 'Failed to connect to DeepSeek'}` 
