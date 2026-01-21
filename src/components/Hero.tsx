@@ -46,7 +46,10 @@ export const Hero: React.FC = React.memo(() => {
               <LazyImage 
                 src={profileImg} 
                 alt={`${data.hero.name} - ${data.hero.title}`} 
+                width={325}
+                height={325}
                 loading="eager"
+                fetchPriority="high"
                 className="w-full h-full rounded-full border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 
               />
               <div className="absolute -inset-5 bg-gradient-to-br from-primary-500 to-primary-400 rounded-full opacity-20 -z-0 animate-[glowPulse_4s_ease-in-out_infinite_alternate]"></div>
