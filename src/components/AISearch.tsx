@@ -68,7 +68,11 @@ export const AISearch: React.FC = () => {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: textToSend, context }),
+        body: JSON.stringify({ 
+            message: textToSend, 
+            context: { page: location.pathname, data: context }, // Send explicit page context
+            history: messages // Send chat history for continuity
+        }),
       });
 
       if (!response.ok) throw new Error('Failed to fetch');
