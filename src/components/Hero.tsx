@@ -1,8 +1,9 @@
-import React from 'react';
-import { Particles } from './Particles';
+import React, { Suspense } from 'react';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
 import { LazyImage } from './LazyImage';
+
+const Particles = React.lazy(() => import('./Particles').then(module => ({ default: module.Particles })));
 
 export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
@@ -11,7 +12,9 @@ export const Hero: React.FC = React.memo(() => {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-24 md:pt-[72px] z-0">
       <div className="absolute inset-0 z-0">
-        <Particles />
+        <Suspense fallback={null}>
+          <Particles />
+        </Suspense>
         <div className="hero-gradient"></div>
       </div>
       
@@ -42,6 +45,7 @@ export const Hero: React.FC = React.memo(() => {
               <LazyImage 
                 src={data.hero.image} 
                 alt={`${data.hero.name} - ${data.hero.title}`} 
+                loading="eager"
                 className="w-full h-full rounded-full border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 
               />
               <div className="absolute -inset-5 bg-gradient-to-br from-primary-500 to-primary-400 rounded-full opacity-20 -z-0 animate-[glowPulse_4s_ease-in-out_infinite_alternate]"></div>

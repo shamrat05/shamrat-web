@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import * as PIXI from 'pixi.js';
+import { Application, Graphics } from 'pixi.js';
 
 export const Particles: React.FC = React.memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,7 +8,7 @@ export const Particles: React.FC = React.memo(() => {
     if (!containerRef.current) return;
 
     // Create PIXI Application with performance optimizations
-    const app = new PIXI.Application({
+    const app = new Application({
       backgroundAlpha: 0,
       resizeTo: window,
       antialias: false, // Disable antialias for mobile performance (negligible difference for moving particles)
@@ -22,14 +22,14 @@ export const Particles: React.FC = React.memo(() => {
     containerRef.current.appendChild(app.view as unknown as Node);
 
     // Particle logic
-    const particles: PIXI.Graphics[] = [];
+    const particles: Graphics[] = [];
     // Adjust particle count based on screen size for performance
     const isMobile = window.innerWidth < 768;
     const particleCount = isMobile ? 15 : 40;
     
     // Create particles
     for (let i = 0; i < particleCount; i++) {
-      const graphics = new PIXI.Graphics();
+      const graphics = new Graphics();
       graphics.beginFill(0x0A84FF); // Primary blue color
       // Random size between 1 and 3 (slightly smaller for sharpness without AA)
       const size = Math.random() * 2 + 1;

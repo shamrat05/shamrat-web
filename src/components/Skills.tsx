@@ -1,5 +1,21 @@
 import React from 'react';
-import * as LucideIcons from 'lucide-react';
+import {
+  Code,
+  FileSpreadsheet,
+  BarChart,
+  Database,
+  Users,
+  Settings,
+  Target,
+  Handshake,
+  ClipboardList,
+  MessageSquare,
+  Crosshair,
+  Award,
+  Laptop,
+  MessageCircle,
+  Trophy
+} from 'lucide-react';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -23,14 +39,32 @@ ChartJS.register(
   Legend
 );
 
+// Map of icon names used in localData to components
+const iconMap: Record<string, React.FC<{ size?: number | string }>> = {
+  Code,
+  FileSpreadsheet,
+  BarChart,
+  Database,
+  Users,
+  Settings,
+  Target,
+  Handshake,
+  ClipboardList,
+  MessageSquare,
+  Crosshair,
+  Award,
+  Laptop,
+  MessageCircle,
+  Trophy
+};
+
 export const Skills: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
 
   const getIcon = (iconName?: string) => {
-    if (!iconName) return LucideIcons.Code;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Icon = (LucideIcons as any)[iconName] || LucideIcons.Code;
+    if (!iconName) return Code;
+    const Icon = iconMap[iconName] || Code;
     return Icon;
   };
 

@@ -23,6 +23,7 @@ export default defineConfig({
           'pixi': ['pixi.js'],
           'zustand': ['zustand'],
           'lucide': ['lucide-react'],
+          '3d': ['three', '@react-three/fiber', '@react-three/drei'],
         }
       }
     },
