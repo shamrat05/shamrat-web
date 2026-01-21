@@ -57,6 +57,45 @@ export const SEO: React.FC<SEOProps> = ({
       {tags && tags.map(tag => (
         <meta property="article:tag" content={tag} key={tag} />
       ))}
+      
+      {/* Structured Data (JSON-LD) */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          ...(type === 'article' ? {
+            "@type": "Article",
+            "headline": title,
+            "image": ogImage,
+            "datePublished": publishedTime,
+            "author": {
+              "@type": "Person",
+              "name": "Md. Shamrat Hossain"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Md. Shamrat Hossain",
+              "logo": {
+                "@type": "ImageObject",
+                "url": `${siteUrl}/images/shamrat-profile.jpg`
+              }
+            },
+            "description": description,
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": fullUrl
+            }
+          } : {
+            "@type": "WebSite",
+            "name": "Md. Shamrat Hossain",
+            "url": siteUrl,
+            "description": description,
+            "author": {
+              "@type": "Person",
+              "name": "Md. Shamrat Hossain"
+            }
+          })
+        })}
+      </script>
     </Helmet>
   );
 };
