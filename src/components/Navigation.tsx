@@ -162,7 +162,7 @@ export const Navigation: React.FC = () => {
              <button 
                 onClick={toggleTheme}
                 className="p-2 rounded-lg text-text-primary hover:bg-bg-page hover:text-primary-500 transition-colors"
-                aria-label="Toggle theme"
+                aria-label={theme === 'dark' ? "Switch to light mode" : "Switch to dark mode"}
              >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
              </button>

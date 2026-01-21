@@ -36,7 +36,7 @@ export const About: React.FC = React.memo(() => {
                 <GraduationCap size={28} />
               </div>
               <div>
-                <h4 className="text-text-primary font-bold text-lg mb-1">Education</h4>
+                <h3 className="text-text-primary font-bold text-lg mb-1">Education</h3>
                 <p className="text-text-secondary">MBA & BBA in Marketing from Islamic University</p>
               </div>
             </div>
@@ -47,7 +47,7 @@ export const About: React.FC = React.memo(() => {
                 <Briefcase size={28} />
               </div>
               <div>
-                <h4 className="text-text-primary font-bold text-lg mb-1">Experience</h4>
+                <h3 className="text-text-primary font-bold text-lg mb-1">Experience</h3>
                 <p className="text-text-secondary">2+ years in operations and marketing roles</p>
               </div>
             </div>
@@ -58,7 +58,7 @@ export const About: React.FC = React.memo(() => {
                 <Heart size={28} />
               </div>
               <div>
-                <h4 className="text-text-primary font-bold text-lg mb-1">Passion</h4>
+                <h3 className="text-text-primary font-bold text-lg mb-1">Passion</h3>
                 <p className="text-text-secondary">Bridging the gap between strategy and execution</p>
               </div>
             </div>
