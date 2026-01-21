@@ -23,7 +23,7 @@ export const SEO: React.FC<SEOProps> = ({
 }) => {
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://shamrat.vercel.app';
   const siteTitle = `${title} | Md. Shamrat Hossain`;
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://shamrat.vercel.app';
   
   // Use provided image or generate a dynamic one
   let ogImage = image || `${API_URL}/api/og?title=${encodeURIComponent(title)}`;
