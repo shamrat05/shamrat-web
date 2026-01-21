@@ -144,7 +144,7 @@ export const Navigation: React.FC = () => {
              <button
                 onClick={() => setAiChatOpen(!isAiChatOpen)}
                 className={`p-2 rounded-lg transition-colors flex items-center gap-1 font-mono text-xs uppercase ${isAiChatOpen ? 'text-primary-500 bg-primary-500/10' : 'text-text-primary hover:bg-bg-page hover:text-primary-500'}`}
-                aria-label="Ask AI"
+                aria-label="Toggle AI Chat Assistant"
              >
                 <Sparkles size={16} />
                 AI
@@ -153,7 +153,7 @@ export const Navigation: React.FC = () => {
              <button
                 onClick={toggleLanguage}
                 className="p-2 rounded-lg text-text-primary hover:bg-bg-page hover:text-primary-500 transition-colors flex items-center gap-1 font-mono text-xs uppercase"
-                aria-label="Toggle language"
+                aria-label="Switch Language"
              >
                 <Languages size={16} />
                 {i18n.language === 'en' ? 'BN' : 'EN'}
