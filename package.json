@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"vite\" \"cd server && npm run dev\"",
     "dev:client": "vite",
-    "build": "tsc -b && vite build && npm run generate:sitemap",
+    "build": "npm run generate:sitemap && tsc -b && vite build",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",
     "lint": "eslint .",
     "preview": "vite preview"

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { localData } from '../data/localData';
 
 interface SEOProps {
   title: string;
@@ -20,7 +21,7 @@ export const SEO: React.FC<SEOProps> = ({
   publishedTime,
   tags
 }) => {
-  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://shamrat.me';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://shamrat.vercel.app';
   const siteTitle = `${title} | Md. Shamrat Hossain`;
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   
@@ -31,6 +32,12 @@ export const SEO: React.FC<SEOProps> = ({
   }
 
   const fullUrl = url ? (url.startsWith('http') ? url : `${siteUrl}${url}`) : siteUrl;
+
+  // Social profiles for Structured Data
+  const sameAs = [
+    localData.contact.linkedin,
+    // Add other social links here if available in localData or hardcoded
+  ].filter(Boolean);
 
   return (
     <Helmet>
@@ -69,7 +76,10 @@ export const SEO: React.FC<SEOProps> = ({
             "datePublished": publishedTime,
             "author": {
               "@type": "Person",
-              "name": "Md. Shamrat Hossain"
+              "name": "Md. Shamrat Hossain",
+              "url": siteUrl,
+              "sameAs": sameAs,
+              "jobTitle": localData.hero.title
             },
             "publisher": {
               "@type": "Organization",
@@ -91,7 +101,10 @@ export const SEO: React.FC<SEOProps> = ({
             "description": description,
             "author": {
               "@type": "Person",
-              "name": "Md. Shamrat Hossain"
+              "name": "Md. Shamrat Hossain",
+              "url": siteUrl,
+              "sameAs": sameAs,
+              "jobTitle": localData.hero.title
             }
           })
         })}

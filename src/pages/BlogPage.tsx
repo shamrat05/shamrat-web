@@ -4,12 +4,18 @@ import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
+import { SEO } from '../components/SEO';
 
 const BlogPage: React.FC = () => {
   const { data } = useCMS();
 
   return (
     <div className="pt-28 min-h-screen bg-bg-page relative">
+       <SEO 
+        title="Blog & Insights" 
+        description="Thoughts, tutorials, and case studies on marketing, operations, and technology by Md. Shamrat Hossain."
+        url="/blog"
+      />
        <Particles />
       <div className="container relative z-10 py-16">
         <div className="mb-12">

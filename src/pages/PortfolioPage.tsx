@@ -4,6 +4,7 @@ import { ArrowLeft, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Particles } from '../components/Particles';
 import { useCMS } from '../hooks/useCMS';
+import { SEO } from '../components/SEO';
 
 const PortfolioPage: React.FC = () => {
   const [filter, setFilter] = useState('all');
@@ -15,6 +16,11 @@ const PortfolioPage: React.FC = () => {
 
   return (
     <div className="pt-28 min-h-screen bg-bg-page relative">
+       <SEO 
+        title="Portfolio" 
+        description="A showcase of my projects across marketing, operations, and analytics."
+        url="/portfolio"
+      />
        <Particles />
       <div className="container relative z-10 py-16">
         <div className="mb-12">
