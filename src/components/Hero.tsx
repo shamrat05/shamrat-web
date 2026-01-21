@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
 import { LazyImage } from './LazyImage';
+import profileImg from '../assets/images/shamrat-profile.jpg?format=webp';
 
 const Particles = React.lazy(() => import('./Particles').then(module => ({ default: module.Particles })));
 
@@ -43,7 +44,7 @@ export const Hero: React.FC = React.memo(() => {
           <div className="hero-image flex justify-center items-center">
             <div className="relative w-[280px] h-[280px] md:w-[325px] md:h-[325px]">
               <LazyImage 
-                src={data.hero.image} 
+                src={profileImg} 
                 alt={`${data.hero.name} - ${data.hero.title}`} 
                 loading="eager"
                 className="w-full h-full rounded-full border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 

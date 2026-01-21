@@ -1,93 +1,103 @@
 import React, { useEffect, useRef } from 'react';
-import { Application, Graphics } from 'pixi.js';
+
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  alpha: number;
+}
 
 export const Particles: React.FC = React.memo(() => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    // Create PIXI Application with performance optimizations
-    const app = new Application({
-      backgroundAlpha: 0,
-      resizeTo: window,
-      antialias: false, // Disable antialias for mobile performance (negligible difference for moving particles)
-      autoDensity: true,
-      // Cap resolution to 2 to avoid excessive processing on high-DPI (3x/4x) mobile screens
-      resolution: Math.min(window.devicePixelRatio || 1, 2),
-      powerPreference: 'high-performance', // Request discrete GPU
-    });
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
 
-    // Append canvas to container
-    containerRef.current.appendChild(app.view as unknown as Node);
-
-    // Particle logic
-    const particles: Graphics[] = [];
-    // Adjust particle count based on screen size for performance
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 15 : 40;
+    let animationFrameId: number;
+    let particles: Particle[] = [];
     
-    // Create particles
-    for (let i = 0; i < particleCount; i++) {
-      const graphics = new Graphics();
-      graphics.beginFill(0x0A84FF); // Primary blue color
-      // Random size between 1 and 3 (slightly smaller for sharpness without AA)
-      const size = Math.random() * 2 + 1;
-      graphics.drawCircle(0, 0, size);
-      graphics.endFill();
-      
-      // Custom properties for animation
-      (graphics as any).vx = Math.random() * 0.5 - 0.25;
-      (graphics as any).vy = Math.random() * 0.5 - 0.25;
-      graphics.x = Math.random() * app.screen.width;
-      graphics.y = Math.random() * app.screen.height;
-      // Lower alpha slightly for better blending
-      graphics.alpha = Math.random() * 0.4 + 0.1;
+    const initParticles = () => {
+      const isMobile = window.innerWidth < 768;
+      const particleCount = isMobile ? 20 : 50;
+      particles = [];
 
-      // Cache as bitmap to avoid re-rasterizing geometry every frame (Huge performance boost)
-      graphics.cacheAsBitmap = true;
-
-      app.stage.addChild(graphics);
-      particles.push(graphics);
-    }
-
-    // Animation Loop
-    app.ticker.add(() => {
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += (p as any).vx;
-        p.y += (p as any).vy;
-
-        // Wrap around screen
-        if (p.x < -10) p.x = app.screen.width + 10;
-        if (p.x > app.screen.width + 10) p.x = -10;
-        if (p.y < -10) p.y = app.screen.height + 10;
-        if (p.y > app.screen.height + 10) p.y = -10;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 2 + 1,
+          alpha: Math.random() * 0.4 + 0.1,
+        });
       }
-    });
-
-    // Handle resize
-    const handleResize = () => {
-       // PIXI resizeTo handles canvas sizing, we just let particles wrap naturally
     };
+
+    const handleResize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      // Set actual size in memory (scaled to account for extra pixel density)
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      
+      // Normalize coordinate system to use css pixels.
+      ctx.scale(dpr, dpr);
+      
+      // Set visible size
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      initParticles();
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear utilizing the scaled width/height implicitly? No, clearRect uses transformed coords if scaled.
+      // Actually, clearRect needs to cover the whole canvas. 
+      // Since we scaled the context, canvas.width/dpr is the logical width.
+      const dpr = window.devicePixelRatio || 1;
+      ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Wrap around
+        if (p.x < -10) p.x = (canvas.width / dpr) + 10;
+        if (p.x > (canvas.width / dpr) + 10) p.x = -10;
+        if (p.y < -10) p.y = (canvas.height / dpr) + 10;
+        if (p.y > (canvas.height / dpr) + 10) p.y = -10;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(10, 132, 255, ${p.alpha})`; // Primary Blue
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    handleResize();
     window.addEventListener('resize', handleResize);
+    animate();
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      // Clean up PIXI application
-      app.destroy(true, { children: true, texture: true, baseTexture: true });
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <div 
-      ref={containerRef} 
-      className="absolute inset-0 z-0 pointer-events-none" 
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 z-0 pointer-events-none"
       aria-hidden="true"
       style={{
-        // Hardware acceleration hint for the container
-        transform: 'translateZ(0)',
-        contain: 'paint layout'
+        transform: 'translateZ(0)', // Force hardware acceleration
       }}
     />
   );

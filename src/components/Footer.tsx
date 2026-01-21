@@ -58,14 +58,15 @@ export const Footer: React.FC = () => {
           
           <div className="flex gap-4">
             {[
-              { icon: Mail, href: 'mailto:shamrat.r.h@gmail.com' },
-              { icon: Phone, href: 'tel:+8801727805705' },
-              { icon: Linkedin, href: 'https://linkedin.com/in/shamrat5' },
+              { icon: Mail, href: 'mailto:shamrat.r.h@gmail.com', label: 'Email' },
+              { icon: Phone, href: 'tel:+8801727805705', label: 'Phone' },
+              { icon: Linkedin, href: 'https://linkedin.com/in/shamrat5', label: 'LinkedIn' },
             ].map((social, index) => (
               <a 
                 key={index}
                 href={social.href}
                 className="flex items-center justify-center w-10 h-10 bg-bg-page text-text-secondary rounded-lg hover:bg-primary-500 hover:text-white hover:-translate-y-1 transition-all duration-300"
+                aria-label={social.label}
               >
                 <social.icon size={20} />
               </a>

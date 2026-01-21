@@ -108,10 +108,14 @@ export const Navigation: React.FC = () => {
     ">
       <div className="max-w-[1280px] mx-auto px-4 h-[72px] flex items-center justify-between">
         {/* Logo */}
-        <div className="relative flex items-center justify-center gap-2 cursor-pointer" onClick={() => handleNavClick('home', '/')}>
+        <button 
+          className="relative flex items-center justify-center gap-2 cursor-pointer bg-transparent border-none p-0" 
+          onClick={() => handleNavClick('home', '/')}
+          aria-label="Go to homepage"
+        >
              <span className="font-heading font-bold text-2xl bg-gradient-to-br from-primary-500 to-primary-400 bg-clip-text text-transparent">SH</span>
              <span className={`w-2 h-2 rounded-full ${getStatusColor()} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
-        </div>
+        </button>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
@@ -197,6 +201,7 @@ export const Navigation: React.FC = () => {
           <button
             className="p-2 text-text-primary"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

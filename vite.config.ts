@@ -20,7 +20,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           'vendor': ['react', 'react-dom', 'framer-motion'],
-          'pixi': ['pixi.js'],
           'zustand': ['zustand'],
           'lucide': ['lucide-react'],
           '3d': ['three', '@react-three/fiber', '@react-three/drei'],
