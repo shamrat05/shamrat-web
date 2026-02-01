@@ -111,8 +111,9 @@ export const Navigation: React.FC = () => {
         <button 
           className="relative flex items-center justify-center gap-2 cursor-pointer bg-transparent border-none p-0" 
           onClick={() => handleNavClick('home', '/')}
-          aria-label="Go to homepage"
+          aria-label="Md. Shamrat Hossain (Samrat) - Homepage"
         >
+             <span className="sr-only">Md. Shamrat Hossain (Samrat)</span>
              <span className="font-heading font-bold text-2xl bg-gradient-to-br from-primary-500 to-primary-400 bg-clip-text text-transparent">SH</span>
              <span className={`w-2 h-2 rounded-full ${getStatusColor()} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
         </button>

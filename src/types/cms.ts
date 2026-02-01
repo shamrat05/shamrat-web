@@ -17,6 +17,9 @@ export interface ContactInfo {
   email: string;
   phone: string;
   linkedin: string;
+  github?: string;
+  facebook?: string;
+  twitter?: string;
   location: string;
 }
 

@@ -27,11 +27,11 @@ export const AISearch: React.FC = () => {
 
   const getSuggestions = () => {
     const path = location.pathname;
-    if (path === '/') return ['Who is Shamrat?', 'What are his top skills?', 'Contact info'];
+    if (path === '/') return ['Who is Md. Shamrat Hossain?', 'What are Samrat\'s top skills?', 'Contact info'];
     if (path.startsWith('/blog/')) return ['Summarize this post', 'Key takeaways', 'Who is the author?'];
     if (path.startsWith('/portfolio/')) return ['What technologies were used?', 'What was the main challenge?', 'Key results?'];
     if (path === '/resume') return ['Summarize experience', 'Education details', 'Download PDF'];
-    return ['Tell me about Shamrat', 'Show me his portfolio', 'Contact details'];
+    return ['Tell me about Shamrat (Samrat)', 'Show me his portfolio', 'Contact details'];
   };
 
   const scrollToBottom = () => {

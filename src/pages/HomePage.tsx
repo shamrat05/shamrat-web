@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react';
 import { Hero } from '../components/Hero';
 import { SectionLoader } from '../components/SectionLoader';
 import { SEO } from '../components/SEO';
-import { localData } from '../data/localData';
 
 const About = lazy(() => import('../components/About').then(module => ({ default: module.About })));
 const Skills = lazy(() => import('../components/Skills').then(module => ({ default: module.Skills })));
@@ -15,9 +14,10 @@ const HomePage: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Home" 
-        description={localData.hero.description}
+        title="Md. Shamrat Hossain | Marketing & Operations Expert" 
+        description="Official portfolio of Md. Shamrat Hossain. A results-driven Marketing & Operations Professional in Bangladesh with expertise in Data Analytics and Strategic Business Execution."
         url="/"
+        keywords={["Shamrat", "Samrat", "Md. Shamrat Hossain", "Marketing Expert Bangladesh", "Operations Professional"]}
       />
       <Hero />
       <Suspense fallback={<SectionLoader />}>

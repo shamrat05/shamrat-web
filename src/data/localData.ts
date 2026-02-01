@@ -4,13 +4,13 @@ export const localData: CMSData = {
   hero: {
     name: "Md. Shamrat Hossain",
     title: "Marketing & Operations Professional",
-    description: "Results-driven marketing and operations professional with proven expertise in data analytics, stakeholder coordination, and strategic business execution.",
+    description: "Results-driven marketing and operations professional with proven expertise in data analytics, stakeholder coordination, and strategic business execution in Bangladesh.",
     image: "/images/shamrat-profile.jpg"
   },
   about: {
     description: [
-      "I'm a dedicated marketing and operations professional with a strong foundation in business analytics and strategic planning. I have successfully completed my MBA in Marketing and bring hands-on experience in digital operations and stakeholder management.",
-      "My professional journey spans managing complex banking operations across 551+ outlets to developing marketing strategies for industrial companies. I excel at turning data into actionable insights and building meaningful relationships that drive business growth."
+      "I'm Md. Shamrat Hossain, a dedicated marketing and operations professional with a strong foundation in business analytics and strategic planning. I have successfully completed my MBA in Marketing and bring hands-on experience in digital operations and stakeholder management.",
+      "My professional journey spans managing complex banking operations across 551+ outlets in 62 districts of Bangladesh to developing marketing strategies for industrial companies. I excel at turning data into actionable insights and building meaningful relationships that drive business growth."
     ],
     stats: [
       { value: "551+", label: "Outlets Managed" },
@@ -23,6 +23,9 @@ export const localData: CMSData = {
     email: "shamrat.r.h@gmail.com",
     phone: "+88 01727-805705",
     linkedin: "https://linkedin.com/in/shamrat5",
+    github: "https://github.com/shamrat5",
+    facebook: "https://facebook.com/shamrat5",
+    twitter: "https://twitter.com/shamrat5",
     location: "Azimpur, Dhaka, Bangladesh"
   },
   projects: [

@@ -9,7 +9,7 @@ interface TypewriterProps {
 }
 
 export const Typewriter: React.FC<TypewriterProps> = ({
-  words = ['Excellence', 'Innovation', 'Leadership', 'Growth', 'Success'],
+  words = ['Shamrat', 'Excellence', 'Innovation', 'Leadership', 'Growth'],
   typeSpeed = 100,
   deleteSpeed = 50,
   pauseDuration = 2000,
