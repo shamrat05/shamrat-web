@@ -15,11 +15,12 @@ export const usePageTitle = () => {
 
     const resetTitle = () => {
       const path = location.pathname;
-      let title = 'Md. Shamrat Hossain - Portfolio';
+      let title = 'Md. Shamrat Hossain | Marketing & Operations Professional';
 
-      if (path === '/') title = 'Home | Md. Shamrat Hossain';
-      else if (path.startsWith('/portfolio')) title = 'Portfolio | Md. Shamrat Hossain';
-      else if (path.startsWith('/blog')) title = 'Blog | Md. Shamrat Hossain';
+      if (path === '/') title = 'Md. Shamrat Hossain | Portfolio & Analytics Expert';
+      else if (path.startsWith('/portfolio')) title = 'Portfolio | Shamrat Hossain';
+      else if (path.startsWith('/blog')) title = 'Blog & Insights | Shamrat Hossain';
+      else if (path.startsWith('/resume')) title = 'Resume | Md. Shamrat Hossain';
       
       document.title = title;
     };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const technologies = [
-  'React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'GraphQL',
+  'Shamrat', 'React', 'TypeScript', 'Samrat', 'Node.js', 'Next.js', 'Tailwind CSS', 'GraphQL',
   'PostgreSQL', 'MongoDB', 'Docker', 'AWS', 'Figma', 'Framer Motion',
   'Three.js', 'Python', 'Go', 'Rust', 'Kubernetes'
 ];

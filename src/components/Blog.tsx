@@ -20,7 +20,7 @@ export const Blog: React.FC = React.memo(() => {
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-16">
           <h2 className="section-title">Latest Insights</h2>
-          <p className="section-subtitle">Thoughts on marketing, operations, and professional growth</p>
+          <p className="section-subtitle">Thoughts on marketing, operations, and growth by Shamrat Hossain</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">

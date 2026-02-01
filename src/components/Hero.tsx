@@ -45,7 +45,7 @@ export const Hero: React.FC = React.memo(() => {
             <div className="relative w-[280px] h-[280px] md:w-[325px] md:h-[325px]">
               <LazyImage 
                 src={profileImg} 
-                alt={`${data.hero.name} (Samrat) - ${data.hero.title}`} 
+                alt="Md. Shamrat Hossain (Samrat) - Marketing & Operations Professional in Dhaka, Bangladesh" 
                 width={325}
                 height={325}
                 loading="eager"

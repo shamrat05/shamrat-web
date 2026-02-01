@@ -28,7 +28,7 @@ export const Projects: React.FC = React.memo(() => {
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-16">
           <h2 className="section-title">Portfolio</h2>
-          <p className="section-subtitle">Projects that showcase my expertise and impact</p>
+          <p className="section-subtitle">Marketing & Operations portfolio of Shamrat Hossain showcasing expertise and impact</p>
         </div>
 
         {/* Filters */}

@@ -62,13 +62,16 @@ export const SEO: React.FC<SEOProps> = ({
     "@id": `${siteUrl}/#person`,
     "name": "Md. Shamrat Hossain",
     "alternateName": [
-      "Samrat", 
       "Shamrat", 
+      "Samrat", 
       "Shamrat Hossain", 
       "Samrat Hossain", 
       "Md. Samrat Hossain",
       "Md Samrat Hossain",
-      "Md Shamrat Hossain"
+      "Md Shamrat Hossain",
+      "Shomrat",
+      "Shomrat Hossain",
+      "Sumrat"
     ],
     "url": siteUrl,
     "image": {
