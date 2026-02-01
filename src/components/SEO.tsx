@@ -35,8 +35,8 @@ export const SEO: React.FC<SEOProps> = ({
     ogImage = `${siteUrl}${ogImage}`;
   }
 
-  const fullUrl = url ? (url.startsWith('http') ? url : `${siteUrl}${url}`) : siteUrl;
-  const canonicalUrl = canonical || fullUrl;
+  const canonicalUrl = canonical || (url ? (url.startsWith('http') ? url : `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`) : siteUrl);
+  const finalFullUrl = url ? (url.startsWith('http') ? url : `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`) : siteUrl;
 
   // Social profiles for Structured Data
   const sameAs = [
@@ -126,7 +126,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={fullUrl} />
+      <meta property="og:url" content={finalFullUrl} />
       <meta property="og:type" content={type} />
       
       {/* Twitter */}
@@ -173,7 +173,7 @@ export const SEO: React.FC<SEOProps> = ({
               "description": description,
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": fullUrl
+                "@id": finalFullUrl
               }
             }] : [])
           ]

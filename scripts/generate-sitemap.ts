@@ -25,11 +25,12 @@ const generateSitemap = () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allRoutes
   .map((route) => {
+    const isMain = route === '' || route === '/blog' || route === '/portfolio' || route === '/resume';
     return `  <url>
-    <loc>${BASE_URL}${route}</loc>
+    <loc>${BASE_URL}${route || '/'}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>${route === '' ? '1.0' : '0.8'}</priority>
+    <changefreq>${isMain ? 'daily' : 'monthly'}</changefreq>
+    <priority>${route === '' ? '1.0' : isMain ? '0.8' : '0.6'}</priority>
   </url>`;
   })
   .join('\n')}

@@ -33,7 +33,7 @@ const ProjectPage: React.FC = () => {
         title={project.title}
         description={project.description}
         image={project.image}
-        url={project.link}
+        url={`/portfolio/${project.slug}`}
         type="article"
         tags={project.tags}
       />

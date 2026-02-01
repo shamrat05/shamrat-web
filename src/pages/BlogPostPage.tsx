@@ -59,7 +59,7 @@ const BlogPostPage: React.FC = () => {
         title={post.title}
         description={post.description}
         image={post.image}
-        url={post.link}
+        url={`/blog/${post.slug}`}
         type="article"
         publishedTime={post.date}
         tags={post.tags}
