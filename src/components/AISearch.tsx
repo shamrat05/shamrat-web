@@ -79,7 +79,7 @@ export const AISearch: React.FC = () => {
 
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: 'Sorry, I encountered an error connecting to the AI service. Please try again later.' 
