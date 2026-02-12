@@ -1,72 +1,80 @@
 import React, { Suspense } from 'react';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
-import { LazyImage } from './LazyImage';
-import profileImg from '../assets/images/shamrat-profile.jpg?format=webp';
-
-const Particles = React.lazy(() => import('./Particles').then(module => ({ default: module.Particles })));
+import { Wand2, ArrowRight, Play } from 'lucide-react';
 
 export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
   const { t } = useTranslation();
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-24 md:pt-[72px] z-0">
-      <div className="absolute inset-0 z-0">
-        <Suspense fallback={null}>
-          <Particles />
-        </Suspense>
-        <div className="hero-gradient"></div>
-      </div>
-      
-      <div className="container relative z-10">
-        <div className="glass-panel grid md:grid-cols-[1.2fr_0.8fr] gap-8 md:gap-12 items-center p-6 md:p-12 rounded-[40px] w-full max-w-[1000px] mx-auto transition-colors duration-500 relative z-10">
-          <div className="hero-text text-center md:text-left">
-            <h1 className="mb-8">
-              <span className="block text-4xl md:text-6xl font-bold font-heading mb-2 bg-gradient-to-br from-text-primary to-primary-500 bg-clip-text text-transparent drop-shadow-sm">
-                {data.hero.name}
-              </span>
-              <span className="block text-xl md:text-3xl text-primary-500 font-medium">
-                {t('hero.role')}
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-text-secondary/95 mb-8 leading-relaxed font-medium">
-              {data.hero.description}
-            </p>
-            
-            <div className="flex gap-4 justify-center md:justify-start flex-wrap">
-              <a 
-                href="#featured-projects" 
-                className="px-6 py-3 bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full text-white font-medium hover:bg-white/10 transition-all shadow-xl shadow-black/20"
-              >
-                {t('hero.btn_work')}
-              </a>
-              <a 
-                href="#contact" 
-                className="px-6 py-3 bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full text-white font-medium hover:bg-white/10 transition-all shadow-xl shadow-black/20"
-              >
-                {t('hero.btn_contact')}
-              </a>
-            </div>
-          </div>
-          
-          <div className="hero-image flex justify-center items-center">
-            <div className="relative w-[280px] h-[280px] md:w-[325px] md:h-[325px]">
-              <LazyImage 
-                src={profileImg} 
-                alt="Md. Shamrat Hossain (Samrat) - Marketing & Operations Professional in Dhaka, Bangladesh" 
-                width={325}
-                height={325}
-                loading="eager"
-                fetchPriority="high"
-                className="w-full h-full rounded-full border-4 border-bg-surface shadow-[0_0_40px_rgba(10,132,255,0.3)] animate-[profileGlow_3s_ease-in-out_infinite_alternate] relative z-10" 
-              />
-              <div className="absolute -inset-5 bg-gradient-to-br from-primary-500 to-primary-400 rounded-full opacity-20 -z-0 animate-[glowPulse_4s_ease-in-out_infinite_alternate]"></div>
-            </div>
-          </div>
+    <section id="home" className="relative w-full min-h-screen overflow-hidden flex flex-col justify-center bg-[#0A0A0A]">
+      {/* Aura Background Component */}
+      <div className="absolute top-0 w-full h-full -z-10" style={{ maskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)' }}>
+        <div className="absolute top-0 left-0 w-full h-full z-0">
+          <iframe 
+            src="https://my.spline.design/glowingplanetparticles-HmCVKutonlFn3Oqqe6DI9nWi/" 
+            frameBorder="0" 
+            width="100%" 
+            height="100%" 
+            id="aura-spline" 
+            title="Spline Background"
+            className="opacity-60"
+          />
         </div>
       </div>
+
+      {/* Glow Effects */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary-500/10 rounded-full blur-[120px] opacity-40"></div>
+        <div className="absolute inset-0 bg-matrix z-0 opacity-5"></div>
+      </div>
+
+      {/* Main Content */}
+      <main className="z-10 flex flex-col w-full max-w-7xl mx-auto px-4 items-center justify-center pt-20 pb-16 md:pt-24 md:pb-20">
+        {/* Status Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 md:mb-8 animate-fade-in-up">
+          <Wand2 className="w-3 h-3 text-primary-400" />
+          <span className="text-xs text-neutral-300 tracking-wide uppercase">
+            {t('hero.role')}
+          </span>
+        </div>
+
+        {/* Hero Text */}
+        <h1 className="text-4xl md:text-7xl lg:text-8xl text-center tracking-tight leading-[1.1] mb-6 md:mb-8 max-w-5xl">
+          <span className="text-white drop-shadow-2xl">{data.hero.name}</span>
+          <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/80 to-white/40">
+            {t('hero.role')}
+          </span>
+        </h1>
+
+        <p className="text-lg md:text-xl text-center text-neutral-400 max-w-2xl font-light leading-relaxed mb-12">
+          {data.hero.description}
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="relative group cursor-pointer">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-400/30 rounded-full blur opacity-50 group-hover:opacity-75 transition duration-500"></div>
+            <a 
+              href="#featured-projects" 
+              className="relative flex items-center gap-3 bg-white text-black hover:bg-neutral-200 px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg shadow-white/10"
+            >
+              {t('hero.btn_work')}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
+            </a>
+          </div>
+          
+          <a 
+            href="#contact"
+            className="flex items-center gap-3 px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-300 backdrop-blur-sm"
+          >
+            <Play className="w-5 h-5 fill-current" />
+            {t('hero.btn_contact')}
+          </a>
+        </div>
+      </main>
     </section>
   );
 });
