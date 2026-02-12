@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
 import { Wand2, ArrowRight, Play } from 'lucide-react';
