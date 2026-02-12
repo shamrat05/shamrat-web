@@ -1,80 +1,110 @@
 import React from 'react';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
-import { Wand2, ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Sparkles } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
 
 export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
   const { t } = useTranslation();
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+
   return (
-    <section id="home" className="relative w-full min-h-screen overflow-hidden flex flex-col justify-center bg-[#0A0A0A]">
-      {/* Aura Background Component */}
-      <div className="absolute top-0 w-full h-full -z-10" style={{ maskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)' }}>
-        <div className="absolute top-0 left-0 w-full h-full z-0">
-          <iframe 
-            src="https://my.spline.design/glowingplanetparticles-HmCVKutonlFn3Oqqe6DI9nWi/" 
-            frameBorder="0" 
-            width="100%" 
-            height="100%" 
-            id="aura-spline" 
-            title="Spline Background"
-            className="opacity-60"
-          />
-        </div>
-      </div>
+    <section id="home" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
 
-      {/* Glow Effects */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary-500/10 rounded-full blur-[120px] opacity-40"></div>
-        <div className="absolute inset-0 bg-matrix z-0 opacity-5"></div>
-      </div>
+      {/* Decorative Glows specific to Hero */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-[120px] -z-10" />
 
-      {/* Main Content */}
-      <main className="z-10 flex flex-col w-full max-w-7xl mx-auto px-4 items-center justify-center pt-20 pb-16 md:pt-24 md:pb-20">
-        {/* Status Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 md:mb-8 animate-fade-in-up">
-          <Wand2 className="w-3 h-3 text-primary-400" />
-          <span className="text-xs text-neutral-300 tracking-wide uppercase">
-            {t('hero.role')}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="z-10 flex flex-col w-full max-w-5xl mx-auto px-4 items-center justify-center text-center mt-20 md:mt-32"
+      >
+        {/* Animated Badge */}
+        <motion.div
+          variants={itemVariants}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-default bg-white/5 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default group"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-semantic-success opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-semantic-success"></span>
           </span>
-        </div>
+          <span className="text-sm font-medium text-text-secondary tracking-wide">
+            Available for new projects
+          </span>
+          <ArrowRight className="w-3 h-3 text-text-secondary/60 group-hover:translate-x-0.5 transition-transform" />
+        </motion.div>
 
         {/* Hero Text */}
-        <h1 className="text-4xl md:text-7xl lg:text-8xl text-center tracking-tight leading-[1.1] mb-6 md:mb-8 max-w-5xl">
-          <span className="text-white drop-shadow-2xl">{data.hero.name}</span>
-          <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/80 to-white/40">
+        <motion.h1
+          variants={itemVariants}
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] mb-6"
+        >
+          <span className="bg-clip-text text-transparent bg-gradient-to-b from-text-primary via-text-primary to-text-primary/50 block mb-2">
+            {data.hero.name}
+          </span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-text-primary to-primary-600">
             {t('hero.role')}
           </span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg md:text-xl text-center text-neutral-400 max-w-2xl font-light leading-relaxed mb-12">
+        <motion.p
+          variants={itemVariants}
+          className="text-lg md:text-xl text-text-secondary max-w-2xl font-light leading-relaxed mb-10 mx-auto"
+        >
           {data.hero.description}
-        </p>
+        </motion.p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col md:flex-row gap-6 items-center">
-          <div className="relative group cursor-pointer">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-400/30 rounded-full blur opacity-50 group-hover:opacity-75 transition duration-500"></div>
-            <a 
-              href="#featured-projects" 
-              className="relative flex items-center gap-3 bg-white text-black hover:bg-neutral-200 px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg shadow-white/10"
-            >
-              {t('hero.btn_work')}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-all" />
-            </a>
-          </div>
-          
-          <a 
-            href="#contact"
-            className="flex items-center gap-3 px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all duration-300 backdrop-blur-sm"
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4"
+        >
+          <a
+            href="#projects"
+            className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-text-primary px-8 font-medium text-bg-page transition-all duration-300 hover:bg-text-secondary hover:ring-2 hover:ring-text-secondary hover:ring-offset-2 hover:ring-offset-bg-page"
           >
-            <Play className="w-5 h-5 fill-current" />
-            {t('hero.btn_contact')}
+            <span className="mr-2">{t('hero.btn_work')}</span>
+            <Sparkles className="h-4 w-4 transition-transform group-hover:scale-110" />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-600 opacity-0 transition-opacity duration-500 group-hover:opacity-10" />
           </a>
-        </div>
-      </main>
+
+          <a
+            href="#contact"
+            className="group inline-flex h-12 items-center justify-center rounded-full border border-border-default bg-white/5 px-8 font-medium text-text-primary backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:border-primary-500/30"
+          >
+            <span className="mr-2">{t('hero.btn_contact')}</span>
+            <Play className="h-4 w-4 fill-current opacity-60 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        </motion.div>
+
+        {/* Visual Element / "Product Shot" Placeholder */}
+        {/* Product Shot Removed as requested */}
+      </motion.div>
     </section>
   );
 });

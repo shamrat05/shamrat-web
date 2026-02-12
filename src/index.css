@@ -86,7 +86,7 @@
   }
   
   body {
-    @apply bg-bg-page text-text-primary font-sans antialiased;
+    @apply bg-transparent text-text-primary font-sans antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {

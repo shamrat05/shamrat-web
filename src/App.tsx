@@ -13,6 +13,7 @@ import { AISearch } from './components/AISearch';
 import { CommandPalette } from './components/CommandPalette';
 import { usePageTitle } from './hooks/usePageTitle';
 import { useDynamicFavicon } from './hooks/useDynamicFavicon';
+import { BackgroundEffect } from './components/ui/BackgroundEffect';
 import './index.css';
 
 // Lazy loaded components
@@ -28,15 +29,16 @@ const AppContent = () => {
   useAnalytics(); // Initialize smart tracking
   usePageTitle(); // Handle dynamic page titles
   useDynamicFavicon(); // Handle dynamic favicon
-  
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen bg-bg-page text-text-primary overflow-hidden font-sans flex flex-col"
+        className="min-h-screen bg-transparent text-text-primary overflow-hidden font-sans flex flex-col relative"
       >
+        <BackgroundEffect />
         <Navigation />
 
         <main className="flex-grow pt-0">
