@@ -36,8 +36,18 @@ export const Hero: React.FC = React.memo(() => {
             </p>
             
             <div className="flex gap-4 justify-center md:justify-start flex-wrap">
-              <a href="#featured-projects" className="btn btn-secondary">{t('hero.btn_work')}</a>
-              <a href="#contact" className="btn btn-secondary">{t('hero.btn_contact')}</a>
+              <a 
+                href="#featured-projects" 
+                className="px-6 py-3 bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full text-white font-medium hover:bg-white/10 transition-all shadow-xl shadow-black/20"
+              >
+                {t('hero.btn_work')}
+              </a>
+              <a 
+                href="#contact" 
+                className="px-6 py-3 bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full text-white font-medium hover:bg-white/10 transition-all shadow-xl shadow-black/20"
+              >
+                {t('hero.btn_contact')}
+              </a>
             </div>
           </div>
           
