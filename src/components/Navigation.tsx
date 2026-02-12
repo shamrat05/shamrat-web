@@ -120,8 +120,8 @@ export const Navigation: React.FC = () => {
               key={item.id}
               onClick={() => handleNavClick(item.id, item.href)}
               className={`text-sm font-medium transition-colors bg-transparent border-none cursor-pointer ${(activeSection === item.id || location.pathname === item.href)
-                  ? 'text-white'
-                  : 'text-white/60 hover:text-white'
+                ? 'text-white'
+                : 'text-white/60 hover:text-white'
                 }`}
             >
               {item.label}
@@ -178,8 +178,8 @@ export const Navigation: React.FC = () => {
               key={item.id}
               onClick={() => handleNavClick(item.id, item.href)}
               className={`text-left py-3 px-4 rounded-lg transition-colors ${(activeSection === item.id || location.pathname === item.href)
-                  ? 'bg-primary-500/10 text-primary-400'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                ? 'bg-primary-500/10 text-primary-400'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
             >
               {item.label}
@@ -188,4 +188,13 @@ export const Navigation: React.FC = () => {
           <div className="h-px bg-white/10 my-2" />
           <button
             onClick={toggleLanguage}
-            className="text-left py-3 px-4 rounded-lg text-white/60 hover:bg-white/5 hover:text-white transition-colors
+            className="text-left py-3 px-4 rounded-lg text-white/60 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2"
+          >
+            <Languages size={18} />
+            {i18n.language === 'en' ? 'Bengali' : 'English'}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
