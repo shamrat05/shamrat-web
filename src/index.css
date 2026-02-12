@@ -173,12 +173,14 @@
 
   @media (hover: hover) {
     .card-glass:hover {
-      @apply -translate-y-2 shadow-[0_12px_32px_rgba(10, 132, 255, 0.3)] border-primary-500/30;
+      @apply -translate-y-2 border-primary-500/30;
+      box-shadow: 0 12px 32px rgba(10, 132, 255, 0.3);
     }
   }
 
   .card-glass:active {
-    @apply scale-[0.98] bg-white/10 border-primary-500/50 shadow-[0_0_20px_rgba(10, 132, 255, 0.2)];
+    @apply scale-[0.98] bg-white/10 border-primary-500/50;
+    box-shadow: 0 0 20px rgba(10, 132, 255, 0.2);
   }
 
   /* Light mode overrides for card-glass */
@@ -188,7 +190,8 @@
 
   @media (hover: hover) {
     [data-theme="light"] .card-glass:hover {
-      @apply shadow-[0_12px_32px_rgba(10, 132, 255, 0.3)] border-primary-500/30;
+      @apply border-primary-500/30;
+      box-shadow: 0 12px 32px rgba(10, 132, 255, 0.3);
     }
   }
 }
