@@ -21,7 +21,11 @@ const getInitialMode = (): PerformanceMode => {
   const lowEnd = deviceMemory <= 3 || hardwareConcurrency <= 4;
 
   const reduced = prefersReducedMotion || saveData || lowEnd || (isCoarsePointer && isSmallScreen);
-  return reduced ? 'reduced' : 'full';
+  const mode: PerformanceMode = reduced ? 'reduced' : 'full';
+  if (typeof document !== 'undefined') {
+    document.documentElement.dataset.performance = mode;
+  }
+  return mode;
 };
 
 export const usePerformanceMode = () => {
