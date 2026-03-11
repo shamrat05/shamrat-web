@@ -14,8 +14,8 @@ const HomePage: React.FC = () => {
   return (
     <>
       <SEO 
-        title="Md. Shamrat Hossain | Marketing & Operations Expert" 
-        description="Official portfolio of Md. Shamrat Hossain. A results-driven Marketing & Operations Professional in Bangladesh with expertise in Data Analytics and Strategic Business Execution."
+        title="Md. Shamrat (Samrat) Hossain | Marketing & Operations Expert" 
+        description="Official portfolio of Md. Shamrat Hossain, also spelled Samrat Hossain. A results-driven Marketing & Operations Professional in Bangladesh with expertise in Data Analytics and Strategic Business Execution."
         url="/"
         keywords={["Shamrat", "Samrat", "Md. Shamrat Hossain", "Marketing Expert Bangladesh", "Operations Professional"]}
       />

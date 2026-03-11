@@ -107,7 +107,7 @@ export const Navigation: React.FC = React.memo(() => {
   }, [setActiveSection]);
 
   return (
-    <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+    <nav className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <div className="w-full max-w-5xl bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full px-4 py-3 md:px-6 flex items-center justify-between shadow-2xl shadow-black/50 pointer-events-auto">
         {/* Logo */}
         <button
@@ -184,10 +184,10 @@ export const Navigation: React.FC = React.memo(() => {
       </div>
 
       {/* Mobile Menu - CSS transitions instead of Framer Motion */}
-      <div 
-        className={`md:hidden absolute top-20 left-4 right-4 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
-          isOpen 
-            ? 'opacity-100 scale-y-100 translate-y-0' 
+      <div
+        className={`md:hidden absolute top-14 left-4 right-4 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
+          isOpen
+            ? 'opacity-100 scale-y-100 translate-y-0'
             : 'opacity-0 scale-y-0 -translate-y-4 pointer-events-none'
         }`}
         style={{

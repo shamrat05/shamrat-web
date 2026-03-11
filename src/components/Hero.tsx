@@ -26,8 +26,8 @@ export const Hero: React.FC = React.memo(() => {
 
       <div className="z-10 flex flex-col w-full max-w-5xl mx-auto px-4 items-center justify-center text-center mt-20 md:mt-32">
         {/* Animated Badge - CSS animation */}
-        <div 
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-default bg-white/5 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default group"
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-border-default bg-white/5 backdrop-blur-md mb-6 sm:mb-8 hover:bg-white/10 transition-colors cursor-default group"
           style={{
             animation: 'fadeInUp 0.6s ease-out 0.2s both',
           }}
@@ -36,7 +36,7 @@ export const Hero: React.FC = React.memo(() => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-semantic-success opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-semantic-success"></span>
           </span>
-          <span className="text-sm font-medium text-text-secondary tracking-wide">
+          <span className="text-xs sm:text-sm font-medium text-text-secondary tracking-wide">
             Available for new projects
           </span>
           <ArrowRight className="w-3 h-3 text-text-secondary/60 group-hover:translate-x-0.5 transition-transform" />
@@ -44,13 +44,16 @@ export const Hero: React.FC = React.memo(() => {
 
         {/* Hero Text - CSS staggered animation */}
         <h1
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] mb-6"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] mb-6"
           style={{
             animation: 'fadeInUp 0.6s ease-out 0.3s both',
           }}
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-b from-text-primary via-text-primary to-text-primary/50 block mb-2">
+          <span className="bg-clip-text text-transparent bg-gradient-to-b from-text-primary via-text-primary to-text-primary/50 block mb-2 text-4xl sm:text-5xl">
             {data.hero.name}
+          </span>
+          <span className="block text-xs sm:text-sm md:text-base text-text-secondary/80 font-medium tracking-wide mb-3">
+            {t('hero.alias')}
           </span>
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-text-primary to-primary-600">
             {t('hero.role')}

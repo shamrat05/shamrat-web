@@ -37,6 +37,7 @@ export const SEO: React.FC<SEOProps> = ({
 
   const canonicalUrl = canonical || (url ? (url.startsWith('http') ? url : `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`) : siteUrl);
   const finalFullUrl = url ? (url.startsWith('http') ? url : `${siteUrl}${url.startsWith('/') ? url : `/${url}`}`) : siteUrl;
+  const isHome = finalFullUrl === siteUrl || finalFullUrl === `${siteUrl}/`;
 
   // Social profiles for Structured Data
   const sameAs = [
@@ -112,6 +113,47 @@ export const SEO: React.FC<SEOProps> = ({
     ]
   };
 
+  const webSiteSchema = {
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    "url": siteUrl,
+    "name": "Md. Shamrat Hossain",
+    "alternateName": ["Shamrat", "Samrat", "Shamrat Hossain", "Samrat Hossain"],
+    "description": description,
+    "publisher": { "@id": `${siteUrl}/#person` },
+    "potentialAction": [{
+      "@type": "SearchAction",
+      "target": `${siteUrl}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }]
+  };
+
+  const webPageSchema = {
+    "@type": "WebPage",
+    "@id": `${finalFullUrl}#webpage`,
+    "url": finalFullUrl,
+    "name": title,
+    "description": description,
+    "isPartOf": { "@id": `${siteUrl}/#website` },
+    "about": { "@id": `${siteUrl}/#person` },
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "@id": `${finalFullUrl}#primaryimage`,
+      "url": ogImage
+    }
+  };
+
+  const profilePageSchema = isHome ? {
+    "@type": "ProfilePage",
+    "@id": `${siteUrl}/#profile`,
+    "url": siteUrl,
+    "name": "Md. Shamrat Hossain",
+    "alternateName": ["Shamrat", "Samrat", "Shamrat Hossain", "Samrat Hossain"],
+    "mainEntity": { "@id": `${siteUrl}/#person` },
+    "about": { "@id": `${siteUrl}/#person` },
+    "isPartOf": { "@id": `${siteUrl}/#website` }
+  } : null;
+
   return (
     <Helmet>
       {/* Basic Metadata */}
@@ -119,6 +161,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywordsString} />
       <meta name="author" content="Md. Shamrat Hossain" />
+      <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Open Graph */}
@@ -149,20 +192,10 @@ export const SEO: React.FC<SEOProps> = ({
           "@context": "https://schema.org",
           "@graph": [
             personSchema,
-            {
-              "@type": "WebSite",
-              "@id": `${siteUrl}/#website`,
-              "url": siteUrl,
-              "name": "Md. Shamrat Hossain",
-              "description": description,
-              "publisher": { "@id": `${siteUrl}/#person` },
-              "potentialAction": [{
-                "@type": "SearchAction",
-                "target": `${siteUrl}/?s={search_term_string}`,
-                "query-input": "required name=search_term_string"
-              }]
-            },
+            webSiteSchema,
+            webPageSchema,
             breadcrumbSchema,
+            ...(profilePageSchema ? [profilePageSchema] : []),
             ...(type === 'article' ? [{
               "@type": "Article",
               "headline": title,
@@ -182,4 +215,3 @@ export const SEO: React.FC<SEOProps> = ({
     </Helmet>
   );
 };
-
