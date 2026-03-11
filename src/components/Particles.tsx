@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
 interface Particle {
   x: number;
@@ -17,12 +18,14 @@ interface Particle {
  * - GPU-accelerated canvas rendering
  */
 export const Particles: React.FC = React.memo(() => {
+  const { isReduced } = usePerformanceMode();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
   const lastFrameTimeRef = useRef<number>(0);
   const isVisibleRef = useRef<boolean>(true);
 
   useEffect(() => {
+    if (isReduced) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -58,7 +61,7 @@ export const Particles: React.FC = React.memo(() => {
         const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
-        ctx.scale(dpr, dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         canvas.style.width = `${window.innerWidth}px`;
         canvas.style.height = `${window.innerHeight}px`;
         initParticles();
@@ -116,7 +119,7 @@ export const Particles: React.FC = React.memo(() => {
 
     // Initialize
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
     document.addEventListener('visibilitychange', handleVisibilityChange);
     rafRef.current = requestAnimationFrame(animate);
 
@@ -126,7 +129,9 @@ export const Particles: React.FC = React.memo(() => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [isReduced]);
+
+  if (isReduced) return null;
 
   return (
     <canvas

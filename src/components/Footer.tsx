@@ -9,8 +9,11 @@ export const Footer: React.FC = () => {
 
   useEffect(() => {
     let animationFrameId: number;
+    let ticking = false;
 
     const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
       animationFrameId = requestAnimationFrame(() => {
         // Calculate scroll progress
         const totalScroll = document.documentElement.scrollTop;
@@ -25,10 +28,11 @@ export const Footer: React.FC = () => {
         } else {
           setShowBackToTop(false);
         }
+        ticking = false;
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameId);

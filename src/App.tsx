@@ -13,6 +13,9 @@ import { usePageTitle } from './hooks/usePageTitle';
 import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import { BackgroundEffect } from './components/ui/BackgroundEffect';
 import { PageTransition } from './components/PageTransition';
+import { PageLoader } from './components/PageLoader';
+import { useIdlePrefetch } from './hooks/useIdlePrefetch';
+import { usePerformanceMode } from './hooks/usePerformanceMode';
 import './index.css';
 
 // Lazy loaded components with proper loading states
@@ -23,11 +26,21 @@ const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const ProjectPage = lazy(() => import('./pages/ProjectPage'));
 const ResumePage = lazy(() => import('./pages/ResumePage'));
 
+const prefetchTasks = [
+  () => import('./pages/BlogPage'),
+  () => import('./pages/BlogPostPage'),
+  () => import('./pages/PortfolioPage'),
+  () => import('./pages/ProjectPage'),
+  () => import('./pages/ResumePage'),
+];
+
 // Component to handle analytics hooks inside Router
 const AppContent = () => {
   useAnalytics();
   usePageTitle();
   useDynamicFavicon();
+  usePerformanceMode();
+  useIdlePrefetch(prefetchTasks);
   const location = useLocation();
 
   return (
@@ -37,7 +50,7 @@ const AppContent = () => {
         <Navigation />
 
         <main className="flex-grow pt-0">
-          <Suspense fallback={null}>
+          <Suspense fallback={<PageLoader />}>
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
               <Route path="/blog" element={<BlogPage />} />

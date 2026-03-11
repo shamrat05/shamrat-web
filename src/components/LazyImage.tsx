@@ -39,7 +39,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         }
       },
       {
-        rootMargin: '200px', // Start loading before visible
+        rootMargin: '400px', // Start loading before visible
       }
     );
 
@@ -53,7 +53,12 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   return (
     <div 
       className={`relative overflow-hidden ${className}`}
-      style={{ contain: 'layout' }}
+      style={{ 
+        contain: 'layout',
+        backgroundImage: placeholderSrc ? `url(${placeholderSrc})` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       {/* Placeholder background */}
       <div
@@ -72,6 +77,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         src={isInView ? src : undefined}
         alt={alt}
         loading={loading}
+        decoding="async"
         fetchPriority={loading === "eager" ? "high" : "auto"}
         className={`w-full h-full object-cover transition-opacity duration-500 ${
           isLoaded ? 'opacity-100' : 'opacity-0'
