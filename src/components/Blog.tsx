@@ -35,6 +35,7 @@ export const Blog: React.FC = React.memo(() => {
                 <img 
                   src={post.image} 
                   alt={post.title} 
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <span className="absolute top-4 left-4 bg-primary-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide">

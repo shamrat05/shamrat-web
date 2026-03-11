@@ -163,6 +163,7 @@ export const Navigation: React.FC = React.memo(() => {
               <img
                 src="/images/shamrat-profile.jpg"
                 alt="Md Shamrat Hossain"
+                decoding="async"
                 className="w-7 h-7 rounded-full object-cover"
                 loading="lazy"
               />
