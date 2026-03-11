@@ -25,7 +25,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children, locati
         window.scrollTo({
           top: 0,
           left: 0,
-          behavior: supportsViewTransitions ? 'instant' : 'smooth'
+          behavior: supportsViewTransitions ? 'auto' : 'smooth'
         });
       });
       
