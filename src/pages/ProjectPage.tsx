@@ -52,6 +52,7 @@ const ProjectPage: React.FC = () => {
               <img 
                 src={project.image} 
                 alt={project.title} 
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
             </div>

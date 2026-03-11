@@ -121,6 +121,7 @@ const BlogPostPage: React.FC = () => {
             <img 
               src={post.image} 
               alt={post.title} 
+              decoding="async"
               className="w-full h-auto object-cover"
             />
           </div>
