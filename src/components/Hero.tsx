@@ -24,7 +24,7 @@ export const Hero: React.FC = React.memo(() => {
            }} 
       />
 
-      <div className="z-10 flex flex-col w-full max-w-5xl mx-auto px-4 items-center justify-center text-center mt-20 md:mt-32">
+      <div className="z-10 flex flex-col w-full max-w-5xl mx-auto px-4 items-center justify-center text-center mt-12 md:mt-32">
         {/* Animated Badge - CSS animation */}
         <div
           className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-border-default bg-white/5 backdrop-blur-md mb-6 sm:mb-8 hover:bg-white/10 transition-colors cursor-default group"
