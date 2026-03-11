@@ -57,13 +57,29 @@ export const usePerformanceMode = () => {
     recompute();
 
     const onChange = () => recompute();
-    reducedMotionMql.addEventListener('change', onChange);
-    coarsePointerMql.addEventListener('change', onChange);
+    if (reducedMotionMql.addEventListener) {
+      reducedMotionMql.addEventListener('change', onChange);
+    } else {
+      reducedMotionMql.addListener(onChange);
+    }
+    if (coarsePointerMql.addEventListener) {
+      coarsePointerMql.addEventListener('change', onChange);
+    } else {
+      coarsePointerMql.addListener(onChange);
+    }
     window.addEventListener('resize', onChange, { passive: true });
 
     return () => {
-      reducedMotionMql.removeEventListener('change', onChange);
-      coarsePointerMql.removeEventListener('change', onChange);
+      if (reducedMotionMql.removeEventListener) {
+        reducedMotionMql.removeEventListener('change', onChange);
+      } else {
+        reducedMotionMql.removeListener(onChange);
+      }
+      if (coarsePointerMql.removeEventListener) {
+        coarsePointerMql.removeEventListener('change', onChange);
+      } else {
+        coarsePointerMql.removeListener(onChange);
+      }
       window.removeEventListener('resize', onChange);
     };
   }, []);
