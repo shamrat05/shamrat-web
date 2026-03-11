@@ -7,7 +7,10 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Optimize React for production
+      include: '**/*.tsx',
+    }),
     imagetools(),
     createHtmlPlugin({
       minify: true,
@@ -19,7 +22,7 @@ export default defineConfig({
         // Find the generated profile image in the bundle
         const bundle = ctx.bundle;
         let profileImgPath = '';
-        
+
         if (bundle) {
           for (const [, value] of Object.entries(bundle)) {
             if (value.fileName.includes('shamrat-profile') && value.fileName.endsWith('.webp')) {
@@ -38,6 +41,7 @@ export default defineConfig({
                 as: 'image',
                 href: `/${profileImgPath}`,
                 fetchpriority: 'high',
+                type: 'image/webp',
               },
               injectTo: 'head',
             },
@@ -46,24 +50,72 @@ export default defineConfig({
         return [];
       },
     },
+    {
+      name: 'view-transitions-css',
+      transformIndexHtml(html) {
+        // Add View Transitions CSS
+        return html.replace(
+          '</head>',
+          `
+    <style>
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+      ::view-transition-old(root) {
+        z-index: 1;
+      }
+      ::view-transition-new(root) {
+        z-index: 2;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-group(*),
+        ::view-transition-old(*),
+        ::view-transition-new(*) {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>`
+        );
+      },
+    },
     visualizer({
-      open: true,
+      open: false, // Don't auto-open in browser
       gzipSize: true,
       brotliSize: true,
+      filename: 'dist/stats.html',
     })
   ],
   build: {
+    target: 'esnext', // Modern browsers support ESNext
+    minify: 'esbuild', // Faster minifier
     rollupOptions: {
       treeshake: true,
       output: {
         manualChunks: {
-          'vendor': ['react', 'react-dom', 'framer-motion'],
+          'vendor': ['react', 'react-dom'],
+          'framer-motion': ['framer-motion'],
           'zustand': ['zustand'],
           'lucide': ['lucide-react'],
           '3d': ['three', '@react-three/fiber', '@react-three/drei'],
-        }
+          'router': ['react-router-dom'],
+          'query': ['@tanstack/react-query'],
+          'i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+        },
+        // Optimize chunk loading
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       }
     },
-    chunkSizeWarningLimit: 1000,
-  }
+    chunkSizeWarningLimit: 500, // Stricter limit
+    // Enable source maps for debugging
+    sourcemap: false, // Disable in production for smaller bundles
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'framer-motion', 'zustand'],
+    exclude: ['lucide-react'], // Keep icon tree-shaking
+  },
 })

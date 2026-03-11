@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Menu, X, Sun, Moon, Languages, Sparkles, Folder, ChevronDown } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-export const Navigation: React.FC = () => {
+/**
+ * Optimized Navigation with:
+ * - React.memo for preventing unnecessary re-renders
+ * - useCallback for stable function references
+ * - useMemo for computed values
+ * - CSS transitions instead of Framer Motion for mobile menu
+ */
+export const Navigation: React.FC = React.memo(() => {
   const activeSection = usePortfolioStore((state) => state.activeSection);
   const setActiveSection = usePortfolioStore((state) => state.setActiveSection);
   const setAiChatOpen = usePortfolioStore((state) => state.setAiChatOpen);
@@ -16,26 +23,30 @@ export const Navigation: React.FC = () => {
     const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     return savedTheme || systemTheme;
   });
+  
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
+  // Update theme attribute only when theme changes
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
+  }, []);
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'bn' : 'en';
-    i18n.changeLanguage(newLang);
-  };
+  const toggleLanguage = useCallback(() => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'bn' : 'en');
+  }, [i18n]);
 
-  const navItems = [
+  // Memoize nav items to prevent re-creation
+  const navItems = useMemo(() => [
     { label: t('nav.home'), id: 'home', href: '/' },
     { label: t('nav.about'), id: 'about', href: '/#about' },
     { label: t('nav.experience'), id: 'experience', href: '/#experience' },
@@ -44,10 +55,10 @@ export const Navigation: React.FC = () => {
     { label: t('nav.blog'), id: 'blog', href: '/blog' },
     { label: 'Resume', id: 'resume', href: '/resume' },
     { label: t('nav.contact'), id: 'contact', href: '/#contact' },
-  ];
+  ], [t]);
 
-  // Status Dot Logic
-  const getStatusColor = () => {
+  // Status Dot Logic - memoized
+  const statusColor = useMemo(() => {
     const now = new Date();
     const bdHour = parseInt(new Intl.DateTimeFormat('en-US', {
       timeZone: 'Asia/Dhaka',
@@ -55,9 +66,9 @@ export const Navigation: React.FC = () => {
       hour12: false
     }).format(now), 10);
     return (bdHour >= 9 && bdHour < 23) ? 'bg-semantic-success' : 'bg-orange-500';
-  };
+  }, []);
 
-  const handleNavClick = (id: string, href: string) => {
+  const handleNavClick = useCallback((id: string, href: string) => {
     if (href.startsWith('/#') || href === '/') {
       if (location.pathname !== '/') {
         navigate('/');
@@ -73,9 +84,9 @@ export const Navigation: React.FC = () => {
       setActiveSection(id);
     }
     setIsOpen(false);
-  };
+  }, [location.pathname, navigate, setActiveSection]);
 
-  const scrollToSection = (id: string, href: string) => {
+  const scrollToSection = useCallback((id: string, href: string) => {
     setActiveSection(id);
     if (href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -93,7 +104,7 @@ export const Navigation: React.FC = () => {
         behavior: 'smooth'
       });
     }
-  };
+  }, [setActiveSection]);
 
   return (
     <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
@@ -109,7 +120,7 @@ export const Navigation: React.FC = () => {
           </div>
           <div className="relative flex items-center">
             <span className="text-lg font-bold tracking-tight text-white mt-0.5">Shamrat</span>
-            <span className={`ml-2 w-2 h-2 rounded-full ${getStatusColor()} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
+            <span className={`ml-2 w-2 h-2 rounded-full ${statusColor} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
           </div>
         </button>
 
@@ -153,6 +164,7 @@ export const Navigation: React.FC = () => {
                 src="/images/shamrat-profile.jpg"
                 alt="Md Shamrat Hossain"
                 className="w-7 h-7 rounded-full object-cover"
+                loading="lazy"
               />
               <span className="text-sm text-white hidden sm:block max-w-[100px] truncate">Md Shamrat</span>
               <ChevronDown className="w-4 h-4 text-white/60" />
@@ -170,8 +182,17 @@ export const Navigation: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className={`md:hidden absolute top-20 left-4 right-4 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${isOpen ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0 pointer-events-none'}`}>
+      {/* Mobile Menu - CSS transitions instead of Framer Motion */}
+      <div 
+        className={`md:hidden absolute top-20 left-4 right-4 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
+          isOpen 
+            ? 'opacity-100 scale-y-100 translate-y-0' 
+            : 'opacity-0 scale-y-0 -translate-y-4 pointer-events-none'
+        }`}
+        style={{
+          willChange: isOpen ? 'opacity, transform' : 'auto',
+        }}
+      >
         <div className="flex flex-col p-4 gap-2">
           {navItems.map((item) => (
             <button
@@ -197,4 +218,4 @@ export const Navigation: React.FC = () => {
       </div>
     </nav>
   );
-};
+});

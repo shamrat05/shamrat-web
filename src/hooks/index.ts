@@ -90,3 +90,6 @@ export const useLocalStorage = <T,>(
 
   return [storedValue, setValue];
 };
+
+// Re-export useViewTransition for convenience
+export { useViewTransition } from './useViewTransition';

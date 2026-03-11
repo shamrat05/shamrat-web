@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* View Transitions API - Smooth page navigation */
+@view-transition {
+  navigation: auto;
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  /* Disable heavy effects on mobile */
+  .card-glass {
+    transform: none !important;
+    transition: transform 0.2s ease-out !important;
+  }
+  
+  /* Reduce blur on mobile for better performance */
+  .backdrop-blur-md {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @theme {
   --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-heading: "SF Pro Display", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -96,10 +128,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Prevent overscroll bounce on mobile */
+    overscroll-behavior: none;
   }
 
   body {
     @apply bg-transparent text-text-primary font-sans antialiased;
+    /* Performance optimizations */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1,
@@ -161,6 +199,9 @@
     @apply relative overflow-hidden rounded-xl transition-all duration-300 bg-white/5 backdrop-blur-[20px] border border-white/10 border-t-white/20 shadow-lg;
     will-change: transform;
     transform: translateZ(0);
+    backface-visibility: hidden;
+    /* CSS containment for better rendering performance */
+    contain: layout style;
   }
 
   @media (max-width: 768px) {
@@ -168,6 +209,8 @@
       backdrop-filter: blur(10px);
       /* Reduce blur on mobile for perf */
       -webkit-backdrop-filter: blur(10px);
+      /* Disable hover effects on touch devices */
+      transition: none;
     }
   }
 

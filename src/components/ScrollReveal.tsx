@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -7,39 +6,76 @@ interface ScrollRevealProps {
   width?: "fit-content" | "100%";
 }
 
-export const ScrollReveal: React.FC<ScrollRevealProps> = ({ children, delay = 0.25, width = "fit-content" }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+/**
+ * Optimized ScrollReveal using native Intersection Observer and CSS transitions
+ * No Framer Motion dependency - significantly lighter and faster on mobile
+ */
+export const ScrollReveal: React.FC<ScrollRevealProps> = ({ 
+  children, 
+  delay = 250, 
+  width = "fit-content" 
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Use requestAnimationFrame for smooth reveal
+          requestAnimationFrame(() => {
+            setIsVisible(true);
+          });
+          observer.unobserve(element);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, []);
 
   return (
-    <div ref={ref} style={{ position: 'relative', width, overflow: 'hidden' }}>
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 75 },
-          visible: { opacity: 1, y: 0 },
+    <div 
+      ref={ref} 
+      style={{ 
+        position: 'relative', 
+        width,
+        overflow: 'hidden'
+      }}
+    >
+      <div
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'translateY(0)' : 'translateY(75px)',
+          transition: `opacity 0.5s ease-out ${delay}ms, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
+          willChange: 'opacity, transform',
         }}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        transition={{ duration: 0.5, delay }}
       >
         {children}
-      </motion.div>
-      <motion.div
-        variants={{
-          hidden: { left: 0 },
-          visible: { left: "100%" },
-        }}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        transition={{ duration: 0.5, ease: "easeIn" }}
+      </div>
+      {/* Animated reveal bar - CSS only */}
+      <div
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 4,
           bottom: 4,
-          left: 0,
-          right: 0,
-          background: "var(--primary-500)",
+          left: isVisible ? '100%' : '0',
+          right: isVisible ? '0' : 'auto',
+          background: 'var(--primary-500)',
           zIndex: 20,
+          transition: `left 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
+          width: '100%',
         }}
       />
     </div>
