@@ -185,7 +185,7 @@ export const Navigation: React.FC = React.memo(() => {
 
       {/* Mobile Menu - CSS transitions instead of Framer Motion */}
       <div
-        className={`md:hidden absolute top-9 left-0 right-0 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-none md:rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
+        className={`md:hidden absolute top-11 left-0 right-0 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-none md:rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
           isOpen
             ? 'opacity-100 scale-y-100 translate-y-0'
             : 'opacity-0 scale-y-0 -translate-y-4 pointer-events-none'
