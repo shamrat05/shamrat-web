@@ -28,7 +28,7 @@ export const useIdlePrefetch = (
       };
     }
 
-    const timeoutId = window.setTimeout(run, timeoutMs);
+    const timeoutId = (window as typeof globalThis).setTimeout(run, timeoutMs);
     return () => {
       cancelled = true;
       clearTimeout(timeoutId);
