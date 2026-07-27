@@ -60,7 +60,7 @@ export const Blog: React.FC = React.memo(() => {
     el.scrollBy({ left: direction === 'left' ? -(cardWidth + 24) : cardWidth + 24, behavior: 'smooth' });
   };
 
-  const renderCard = (post: (typeof data.posts)[number], index: number) => (
+  const renderCard = (post: (typeof data.posts)[number]) => (
     <TiltCard key={post.id} className="h-full">
       <Link
         to={post.link}
@@ -170,16 +170,16 @@ export const Blog: React.FC = React.memo(() => {
               className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none -mx-4 px-4"
               style={{ scrollSnapType: 'x mandatory' }}
             >
-              {featuredPosts.map((post, i) => (
-                <div key={post.id} className="min-w-[85vw] max-w-[85vw] snap-center shrink-0">
-                  {renderCard(post, i)}
+            {featuredPosts.map((post) => (
+              <div key={post.id} className="min-w-[85vw] max-w-[85vw] snap-center shrink-0">
+                  {renderCard(post)}
                 </div>
-              ))}
+            ))}
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {featuredPosts.map((post, i) => renderCard(post, i))}
+            {featuredPosts.map((post) => renderCard(post))}
           </div>
         )}
 

@@ -28,7 +28,7 @@ const skills: Skill[] = [
   { name: 'PostgreSQL & MongoDB', icon: '🗄️', color: '#3B9EFF', bg: 'rgba(59,158,255,0.08)', category: 'tech' },
 ];
 
-const Badge: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => {
+const Badge: React.FC<{ skill: Skill }> = ({ skill }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     if (typeof window === 'undefined') return 'dark';
@@ -108,7 +108,7 @@ export const TechMarquee: React.FC = () => {
       <div className="relative mb-4">
         <div className="flex animate-marquee whitespace-nowrap gap-3">
           {[...skills, ...skills].map((skill, i) => (
-            <Badge key={`r1-${i}`} skill={skill} index={i} />
+            <Badge key={`r1-${i}`} skill={skill} />
           ))}
         </div>
       </div>
@@ -117,7 +117,7 @@ export const TechMarquee: React.FC = () => {
       <div className="relative">
         <div className="flex animate-marquee-reverse whitespace-nowrap gap-3" style={{ animationDirection: 'reverse' }}>
           {[...skills.slice().reverse(), ...skills.slice().reverse()].map((skill, i) => (
-            <Badge key={`r2-${i}`} skill={skill} index={i} />
+            <Badge key={`r2-${i}`} skill={skill} />
           ))}
         </div>
       </div>
