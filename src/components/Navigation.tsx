@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -131,20 +132,57 @@ export const Navigation: React.FC = React.memo(() => {
 
           {/* Actions */}
           <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
-            {/* AI Chat */}
-            <button
-              onClick={() => setAiChatOpen(!isAiChatOpen)}
-              className={`p-2 rounded-lg transition-all duration-200 ${
-                isAiChatOpen
-                  ? 'text-[var(--accent)] bg-[var(--accent)]/10'
-                  : isDark
-                    ? 'text-white/40 hover:text-white hover:bg-white/5'
-                    : 'text-[#4B5563] hover:text-[#0a0a0a] hover:bg-black/5'
-              }`}
-              aria-label="Toggle AI Chat"
-            >
-              <Sparkles size={16} />
-            </button>
+            {/* AI Chat - Prominent with glow */}
+            <div className="relative group/ai">
+              <button
+                onClick={() => setAiChatOpen(!isAiChatOpen)}
+                className={`relative p-2 rounded-lg transition-all duration-300 ${
+                  isAiChatOpen
+                    ? 'text-[var(--accent)] bg-[var(--accent)]/15 shadow-[0_0_12px_rgba(121,206,255,0.2)]'
+                    : isDark
+                      ? 'text-[var(--accent)] hover:text-white hover:bg-white/8 hover:shadow-[0_0_16px_rgba(121,206,255,0.15)]'
+                      : 'text-[#0f7fff] hover:text-[#0a0a0a] hover:bg-black/5 hover:shadow-[0_0_16px_rgba(15,127,255,0.12)]'
+                }`}
+                aria-label="AI Assistant - Ask me anything"
+              >
+                <motion.div
+                  animate={!isAiChatOpen ? {
+                    rotate: [0, 10, -10, 5, -5, 0],
+                    scale: [1, 1.1, 1],
+                  } : {}}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 5,
+                    ease: 'easeInOut',
+                  }}
+                >
+                  <Sparkles size={16} />
+                </motion.div>
+                {!isAiChatOpen && (
+                  <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-60" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" />
+                  </span>
+                )}
+              </button>
+              {/* Tooltip */}
+              {!isAiChatOpen && (
+                <div className="absolute top-full right-0 mt-2 pointer-events-none opacity-0 group-hover/ai:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                  <div
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium"
+                    style={{
+                      background: isDark ? 'rgba(10,10,12,0.9)' : 'rgba(255,255,255,0.95)',
+                      color: isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)',
+                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                      boxShadow: '0 4px 12px -2px rgba(0,0,0,0.2)',
+                    }}
+                  >
+                    Ask me anything
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Theme Toggle */}
             <button

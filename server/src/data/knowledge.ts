@@ -29,6 +29,18 @@ export const knowledgeBase = {
   ],
   experience: [
     {
+      role: "Sales Lead",
+      company: "LevelAxis Technologies",
+      period: "Jan 2026 – Present",
+      highlights: [
+        "Leading the Sales Team at LevelAxis Technologies, a software company.",
+        "Driving revenue growth and client acquisition strategies.",
+        "Spearheading strategic sales initiatives and building enterprise relationships.",
+        "Scaling sales operations to meet aggressive growth targets.",
+        "Responsible for the full sales cycle: prospecting, negotiation, and closing.",
+      ]
+    },
+    {
       role: "Officer – Smart Banking Operations",
       company: "DOER Services PLC",
       period: "Nov 2024 – Aug 2025",
@@ -50,6 +62,46 @@ export const knowledgeBase = {
       ]
     }
   ],
+  levelaxis: {
+    company: "LevelAxis Technologies",
+    description: "LevelAxis Technologies is a software company focused on building innovative digital solutions. Shamrat leads the sales team, driving revenue growth and client acquisition.",
+    products: [
+      "Custom software development",
+      "Web and mobile application development",
+      "Business automation solutions",
+      "Digital transformation consulting"
+    ],
+    openPositions: [
+      {
+        title: "Full-Stack Developer",
+        type: "Full-time",
+        requirements: "React, Node.js, TypeScript, PostgreSQL",
+        description: "Building and maintaining web applications for enterprise clients."
+      },
+      {
+        title: "UI/UX Designer",
+        type: "Full-time",
+        requirements: "Figma, design systems, prototyping",
+        description: "Designing intuitive user interfaces for software products."
+      },
+      {
+        title: "Marketing Specialist",
+        type: "Full-time",
+        requirements: "Digital marketing, SEO, content strategy",
+        description: "Driving marketing campaigns and brand awareness for LevelAxis."
+      },
+      {
+        title: "Business Development Executive",
+        type: "Full-time",
+        requirements: "Sales, client relations, B2B experience",
+        description: "Expanding client base and building strategic partnerships."
+      }
+    ],
+    contact: {
+      website: "https://levelaxishq.com",
+      email: "info@levelaxishq.com"
+    }
+  },
   skills: {
     technical: [
       "Advanced Excel", "Google Sheets", "Power BI Dashboarding", 

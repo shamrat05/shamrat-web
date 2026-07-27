@@ -15,6 +15,7 @@ import { BackgroundEffect } from './components/ui/BackgroundEffect';
 import { PageTransition } from './components/PageTransition';
 import { PageLoader } from './components/PageLoader';
 import { CursorFollower } from './components/CursorFollower';
+import { AiSuggestionToast } from './components/AiSuggestionToast';
 import { useIdlePrefetch } from './hooks/useIdlePrefetch';
 import { usePerformanceMode } from './hooks/usePerformanceMode';
 import './index.css';
@@ -74,6 +75,7 @@ const AppContent = () => {
         <Footer />
         <CookieConsent />
         <AISearch />
+        <AiSuggestionToast />
         <CommandPalette />
       </div>
     </PageTransition>

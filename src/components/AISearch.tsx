@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Sparkles, User, Bot } from 'lucide-react';
+import { X, Send, User, Bot } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useIsAiChatOpen, usePortfolioStore } from '../store/portfolioStore';

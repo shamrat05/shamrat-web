@@ -33,7 +33,21 @@ export class SearchService {
       });
     }
 
-    // 4. Skills
+    // 4. LevelAxis Technologies (Company + Jobs)
+    if (isRelevant("levelaxis") || isRelevant("level") || isRelevant("company") || isRelevant("hiring") || isRelevant("position") || isRelevant("vacancy") || isRelevant("opening") || isRelevant("recruit")) {
+      const la = knowledgeBase.levelaxis;
+      findings.push(`**LevelAxis Technologies:** ${la.description}`);
+      findings.push(`**Products/Services:** ${la.products.join(", ")}`);
+      findings.push(`**Website:** ${la.contact.website}`);
+      if (isRelevant("hiring") || isRelevant("position") || isRelevant("vacancy") || isRelevant("opening") || isRelevant("recruit") || isRelevant("job")) {
+        findings.push(`**Open Positions at LevelAxis:**`);
+        la.openPositions.forEach(pos => {
+          findings.push(`- ${pos.title} (${pos.type}): ${pos.description}. Requirements: ${pos.requirements}`);
+        });
+      }
+    }
+
+    // 5. Skills
     if (isRelevant("skill") || isRelevant("tech") || isRelevant("tool") || isRelevant("software")) {
       findings.push(`**Technical Skills:** ${knowledgeBase.skills.technical.join(", ")}`);
       findings.push(`**Professional Skills:** ${knowledgeBase.skills.professional.join(", ")}`);
@@ -43,7 +57,7 @@ export class SearchService {
         if (techMatches.length > 0) findings.push(`**Relevant Technical Skills:** ${techMatches.join(", ")}`);
     }
 
-    // 5. Projects
+    // 6. Projects
     if (isRelevant("project") || isRelevant("portfolio") || isRelevant("case")) {
        knowledgeBase.projects.forEach(p => {
            if (isRelevant(p.title) || isRelevant(p.description) || isRelevant("project")) {
