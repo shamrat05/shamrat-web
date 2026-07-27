@@ -42,9 +42,6 @@
     "three": "^0.182.0",
     "zustand": "^5.0.10"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
-  },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.18",
