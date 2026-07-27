@@ -33,18 +33,12 @@ export class SearchService {
       });
     }
 
-    // 4. LevelAxis Technologies (Company + Jobs)
-    if (isRelevant("levelaxis") || isRelevant("level") || isRelevant("company") || isRelevant("hiring") || isRelevant("position") || isRelevant("vacancy") || isRelevant("opening") || isRelevant("recruit")) {
+    // 4. LevelAxis Technologies (Company)
+    if (isRelevant("levelaxis") || isRelevant("level") || isRelevant("company")) {
       const la = knowledgeBase.levelaxis;
       findings.push(`**LevelAxis Technologies:** ${la.description}`);
       findings.push(`**Products/Services:** ${la.products.join(", ")}`);
       findings.push(`**Website:** ${la.contact.website}`);
-      if (isRelevant("hiring") || isRelevant("position") || isRelevant("vacancy") || isRelevant("opening") || isRelevant("recruit") || isRelevant("job")) {
-        findings.push(`**Open Positions at LevelAxis:**`);
-        la.openPositions.forEach(pos => {
-          findings.push(`- ${pos.title} (${pos.type}): ${pos.description}. Requirements: ${pos.requirements}`);
-        });
-      }
     }
 
     // 5. Skills
