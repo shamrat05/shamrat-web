@@ -104,7 +104,7 @@ export const Navigation: React.FC = React.memo(() => {
               }`}
               loading="lazy"
             />
-            <span className="text-sm md:text-base font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--tertiary)] transition-colors duration-300 whitespace-nowrap overflow-hidden text-ellipsis">
+            <span className="text-sm md:text-base font-bold tracking-tight text-[var(--foreground)] group-hover:text-[var(--tertiary)] transition-colors duration-300 whitespace-nowrap overflow-hidden text-ellipsis max-w-[100px] md:max-w-none">
               Shamrat
             </span>
           </button>
