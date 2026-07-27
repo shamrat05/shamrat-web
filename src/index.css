@@ -45,6 +45,12 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-border-default: var(--border-default);
+  --color-foreground: #f7f7f4;
+  --color-background: #020202;
+  --color-accent: #79ceff;
+  --color-destructive: #ff6568;
+  --color-muted: #737373;
+  --color-border: #27272A;
 
   --color-primary: #0A84FF;
   --color-primary-foreground: #ffffff;
