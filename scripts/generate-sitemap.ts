@@ -9,17 +9,34 @@ const __dirname = path.dirname(__filename);
 const BASE_URL = 'https://shamrat.vercel.app';
 
 const generateSitemap = () => {
-  const staticRoutes = [
-    '',
-    '/blog',
-    '/portfolio',
-    '/resume',
+  const sectionRoutes = [
+    { path: '/about', priority: '0.9', changefreq: 'monthly' },
+    { path: '/experience', priority: '0.9', changefreq: 'monthly' },
+    { path: '/skills', priority: '0.9', changefreq: 'monthly' },
+    { path: '/projects', priority: '0.9', changefreq: 'monthly' },
+    { path: '/contact', priority: '0.8', changefreq: 'monthly' },
   ];
 
-  const projectRoutes = localData.projects.map((project) => `/portfolio/${project.slug}`);
-  const blogRoutes = localData.posts.map((post) => `/blog/${post.slug}`);
+  const staticRoutes = [
+    { path: '', priority: '1.0', changefreq: 'daily' },
+    { path: '/blog', priority: '0.8', changefreq: 'daily' },
+    { path: '/portfolio', priority: '0.8', changefreq: 'weekly' },
+    { path: '/resume', priority: '0.8', changefreq: 'weekly' },
+  ];
 
-  const allRoutes = [...staticRoutes, ...projectRoutes, ...blogRoutes];
+  const projectRoutes = localData.projects.map((project) => ({
+    path: `/portfolio/${project.slug}`,
+    priority: '0.6',
+    changefreq: 'monthly',
+  }));
+
+  const blogRoutes = localData.posts.map((post) => ({
+    path: `/blog/${post.slug}`,
+    priority: '0.6',
+    changefreq: 'monthly',
+  }));
+
+  const allRoutes = [...staticRoutes, ...sectionRoutes, ...projectRoutes, ...blogRoutes];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -27,15 +44,12 @@ const generateSitemap = () => {
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 ${allRoutes
-  .map((route) => {
-    const isMain = route === '' || route === '/blog' || route === '/portfolio' || route === '/resume';
-    return `  <url>
-    <loc>${BASE_URL}${route || '/'}</loc>
+  .map((route) => `  <url>
+    <loc>${BASE_URL}${route.path || '/'}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>${isMain ? 'daily' : 'monthly'}</changefreq>
-    <priority>${route === '' ? '1.0' : isMain ? '0.8' : '0.6'}</priority>
-  </url>`;
-  })
+    <changefreq>${route.changefreq}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>`)
   .join('\n')}
 </urlset>`;
 

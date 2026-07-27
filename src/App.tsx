@@ -63,11 +63,16 @@ const AppContent = () => {
           <Suspense fallback={<PageLoader />}>
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<HomePage section="about" />} />
+              <Route path="/experience" element={<HomePage section="experience" />} />
+              <Route path="/skills" element={<HomePage section="skills" />} />
+              <Route path="/projects" element={<HomePage section="projects" />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/portfolio/:slug" element={<ProjectPage />} />
               <Route path="/resume" element={<ResumePage />} />
+              <Route path="/contact" element={<HomePage section="contact" />} />
             </Routes>
           </Suspense>
         </main>
