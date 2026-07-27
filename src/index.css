@@ -440,43 +440,7 @@
       0 0 0 1px rgba(255, 255, 255, 0.4) inset;
   }
 
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
-  }
-
-  .animate-marquee-reverse {
-    animation: marquee-reverse 50s linear infinite;
-  }
-
-  @keyframes marquee-drift {
-    0% {
-      transform: translateX(0%);
-    }
-
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  @keyframes marquee-reverse {
-    0% {
-      transform: translateX(-50%);
-    }
-
-    100% {
-      transform: translateX(0%);
-    }
-  }
+  /* Legacy marquee classes removed — now using .tm-* prefixed classes */
 
   @keyframes gradient-shift {
     0%, 100% { background-position: 0% 50%; }
@@ -580,4 +544,150 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+
+  /* ── Tech Marquee ─────────────────────────────────── */
+  .tm-section {
+    width: 100%;
+    --tm-gap: 12px;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tm-inner {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .tm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .tm-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .tm-wall {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tm-gap);
+  }
+
+  .tm-viewport {
+    display: flex;
+    gap: var(--tm-gap);
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .tm-group {
+    flex: none;
+    display: flex;
+    gap: var(--tm-gap);
+    animation: tm-scroll var(--speed, 32s) linear infinite;
+    will-change: transform;
+  }
+
+  .tm-group--rev {
+    animation-direction: reverse;
+  }
+
+  @keyframes tm-scroll {
+    to {
+      transform: translateX(calc(-100% - var(--tm-gap)));
+    }
+  }
+
+  /* Pause on hover / focus-within */
+  .tm-wall:hover .tm-group,
+  .tm-wall:focus-within .tm-group {
+    animation-play-state: paused;
+  }
+
+  /* ── Chip (skill pill) ─────────────────────────────── */
+  .tm-chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 7px 16px 7px 7px;
+    cursor: default;
+    user-select: none;
+    transition: filter 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    filter: grayscale(0.85);
+
+    /* Theme-aware colors */
+    background: color-mix(in srgb, var(--c) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 18%, transparent);
+    color: var(--text-secondary);
+  }
+
+  [data-theme="light"] .tm-chip {
+    background: color-mix(in srgb, var(--c) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 15%, transparent);
+    color: var(--text-secondary);
+  }
+
+  @media (hover: hover) {
+    .tm-chip:hover {
+      filter: grayscale(0);
+      transform: translateY(-2px);
+      border-color: var(--c);
+      color: var(--text-primary);
+      box-shadow: 0 4px 20px color-mix(in srgb, var(--c) 15%, transparent);
+    }
+  }
+
+  /* ── Monogram tile ─────────────────────────────────── */
+  .tm-tile {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--c);
+    flex-shrink: 0;
+  }
+
+  /* ── Reduced motion ────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .tm-group {
+      animation: none;
+    }
+
+    .tm-group + .tm-group {
+      display: none;
+    }
+
+    .tm-viewport {
+      overflow-x: auto;
+      mask-image: none;
+      -webkit-mask-image: none;
+      flex-wrap: wrap;
+      gap: var(--tm-gap);
+    }
+
+    .tm-group {
+      flex-wrap: wrap;
+    }
+
+    .tm-chip {
+      filter: none;
+    }
   }
