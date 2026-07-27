@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
           
           <div className="flex items-center gap-3">
             <a
-              href="https://calendly.com/shamrat-r-h/30min"
+              href="https://calendly.com/shamrat"
               target="_blank"
               rel="noopener noreferrer"
               className="group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-primary-500 text-white text-sm font-medium h-9 px-4 transition-all duration-200 hover:scale-[0.96] active:scale-[0.96]"

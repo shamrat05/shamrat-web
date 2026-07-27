@@ -145,7 +145,7 @@ export const Hero: React.FC = React.memo(() => {
         >
           {/* Primary CTA - Book a Call with cat GIF */}
           <a
-            href="https://calendly.com/shamrat-r-h/30min"
+            href="https://calendly.com/shamrat"
             target="_blank"
             rel="noopener noreferrer"
             className={`group/cta relative inline-flex items-center justify-center rounded-xl text-sm font-semibold h-12 px-7 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97] ${

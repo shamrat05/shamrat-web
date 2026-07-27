@@ -197,7 +197,7 @@ export const Navigation: React.FC = React.memo(() => {
 
             {/* Book a Call CTA */}
             <a
-              href="https://calendly.com/shamrat-r-h/30min"
+              href="https://calendly.com/shamrat"
               target="_blank"
               rel="noopener noreferrer"
               className={`hidden sm:inline-flex items-center justify-center rounded-lg text-sm font-medium h-9 px-4 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97] ${
@@ -245,7 +245,7 @@ export const Navigation: React.FC = React.memo(() => {
           ))}
           <div className={`h-px my-2 ${isDark ? 'bg-white/[0.06]' : 'bg-black/[0.06]'}`} />
           <a
-            href="https://calendly.com/shamrat-r-h/30min"
+            href="https://calendly.com/shamrat"
             target="_blank"
             rel="noopener noreferrer"
             className={`text-center py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${
