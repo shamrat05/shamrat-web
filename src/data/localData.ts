@@ -2,7 +2,7 @@ import type { CMSData } from '../types/cms';
 
 export const localData: CMSData = {
   hero: {
-    name: "Md. Shamrat Hossain",
+    name: "Shamrat Hossain",
     title: "Marketing & Operations Professional",
     description: "Results-driven marketing and operations professional with proven expertise in data analytics, stakeholder coordination, and strategic business execution in Bangladesh.",
     image: "/images/shamrat-profile.jpg"
