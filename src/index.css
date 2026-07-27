@@ -45,14 +45,14 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-border-default: var(--border-default);
-  --color-foreground: #f7f7f4;
-  --color-background: #020202;
-  --color-accent: #79ceff;
-  --color-destructive: #ff6568;
-  --color-muted: #737373;
-  --color-border: #27272A;
+  --color-foreground: var(--text-primary);
+  --color-background: var(--bg-page);
+  --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border-default);
 
-  --color-primary: #0A84FF;
+  --color-primary: var(--primary-500);
   --color-primary-foreground: #ffffff;
   --color-primary-50: #EAF5FF;
   --color-primary-400: #3B9EFF;
