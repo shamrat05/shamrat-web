@@ -7,7 +7,6 @@ export const CookieConsent: React.FC = () => {
   useEffect(() => {
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
-      // Small delay to not overwhelm user immediately
       const timer = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -16,7 +15,6 @@ export const CookieConsent: React.FC = () => {
   const handleAccept = () => {
     localStorage.setItem('cookie-consent', 'accepted');
     setIsVisible(false);
-    // Here you would trigger analytics initialization if it wasn't already
   };
 
   const handleDecline = () => {
@@ -33,9 +31,9 @@ export const CookieConsent: React.FC = () => {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50 p-6 card-glass bg-bg-surface border-primary-500/20 shadow-2xl"
         >
-          <h4 className="text-lg font-bold text-text-primary mb-2">We value your privacy</h4>
+          <h4 className="text-lg font-bold text-text-primary mb-2">I value your privacy</h4>
           <p className="text-sm text-text-secondary mb-4">
-            We use cookies to enhance your experience and analyze our traffic. By clicking "Accept", you consent to our use of cookies.
+            I use cookies to enhance your experience and analyze traffic. By clicking "Accept", you consent to the use of cookies.
           </p>
           <div className="flex gap-3 justify-end">
             <button

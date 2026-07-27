@@ -31,10 +31,23 @@ export const Hero: React.FC = React.memo(() => {
   const { t } = useTranslation();
   const ref = React.useRef(null);
   const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const saved = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return saved || systemDark;
+  });
 
   useEffect(() => {
     setMounted(true);
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
   }, []);
+
+  const isDark = theme === 'dark';
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -59,10 +72,17 @@ export const Hero: React.FC = React.memo(() => {
         />
       </div>
 
-      {/* Decorative background elements */}
+      {/* Decorative background elements - vivid accent glows */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[var(--accent)]/[0.03] rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[var(--tertiary)]/[0.03] rounded-full blur-[120px]" />
+        <div className={`absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full blur-[140px] transition-colors duration-700 ${
+          isDark ? 'bg-[#3B9EFF]/[0.08]' : 'bg-[#0f7fff]/[0.06]'
+        }`} />
+        <div className={`absolute bottom-1/4 -right-32 w-[500px] h-[500px] rounded-full blur-[140px] transition-colors duration-700 ${
+          isDark ? 'bg-[#1bb767]/[0.06]' : 'bg-[#33691e]/[0.05]'
+        }`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[200px] transition-colors duration-700 ${
+          isDark ? 'bg-[#79ceff]/[0.04]' : 'bg-[#0f7fff]/[0.03]'
+        }`} />
       </div>
 
       <div className="z-10 flex flex-col w-full max-w-5xl mx-auto px-4 items-center justify-center text-center">
@@ -73,7 +93,11 @@ export const Hero: React.FC = React.memo(() => {
           transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
           className="mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-white/50">
+          <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-medium ${
+            isDark
+              ? 'bg-[#1bb767]/[0.08] border-[#1bb767]/[0.15] text-[#1bb767]'
+              : 'bg-[#33691e]/[0.06] border-[#33691e]/[0.12] text-[#33691e]'
+          }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--tertiary)] animate-pulse" />
             Available for opportunities
           </span>
@@ -84,15 +108,8 @@ export const Hero: React.FC = React.memo(() => {
           {mounted && <CharacterReveal text={data.hero.name} delay={0.3} />}
         </h1>
 
-        {/* Alias */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={mounted ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1.0, ease: [0, 0, 0.2, 1] }}
-          className="text-lg sm:text-xl text-white/30 font-medium tracking-wide mb-2"
-        >
-          {t('hero.alias')}
-        </motion.p>
+        {/* Alias - SEO only, visually hidden */}
+        <p className="sr-only">{t('hero.alias')}</p>
 
         {/* Role */}
         <motion.p
@@ -102,9 +119,9 @@ export const Hero: React.FC = React.memo(() => {
           className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-8"
         >
           <span className="text-[var(--foreground)]">I build </span>
-          <span className="text-[var(--accent)]">strategies</span>
+          <span className="bg-gradient-to-r from-[#3B9EFF] to-[#79ceff] bg-clip-text text-transparent">strategies</span>
           <span className="text-[var(--foreground)]"> that </span>
-          <span className="text-[var(--tertiary)]">scale</span>
+          <span className="bg-gradient-to-r from-[#1bb767] to-[#34D399] bg-clip-text text-transparent">scale</span>
         </motion.p>
 
         {/* Description */}
@@ -112,7 +129,9 @@ export const Hero: React.FC = React.memo(() => {
           initial={{ opacity: 0, y: 16 }}
           animate={mounted ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1.4, ease: [0, 0, 0.2, 1] }}
-          className="text-base md:text-lg text-white/40 max-w-2xl font-light leading-relaxed mb-12 mx-auto"
+          className={`text-base md:text-lg max-w-2xl font-light leading-relaxed mb-12 mx-auto ${
+            isDark ? 'text-white/50' : 'text-[#4B5563]'
+          }`}
         >
           {data.hero.description}
         </motion.p>
@@ -129,7 +148,11 @@ export const Hero: React.FC = React.memo(() => {
             href="https://calendly.com/shamrat-r-h/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="group/cta relative inline-flex items-center justify-center rounded-xl bg-white text-[#020202] text-sm font-semibold h-12 px-7 transition-all duration-200 hover:bg-white/90 hover:scale-[0.97] active:scale-[0.97] hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+            className={`group/cta relative inline-flex items-center justify-center rounded-xl text-sm font-semibold h-12 px-7 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97] ${
+              isDark
+                ? 'bg-white text-[#020202] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]'
+                : 'bg-[#020202] text-white hover:bg-[#020202]/90 hover:shadow-[0_0_30px_rgba(0,0,0,0.15)]'
+            }`}
           >
             <span>Book a Call</span>
             <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
@@ -144,7 +167,11 @@ export const Hero: React.FC = React.memo(() => {
           {/* Secondary CTA - Contact */}
           <button
             onClick={() => scrollTo('contact')}
-            className="group/cta inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm text-white/70 text-sm font-medium h-12 px-7 transition-all duration-200 hover:bg-white/[0.06] hover:border-white/20 hover:text-white hover:scale-[0.97] active:scale-[0.97]"
+            className={`group/cta inline-flex items-center justify-center rounded-xl backdrop-blur-sm text-sm font-medium h-12 px-7 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97] ${
+              isDark
+                ? 'border border-white/10 bg-white/[0.03] text-white/70 hover:bg-white/[0.06] hover:border-[#3B9EFF]/30 hover:text-white'
+                : 'border border-black/10 bg-black/[0.03] text-[#4B5563] hover:bg-black/[0.06] hover:border-[#0f7fff]/30 hover:text-[#0a0a0a]'
+            }`}
           >
             <span>Contact Me</span>
           </button>
@@ -160,9 +187,11 @@ export const Hero: React.FC = React.memo(() => {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1"
+            className={`w-5 h-8 rounded-full flex items-start justify-center p-1 ${
+              isDark ? 'border border-white/20' : 'border border-black/15'
+            }`}
           >
-            <motion.div className="w-1 h-2 rounded-full bg-white/40" />
+            <motion.div className={`w-1 h-2 rounded-full ${isDark ? 'bg-white/40' : 'bg-black/30'}`} />
           </motion.div>
         </motion.div>
       </div>

@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
           </div>
           
           {/* Glass background behind the circle for better visibility */}
-          <div className="absolute inset-1 bg-bg-surface/80 backdrop-blur-sm rounded-full -z-10 shadow-lg border border-white/10 group-hover:bg-bg-surface transition-colors"></div>
+          <div className="absolute inset-1 bg-bg-surface/80 backdrop-blur-sm rounded-full -z-10 shadow-lg border border-border-default group-hover:bg-bg-surface transition-colors"></div>
         </div>
       </button>
     </footer>

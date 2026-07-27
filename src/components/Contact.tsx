@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, Mail, MapPin, Phone, Linkedin, Info, Copy, Check } from 'lucide-react';
 import { useInView } from '../hooks';
 import { useCMS } from '../hooks/useCMS';
@@ -9,6 +9,22 @@ export const Contact: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
   const [copied, setCopied] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const saved = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return saved || systemDark;
+  });
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const isDark = theme === 'dark';
 
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -86,7 +102,8 @@ export const Contact: React.FC = React.memo(() => {
               ].map((contact, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-5 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5 group"
+                  className="flex items-center gap-5 p-4 rounded-xl transition-colors border border-transparent group hover:border-border-default"
+                  style={{ ['--hover-bg' as string]: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)' }}
                 >
                   <div className="w-12 h-12 bg-primary-900/50 rounded-xl flex items-center justify-center text-primary-500 shrink-0 border border-primary-500/20">
                     <contact.icon size={22} />
@@ -124,40 +141,36 @@ export const Contact: React.FC = React.memo(() => {
                         className="flex flex-col gap-6"
                       >
               <div className="space-y-6">
-                <div>
-                  <input
-                    type="text"
-                    name="Name"
-                    placeholder="Your Name"
-                    required
-                    className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 focus:bg-black/30 focus:shadow-[0_0_0_4px_rgba(10,132,255,0.25)] transition-all"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    name="Email"
-                    placeholder="Your Email"
-                    required
-                    className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 focus:bg-black/30 focus:shadow-[0_0_0_4px_rgba(10,132,255,0.25)] transition-all"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    name="Subject"
-                    placeholder="Subject"
-                    required
-                    className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 focus:bg-black/30 focus:shadow-[0_0_0_4px_rgba(10,132,255,0.25)] transition-all"
-                  />
-                </div>
+                {[
+                  { type: 'text', name: 'Name', placeholder: 'Your Name' },
+                  { type: 'email', name: 'Email', placeholder: 'Your Email' },
+                  { type: 'text', name: 'Subject', placeholder: 'Subject' },
+                ].map((field) => (
+                  <div key={field.name}>
+                    <input
+                      type={field.type}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      required
+                      className="w-full px-4 py-3 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 transition-all"
+                      style={{
+                        background: 'var(--input)',
+                        border: '1px solid var(--border)',
+                      }}
+                    />
+                  </div>
+                ))}
                 <div>
                   <textarea
                     name="Message"
                     rows={5}
                     placeholder="Your Message"
                     required
-                    className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 focus:bg-black/30 focus:shadow-[0_0_0_4px_rgba(10,132,255,0.25)] transition-all resize-y min-h-[120px]"
+                    className="w-full px-4 py-3 rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:border-primary-500 transition-all resize-y min-h-[120px]"
+                    style={{
+                      background: 'var(--input)',
+                      border: '1px solid var(--border)',
+                    }}
                   />
                 </div>
               </div>
