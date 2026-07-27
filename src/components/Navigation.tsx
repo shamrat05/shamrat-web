@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Menu, X, Sun, Moon, Languages, Sparkles, Folder, ChevronDown } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-/**
- * Optimized Navigation with:
- * - React.memo for preventing unnecessary re-renders
- * - useCallback for stable function references
- * - useMemo for computed values
- * - CSS transitions instead of Framer Motion for mobile menu
- */
 export const Navigation: React.FC = React.memo(() => {
   const activeSection = usePortfolioStore((state) => state.activeSection);
   const setActiveSection = usePortfolioStore((state) => state.setActiveSection);
@@ -18,34 +11,18 @@ export const Navigation: React.FC = React.memo(() => {
   const isAiChatOpen = usePortfolioStore((state) => state.isAiChatOpen);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    return savedTheme || systemTheme;
-  });
-  
+  const [scrolled, setScrolled] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
-  // Update theme attribute only when theme changes
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = useCallback(() => {
-    setTheme(prev => {
-      const newTheme = prev === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', newTheme);
-      return newTheme;
-    });
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleLanguage = useCallback(() => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'bn' : 'en');
-  }, [i18n]);
-
-  // Memoize nav items to prevent re-creation
   const navItems = useMemo(() => [
     { label: t('nav.home'), id: 'home', href: '/' },
     { label: t('nav.about'), id: 'about', href: '/#about' },
@@ -57,24 +34,11 @@ export const Navigation: React.FC = React.memo(() => {
     { label: t('nav.contact'), id: 'contact', href: '/#contact' },
   ], [t]);
 
-  // Status Dot Logic - memoized
-  const statusColor = useMemo(() => {
-    const now = new Date();
-    const bdHour = parseInt(new Intl.DateTimeFormat('en-US', {
-      timeZone: 'Asia/Dhaka',
-      hour: 'numeric',
-      hour12: false
-    }).format(now), 10);
-    return (bdHour >= 9 && bdHour < 23) ? 'bg-semantic-success' : 'bg-orange-500';
-  }, []);
-
   const handleNavClick = useCallback((id: string, href: string) => {
     if (href.startsWith('/#') || href === '/') {
       if (location.pathname !== '/') {
         navigate('/');
-        setTimeout(() => {
-          scrollToSection(id, href);
-        }, 100);
+        setTimeout(() => scrollToSection(id, href), 100);
       } else {
         scrollToSection(id, href);
       }
@@ -88,135 +52,93 @@ export const Navigation: React.FC = React.memo(() => {
 
   const scrollToSection = useCallback((id: string, href: string) => {
     setActiveSection(id);
-    if (href === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const elementId = href.replace('/#', '');
-    const element = document.getElementById(elementId);
-
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (href === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    const el = document.getElementById(href.replace('/#', ''));
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   }, [setActiveSection]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-0 md:px-4 pointer-events-none">
-      <div className="w-full max-w-5xl bg-neutral-900/80 backdrop-blur-md border-b md:border border-white/10 rounded-none md:rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center justify-between shadow-2xl shadow-black/50 pointer-events-auto">
-        {/* Logo */}
-        <button
-          className="flex items-center gap-2 group bg-transparent border-none p-0 cursor-pointer"
-          onClick={() => handleNavClick('home', '/')}
-          aria-label="Md. Shamrat Hossain - Homepage"
-        >
-          <div className="relative flex items-center justify-center">
-            <Folder className="w-5 h-5 text-white group-hover:text-neutral-300 transition-colors" />
-          </div>
-          <div className="relative flex items-center">
-            <span className="text-lg font-bold tracking-tight text-white mt-0.5">Shamrat</span>
-            <span className={`ml-2 w-2 h-2 rounded-full ${statusColor} shadow-[0_0_8px_currentColor]`} title="Availability Status" />
-          </div>
-        </button>
+    <header className={`fixed inset-x-0 top-0 z-30 h-14 transition-all duration-300 border-b ${scrolled ? 'bg-[#020202]/90 backdrop-blur-md border-white/10' : 'bg-transparent border-transparent'}`}>
+      <div className="md:container h-full">
+        <div className="flex items-center justify-between h-full px-4 md:px-0">
+          {/* Logo */}
+          <button
+            onClick={() => handleNavClick('home', '/')}
+            className="flex items-center gap-2 bg-transparent border-none p-0 cursor-pointer group"
+          >
+            <span className="text-lg font-bold tracking-tight text-[var(--tertiary-dark)] group-hover:text-[var(--tertiary)] transition-colors">
+              Shamrat
+            </span>
+          </button>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id, item.href)}
-              className={`text-sm font-medium transition-colors bg-transparent border-none cursor-pointer ${(activeSection === item.id || location.pathname === item.href)
-                ? 'text-white'
-                : 'text-white/60 hover:text-white'
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.slice(0, 6).map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id, item.href)}
+                className={`text-sm font-medium px-3 py-1.5 rounded-md transition-all bg-transparent border-none cursor-pointer ${
+                  (activeSection === item.id || location.pathname === item.href)
+                    ? 'text-white bg-white/10'
+                    : 'text-[var(--muted-foreground)] hover:text-white hover:bg-white/5'
                 }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setAiChatOpen(!isAiChatOpen)}
+              className={`p-2 rounded-md transition-colors ${isAiChatOpen ? 'text-[var(--accent)]' : 'text-[var(--muted-foreground)] hover:text-white'}`}
             >
-              {item.label}
+              <Sparkles size={16} />
             </button>
-          ))}
-        </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setAiChatOpen(!isAiChatOpen)}
-            className={`p-2 rounded-full transition-colors ${isAiChatOpen ? 'text-primary-400 bg-primary-500/10' : 'text-white/60 hover:text-white'}`}
-            aria-label="Toggle AI Chat"
-          >
-            <Sparkles size={18} />
-          </button>
+            <a
+              href="https://calendly.com/shamrat-r-h/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-medium h-9 px-4 transition-all hover:scale-[0.96] active:scale-[0.96]"
+            >
+              Book a Call
+            </a>
 
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full text-white/60 hover:text-white transition-colors"
-            aria-label="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
-          <div className="relative">
-            <button className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-3 py-1.5 transition-colors">
-              <img
-                src="/images/shamrat-profile.jpg"
-                alt="Md Shamrat Hossain"
-                decoding="async"
-                className="w-7 h-7 rounded-full object-cover"
-                loading="lazy"
-              />
-              <span className="text-sm text-white hidden sm:block max-w-[100px] truncate">Md Shamrat</span>
-              <ChevronDown className="w-4 h-4 text-white/60" />
+            <button
+              className="md:hidden p-2 text-[var(--muted-foreground)] hover:text-white"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-white/60 hover:text-white"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
       </div>
 
-      {/* Mobile Menu - CSS transitions instead of Framer Motion */}
-      <div
-        className={`md:hidden absolute top-11 left-0 right-0 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-none md:rounded-2xl transition-all duration-300 origin-top pointer-events-auto ${
-          isOpen
-            ? 'opacity-100 scale-y-100 translate-y-0'
-            : 'opacity-0 scale-y-0 -translate-y-4 pointer-events-none'
-        }`}
-        style={{
-          willChange: isOpen ? 'opacity, transform' : 'auto',
-        }}
-      >
-        <div className="flex flex-col p-4 gap-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id, item.href)}
-              className={`text-left py-3 px-4 rounded-lg transition-colors ${(activeSection === item.id || location.pathname === item.href)
-                ? 'bg-primary-500/10 text-primary-400'
-                : 'text-white/60 hover:bg-white/5 hover:text-white'
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-[#020202] border-b border-white/10">
+          <div className="flex flex-col p-4 gap-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id, item.href)}
+                className={`text-left py-2.5 px-4 rounded-lg text-sm transition-colors ${
+                  (activeSection === item.id || location.pathname === item.href)
+                    ? 'bg-white/10 text-white'
+                    : 'text-[var(--muted-foreground)] hover:bg-white/5 hover:text-white'
                 }`}
-            >
-              {item.label}
-            </button>
-          ))}
-          <div className="h-px bg-white/10 my-2" />
-          <button
-            onClick={toggleLanguage}
-            className="text-left py-3 px-4 rounded-lg text-white/60 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2"
-          >
-            <Languages size={18} />
-            {i18n.language === 'en' ? 'Bengali' : 'English'}
-          </button>
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </header>
   );
 });

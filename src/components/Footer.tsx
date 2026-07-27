@@ -52,15 +52,23 @@ export const Footer: React.FC = () => {
   const strokeDashoffset = circumference - scrollProgress * circumference;
 
   return (
-    <footer className="bg-bg-surface border-t border-border-default pt-12 pb-8">
+    <footer className="bg-[var(--card)] border-t border-[var(--border)] pt-12 pb-8">
       <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 text-center md:text-left">
-          <div className="footer-logo">
-            <h3 className="text-xl font-bold text-text-primary mb-1">Md. Shamrat Hossain</h3>
-            <p className="text-text-secondary">Marketing & Operations Professional</p>
+          <div>
+            <h3 className="text-xl font-bold text-[var(--foreground)] mb-1">Md. Shamrat Hossain</h3>
+            <p className="text-[var(--muted-foreground)]">Sales Lead at LevelAxis Technologies</p>
           </div>
           
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
+            <a
+              href="https://calendly.com/shamrat-r-h/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium h-10 px-5 transition-all hover:scale-[0.96]"
+            >
+              Book a Call
+            </a>
             {[
               { icon: Mail, href: 'mailto:shamrat.r.h@gmail.com', label: 'Email' },
               { icon: Phone, href: 'tel:+8801727805705', label: 'Phone' },
@@ -70,7 +78,7 @@ export const Footer: React.FC = () => {
                 key={index}
                 href={social.href}
                 rel="me"
-                className="flex items-center justify-center w-10 h-10 bg-bg-page text-text-secondary rounded-lg hover:bg-primary-500 hover:text-white hover:-translate-y-1 transition-all duration-300"
+                className="flex items-center justify-center w-10 h-10 bg-[var(--background)] text-[var(--muted-foreground)] rounded-lg hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] hover:-translate-y-1 transition-all duration-300"
                 aria-label={social.label}
               >
                 <social.icon size={20} />
@@ -79,8 +87,8 @@ export const Footer: React.FC = () => {
           </div>
         </div>
         
-        <div className="text-center pt-8 border-t border-border-default">
-          <p className="text-text-secondary text-sm">&copy; {currentYear} Md. Shamrat Hossain. All rights reserved.</p>
+        <div className="text-center pt-8 border-t border-[var(--border)]">
+          <p className="text-[var(--muted-foreground)] text-sm">&copy; {currentYear} Md. Shamrat Hossain. All rights reserved.</p>
           <ShortcutsLegend />
         </div>
       </div>

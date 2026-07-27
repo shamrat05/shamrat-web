@@ -18,12 +18,19 @@ export const Contact: React.FC = React.memo(() => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get('Name') as string;
+    const email = formData.get('Email') as string;
+    const subject = formData.get('Subject') as string;
+    const message = formData.get('Message') as string;
+    const mailtoLink = `mailto:${data.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${message}`)}`;
+    window.open(mailtoLink, '_blank');
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
-    alert('Message sent! (Simulation)');
   };
   
   return (

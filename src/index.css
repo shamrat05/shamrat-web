@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap');
 
 /* View Transitions API - Smooth page navigation */
 @view-transition {
@@ -33,8 +35,10 @@
 }
 
 @theme {
-  --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading: "SF Pro Display", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Satoshi", "SF Pro Text", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: "Satoshi", "SF Pro Display", -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-tiny5: "Tiny5", monospace;
 
   --color-bg-page: var(--bg-page);
   --color-bg-surface: var(--bg-surface);
@@ -95,25 +99,69 @@
 }
 
 :root {
-  /* Color System - Dark Theme (Default) */
-  --bg-page: #0A0A0A;
-  --bg-surface: #141414;
-  --primary-500: #0A84FF;
+  --background: #020202;
+  --foreground: #f7f7f4;
+  --card: #0a0a0a;
+  --card-foreground: #f7f7f4;
+  --primary: #f7f7f4;
+  --primary-foreground: #26251e;
+  --secondary: #26251e;
+  --secondary-foreground: #f7f7f4;
+  --muted: #fafafa;
+  --muted-foreground: #737373;
+  --accent: #79ceff;
+  --accent-foreground: #0a0a0a;
+  --destructive: #ff6568;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #737373;
+  --radius: 0.625rem;
+  --tertiary: #1bb767;
+  --tertiary-foreground: #f7f7f4;
+  --tertiary-dark: #33691e;
+  --brand-lime: #e6ff4c;
+  --brand-lime-foreground: #0a0a0a;
+
+  --bg-page: #020202;
+  --bg-surface: #0a0a0a;
+  --primary-500: #79ceff;
   --primary-400: #3B9EFF;
   --primary-600: #0052AC;
   --primary-900: #00284D;
   --primary-50: #EAF5FF;
-  --text-primary: #E4E4E7;
-  --text-secondary: #A1A1AA;
-  --border-default: #27272A;
+  --text-primary: #f7f7f4;
+  --text-secondary: #737373;
+  --border-default: rgba(255, 255, 255, 0.1);
   --semantic-success: #34D399;
   --semantic-error: #F87171;
 }
 
 [data-theme="light"] {
+  --background: #fff;
+  --foreground: #0a0a0a;
+  --card: #fdfdfd;
+  --card-foreground: #0a0a0a;
+  --primary: #111;
+  --primary-foreground: #f7f7f4;
+  --secondary: #26251e;
+  --secondary-foreground: #f7f7f4;
+  --muted: #fafafa;
+  --muted-foreground: #737373;
+  --accent: #0f7fff;
+  --accent-foreground: #fafafa;
+  --destructive: #df2225;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a1a1a1;
+  --tertiary: #1bb767;
+  --tertiary-foreground: #f7f7f4;
+  --tertiary-dark: #33691e;
+  --brand-lime: #e6ff4c;
+  --brand-lime-foreground: #0a0a0a;
+
   --bg-page: #FAFAFA;
   --bg-surface: #FFFFFF;
-  --primary-500: #0063D1;
+  --primary-500: #0f7fff;
   --primary-400: #3B9EFF;
   --primary-600: #0052AC;
   --primary-900: #F0F7FF;
@@ -160,31 +208,31 @@
   }
 
   .btn-primary {
-    @apply bg-primary-500 text-white shadow-btn-primary focus:ring-primary-500;
+    @apply bg-primary text-primary-foreground focus:ring-primary-500;
   }
 
   @media (hover: hover) {
     .btn-primary:hover {
-      @apply bg-primary-400 shadow-btn-primary-hover;
+      @apply bg-primary-400;
     }
   }
 
   .btn-primary:active {
-    @apply transform scale-95 bg-primary-600 shadow-none;
+    @apply transform scale-[0.96];
   }
 
   .btn-secondary {
-    @apply bg-transparent border border-border-default text-text-primary focus:ring-border-default;
+    @apply bg-transparent border border-border text-foreground focus:ring-border-default;
   }
 
   @media (hover: hover) {
     .btn-secondary:hover {
-      @apply border-primary-500 text-primary-400;
+      @apply border-accent text-accent;
     }
   }
 
   .btn-secondary:active {
-    @apply bg-white/5 border-primary-500 text-primary-500 transform scale-95;
+    @apply bg-white/5 border-accent text-accent transform scale-[0.96];
   }
 
   .section-title {
@@ -370,6 +418,26 @@
 
     /* Performance optimization */
     transform: translateZ(0);
+  }
+
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    object-fit: cover;
+    mix-blend-mode: overlay;
+    opacity: 0.3;
+  }
+
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    object-fit: cover;
+    mix-blend-mode: color-dodge;
+    opacity: 0.2;
   }
 
   /* Mobile optimization for glass panels */

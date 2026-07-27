@@ -336,6 +336,14 @@ export const localData: CMSData = {
   experience: [
     {
       id: 1,
+      title: "Sales Lead",
+      company: "LevelAxis Technologies",
+      date: "Jan 1, 2026 – Present",
+      description: "Leading the Sales Team of this Software company, driving revenue growth and client acquisition. Spearheading strategic sales initiatives, building enterprise relationships, and scaling the sales operations to meet aggressive growth targets.",
+      tags: ["Sales Leadership", "Team Management", "Client Acquisition", "Revenue Growth"]
+    },
+    {
+      id: 2,
       title: "Officer – Smart Banking Operations",
       company: "DOER Services PLC",
       date: "Nov 2024 – Aug 2025",
@@ -343,7 +351,7 @@ export const localData: CMSData = {
       tags: ["Operations Management", "Stakeholder Coordination", "Data Analysis", "Compliance"]
     },
     {
-      id: 2,
+      id: 3,
       title: "Marketing Intern",
       company: "Kiam Metal Industries",
       date: "Dec 2023 – Mar 2024",

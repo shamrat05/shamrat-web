@@ -68,6 +68,8 @@ router.post('/', async (req: any, res: any) => {
         }
     }
     
+    fullResponse = fullResponse.replace(/\bFINISHED\b/g, '').trim();
+    
     res.json({ 
       role: 'assistant', 
       content: fullResponse 
