@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Menu, X, Sparkles, ChevronDown } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ export const Navigation: React.FC = React.memo(() => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
