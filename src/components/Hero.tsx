@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight } from 'lucide-react';
@@ -30,7 +30,6 @@ export const Hero: React.FC = React.memo(() => {
   const { data } = useCMS();
   const { t } = useTranslation();
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
