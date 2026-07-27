@@ -22,9 +22,9 @@ export const usePageContext = () => {
       Title: ${data.hero.title}
       Top Skills: ${data.skills.technical.map(s => s.name).join(', ')}.
       
-      Current Role: Sales Lead at LevelAxis Technologies (since Jan 2026). LevelAxis is a software company building custom solutions, web/mobile apps, and business automation.
+      Current Role: Sales Lead at LevelAxis Technologies (since Jan 2026).
       
-      Summary: I am ${data.hero.name}, a ${data.hero.title}. I specialize in data analytics, marketing, and operations. I currently lead sales at LevelAxis Technologies.`;
+      Summary: I am ${data.hero.name}, a ${data.hero.title}. I specialize in data analytics, marketing, and operations.`;
     }
 
     // 2. Specific Blog Post
@@ -64,7 +64,7 @@ export const usePageContext = () => {
     if (path ===('/resume')) {
       return `Current Page: Resume / CV.
       
-      Current Role: Sales Lead at LevelAxis Technologies (Jan 2026 – Present). Leading sales team, driving revenue growth and client acquisition for this software company.
+      Current Role: Sales Lead at LevelAxis Technologies (Jan 2026 – Present).
       
       Previous Experience: ${data.experience.map(e => `${e.title} at ${e.company} (${e.date}): ${e.description}`).join('\n')}
       Education: MBA and BBA in Marketing.
@@ -73,7 +73,7 @@ export const usePageContext = () => {
 
     // Default Fallback
     return `Current Page: ${path}. 
-    User is navigating the portfolio of Shamrat Hossain, Sales Lead at LevelAxis Technologies.`;
+    User is navigating the portfolio of Shamrat Hossain.`;
   };
 
   return getContext();

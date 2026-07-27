@@ -33,15 +33,7 @@ export class SearchService {
       });
     }
 
-    // 4. LevelAxis Technologies (Company)
-    if (isRelevant("levelaxis") || isRelevant("level") || isRelevant("company")) {
-      const la = knowledgeBase.levelaxis;
-      findings.push(`**LevelAxis Technologies:** ${la.description}`);
-      findings.push(`**Products/Services:** ${la.products.join(", ")}`);
-      findings.push(`**Website:** ${la.contact.website}`);
-    }
-
-    // 5. Skills
+    // 4. Skills
     if (isRelevant("skill") || isRelevant("tech") || isRelevant("tool") || isRelevant("software")) {
       findings.push(`**Technical Skills:** ${knowledgeBase.skills.technical.join(", ")}`);
       findings.push(`**Professional Skills:** ${knowledgeBase.skills.professional.join(", ")}`);
@@ -51,7 +43,7 @@ export class SearchService {
         if (techMatches.length > 0) findings.push(`**Relevant Technical Skills:** ${techMatches.join(", ")}`);
     }
 
-    // 6. Projects
+    // 5. Projects
     if (isRelevant("project") || isRelevant("portfolio") || isRelevant("case")) {
        knowledgeBase.projects.forEach(p => {
            if (isRelevant(p.title) || isRelevant(p.description) || isRelevant("project")) {

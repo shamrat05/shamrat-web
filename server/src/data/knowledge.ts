@@ -33,11 +33,10 @@ export const knowledgeBase = {
       company: "LevelAxis Technologies",
       period: "Jan 2026 – Present",
       highlights: [
-        "Leading the Sales Team at LevelAxis Technologies, a software company.",
-        "Driving revenue growth and client acquisition strategies.",
-        "Spearheading strategic sales initiatives and building enterprise relationships.",
-        "Scaling sales operations to meet aggressive growth targets.",
-        "Responsible for the full sales cycle: prospecting, negotiation, and closing.",
+        "Leading sales strategy and client acquisition for a software company.",
+        "Driving revenue growth and building enterprise relationships.",
+        "Spearheading strategic sales initiatives and scaling operations.",
+        "Full sales cycle ownership: prospecting, negotiation, and closing.",
       ]
     },
     {
@@ -62,20 +61,6 @@ export const knowledgeBase = {
       ]
     }
   ],
-  levelaxis: {
-    company: "LevelAxis Technologies",
-    description: "LevelAxis Technologies is a software company focused on building innovative digital solutions. Shamrat leads the sales team, driving revenue growth and client acquisition.",
-    products: [
-      "Custom software development",
-      "Web and mobile application development",
-      "Business automation solutions",
-      "Digital transformation consulting"
-    ],
-    contact: {
-      website: "https://levelaxishq.com",
-      email: "info@levelaxishq.com"
-    }
-  },
   skills: {
     technical: [
       "Advanced Excel", "Google Sheets", "Power BI Dashboarding", 
