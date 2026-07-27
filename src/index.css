@@ -231,6 +231,19 @@
     contain: layout style;
   }
 
+  /* Grain overlay for cards - use filter: url(#grain-filter) */
+  .card-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    filter: url(#grain-filter);
+    opacity: 0.03;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   @media (hover: hover) {
     .card-glass:hover {
       background: rgba(255, 255, 255, 0.04);

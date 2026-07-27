@@ -52,20 +52,35 @@ export const Footer: React.FC = () => {
   const strokeDashoffset = circumference - scrollProgress * circumference;
 
   return (
-    <footer className="bg-[var(--card)] border-t border-[var(--border)] pt-12 pb-8">
-      <div className="container">
+    <footer className="relative overflow-hidden" style={{ background: 'var(--card)' }}>
+      {/* Grain overlay on footer */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          filter: 'url(#grain-filter)',
+          opacity: 0.03,
+          mixBlendMode: 'soft-light',
+        }}
+      />
+
+      {/* Top border with subtle glow */}
+      <div className="relative z-10 border-t border-border-default">
+        <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent" />
+      </div>
+
+      <div className="relative z-10 container pt-12 pb-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 text-center md:text-left">
           <div>
-            <h3 className="text-xl font-bold text-[var(--foreground)] mb-1">Md. Shamrat Hossain</h3>
-            <p className="text-[var(--muted-foreground)]">Sales Lead at LevelAxis Technologies</p>
+            <h3 className="text-xl font-bold text-text-primary mb-1">Md. Shamrat Hossain</h3>
+            <p className="text-text-secondary text-sm">Sales Lead at LevelAxis Technologies</p>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <a
               href="https://calendly.com/shamrat-r-h/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium h-10 px-5 transition-all hover:scale-[0.96]"
+              className="group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-primary-500 text-white text-sm font-medium h-9 px-4 transition-all duration-200 hover:scale-[0.96] active:scale-[0.96]"
             >
               Book a Call
             </a>
@@ -78,17 +93,22 @@ export const Footer: React.FC = () => {
                 key={index}
                 href={social.href}
                 rel="me"
-                className="flex items-center justify-center w-10 h-10 bg-[var(--background)] text-[var(--muted-foreground)] rounded-lg hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)] hover:-translate-y-1 transition-all duration-300"
+                className="flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+                style={{
+                  background: 'var(--background)',
+                  color: 'var(--muted-foreground)',
+                  border: '1px solid var(--border)',
+                }}
                 aria-label={social.label}
               >
-                <social.icon size={20} />
+                <social.icon size={18} />
               </a>
             ))}
           </div>
         </div>
         
-        <div className="text-center pt-8 border-t border-[var(--border)]">
-          <p className="text-[var(--muted-foreground)] text-sm">&copy; {currentYear} Md. Shamrat Hossain. All rights reserved.</p>
+        <div className="text-center pt-6 border-t border-border-default">
+          <p className="text-text-secondary text-xs">&copy; {currentYear} Md. Shamrat Hossain. All rights reserved.</p>
           <ShortcutsLegend />
         </div>
       </div>

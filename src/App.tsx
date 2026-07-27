@@ -14,6 +14,7 @@ import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import { BackgroundEffect } from './components/ui/BackgroundEffect';
 import { PageTransition } from './components/PageTransition';
 import { PageLoader } from './components/PageLoader';
+import { CursorFollower } from './components/CursorFollower';
 import { useIdlePrefetch } from './hooks/useIdlePrefetch';
 import { usePerformanceMode } from './hooks/usePerformanceMode';
 import './index.css';
@@ -45,6 +46,14 @@ const AppContent = () => {
 
   return (
     <PageTransition location={location}>
+      {/* SVG Grain Filter - defined once, referenced everywhere */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <filter id="grain-filter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="2" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </svg>
+      <CursorFollower />
       <div className="min-h-screen bg-transparent text-text-primary overflow-hidden font-sans flex flex-col relative">
         <BackgroundEffect />
         <Navigation />

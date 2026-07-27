@@ -12,6 +12,8 @@ interface Message {
   content: string;
 }
 
+const CAT_GIFS = ['/cat-typing.gif', '/cat-thinking.gif', '/cat-hello.gif'];
+
 export const AISearch: React.FC = () => {
   const isOpen = useIsAiChatOpen();
   const setAiChatOpen = usePortfolioStore((state) => state.setAiChatOpen);
@@ -19,11 +21,36 @@ export const AISearch: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeSuggestions, setActiveSuggestions] = useState<string[]>([]);
+  const [loadingCat, setLoadingCat] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const context = usePageContext();
   const location = useLocation();
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const saved = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return saved || systemDark;
+  });
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const isDark = theme === 'dark';
+
+  // Cycle cat GIF while loading
+  useEffect(() => {
+    if (!isLoading) return;
+    const interval = setInterval(() => setLoadingCat(i => (i + 1) % CAT_GIFS.length), 2000);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const getSuggestions = () => {
     const path = location.pathname;
@@ -38,51 +65,46 @@ export const AISearch: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, activeSuggestions]);
+  useEffect(() => { scrollToBottom(); }, [messages, activeSuggestions]);
+  useEffect(() => { setActiveSuggestions(getSuggestions()); }, [location.pathname]);
+  useEffect(() => { if (isOpen && inputRef.current) inputRef.current.focus(); }, [isOpen]);
 
-  // Update suggestions when page changes
-  useEffect(() => {
-    setActiveSuggestions(getSuggestions());
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+  // Mouse tracking for spotlight on panel
+  const handlePanelMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = panelRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  };
 
   const handleSubmit = async (e?: React.FormEvent, overrideQuery?: string) => {
     if (e) e.preventDefault();
     const textToSend = overrideQuery || query;
-    
     if (!textToSend.trim() || isLoading) return;
 
     setMessages(prev => [...prev, { role: 'user', content: textToSend }]);
     setQuery('');
-    setActiveSuggestions([]); // Clear suggestions on submit
+    setActiveSuggestions([]);
     setIsLoading(true);
 
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            message: textToSend, 
-            context: { page: location.pathname, data: context }, // Send explicit page context
-            history: messages // Send chat history for continuity
+        body: JSON.stringify({
+          message: textToSend,
+          context: { page: location.pathname, data: context },
+          history: messages,
         }),
       });
-
       if (!response.ok) throw new Error('Failed to fetch');
-
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
     } catch {
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'Sorry, I encountered an error connecting to the AI service. Please try again later.' 
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Sorry, I encountered an error connecting to the AI service. Please try again later.'
       }]);
     } finally {
       setIsLoading(false);
@@ -93,41 +115,110 @@ export const AISearch: React.FC = () => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed bottom-24 right-6 z-50 w-[350px] md:w-[400px] h-[500px] flex flex-col bg-bg-surface/80 border border-white/10 rounded-2xl shadow-2xl overflow-hidden glass-panel backdrop-blur-xl"
+          ref={panelRef}
+          onMouseMove={handlePanelMouseMove}
+          className="fixed bottom-24 right-6 z-50 w-[350px] md:w-[400px] h-[500px] flex flex-col rounded-2xl overflow-hidden"
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          style={{
+            background: isDark ? 'rgba(10,10,12,0.75)' : 'rgba(255,255,255,0.8)',
+            backdropFilter: 'blur(24px) saturate(1.5)',
+            WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
+            border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+            boxShadow: isDark
+              ? '0 0 0 1px rgba(255,255,255,0.03), 0 24px 80px -12px rgba(0,0,0,0.6), 0 0 40px -8px rgba(121,206,255,0.06)'
+              : '0 0 0 1px rgba(0,0,0,0.03), 0 24px 80px -12px rgba(0,0,0,0.12), 0 0 40px -8px rgba(15,127,255,0.06)',
+            isolation: 'isolate',
+          }}
         >
+          {/* Grain overlay on panel */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              filter: 'url(#grain-filter)',
+              opacity: isDark ? 0.04 : 0.03,
+              mixBlendMode: isDark ? 'soft-light' : 'overlay',
+              borderRadius: 'inherit',
+            }}
+          />
+
+          {/* Mouse spotlight effect */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 opacity-0 hover:opacity-100"
+            style={{
+              background: `radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${isDark ? 'rgba(121,206,255,0.06)' : 'rgba(15,127,255,0.04)'}, transparent 60%)`,
+              borderRadius: 'inherit',
+            }}
+          />
+
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-white/10 bg-primary-900/40 backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              <Sparkles size={18} className="text-primary-500" />
-              <h3 className="font-bold text-text-primary">{t('ai_search.ask')}</h3>
+          <div
+            className="relative z-20 flex items-center justify-between p-4"
+            style={{
+              borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+              background: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+            }}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="relative">
+                <img
+                  src={CAT_GIFS[loadingCat]}
+                  alt=""
+                  className="w-7 h-7 object-contain rounded-md"
+                  style={{ opacity: isLoading ? 1 : 0.7, transition: 'opacity 0.3s' }}
+                />
+              </div>
+              <div>
+                <h3 className="font-bold text-sm text-text-primary">Shamrat AI</h3>
+                <p className="text-[10px] text-text-secondary">
+                  {isLoading ? 'Thinking...' : 'Ask me anything'}
+                </p>
+              </div>
             </div>
-            <button 
+            <button
               onClick={() => setAiChatOpen(false)}
-              className="text-text-secondary hover:text-white transition-colors"
+              className="p-1.5 rounded-lg transition-all duration-200"
+              style={{
+                color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="relative z-20 flex-1 overflow-y-auto p-4 space-y-4 scrollbar-none">
             {messages.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full text-center text-text-secondary">
-                <Bot size={48} className="mb-4 text-primary-500 opacity-60" />
-                <p className="text-sm mb-6">
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <img src={CAT_GIFS[2]} alt="" className="w-16 h-16 object-contain mb-4 opacity-80" />
+                <p className="text-sm text-text-secondary mb-6 max-w-[250px] leading-relaxed">
                   {t('ai_search.placeholder')}
                 </p>
-                <div className="flex flex-col gap-2 w-full px-4">
-                  <p className="text-xs text-text-secondary mb-1 uppercase tracking-wider opacity-70">Suggested Questions</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-col gap-2 w-full">
+                  <p className="text-[10px] text-text-secondary uppercase tracking-widest opacity-60 mb-1">Suggested</p>
+                  <div className="flex flex-wrap gap-1.5 justify-center">
                     {activeSuggestions.map((s, i) => (
-                      <button 
-                        key={i} 
-                        onClick={() => handleSubmit(undefined, s)} 
-                        className="text-xs bg-white/10 hover:bg-primary-500/20 hover:text-primary-500 border border-white/10 px-3 py-2 rounded-lg transition-all text-left backdrop-blur-md"
+                      <button
+                        key={i}
+                        onClick={() => handleSubmit(undefined, s)}
+                        className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
+                        style={{
+                          background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+                          border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+                          color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = isDark ? 'rgba(121,206,255,0.3)' : 'rgba(15,127,255,0.3)';
+                          e.currentTarget.style.color = isDark ? '#79ceff' : '#0f7fff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+                          e.currentTarget.style.color = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)';
+                        }}
                       >
                         {s}
                       </button>
@@ -136,63 +227,126 @@ export const AISearch: React.FC = () => {
                 </div>
               </div>
             )}
-            
+
             {messages.map((msg, idx) => (
-              <div 
-                key={idx} 
-                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+                className={`flex gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                  msg.role === 'user' ? 'bg-primary-600' : 'bg-gray-700'
-                }`}>
-                  {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
+                {/* Avatar */}
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                  style={{
+                    background: msg.role === 'user'
+                      ? isDark ? 'rgba(121,206,255,0.15)' : 'rgba(15,127,255,0.1)'
+                      : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                    border: `1px solid ${msg.role === 'user'
+                      ? isDark ? 'rgba(121,206,255,0.2)' : 'rgba(15,127,255,0.15)'
+                      : isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}`,
+                  }}
+                >
+                  {msg.role === 'user'
+                    ? <User size={13} style={{ color: isDark ? '#79ceff' : '#0f7fff' }} />
+                    : <Bot size={13} style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }} />
+                  }
                 </div>
-                <div className={`p-3 rounded-2xl max-w-[85%] text-sm overflow-hidden ${
-                  msg.role === 'user' 
-                    ? 'bg-primary-600/90 text-white rounded-tr-sm backdrop-blur-sm' 
-                    : 'bg-black/60 text-text-primary rounded-tl-sm backdrop-blur-md border border-white/5'
-                }`}>
-                  <div className="prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-pre:bg-black/50 prose-pre:p-2 prose-pre:rounded-lg">
-                    <ReactMarkdown 
+
+                {/* Bubble */}
+                <div
+                  className="px-3.5 py-2.5 max-w-[80%] text-[13px] leading-relaxed overflow-hidden"
+                  style={{
+                    borderRadius: msg.role === 'user'
+                      ? '14px 14px 4px 14px'
+                      : '14px 14px 14px 4px',
+                    background: msg.role === 'user'
+                      ? isDark ? 'rgba(121,206,255,0.12)' : 'rgba(15,127,255,0.08)'
+                      : isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.025)',
+                    border: `1px solid ${msg.role === 'user'
+                      ? isDark ? 'rgba(121,206,255,0.15)' : 'rgba(15,127,255,0.12)'
+                      : isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
+                    color: isDark ? '#e5e5e5' : '#1f2937',
+                  }}
+                >
+                  <div className={`prose prose-sm max-w-none prose-p:leading-relaxed ${
+                    isDark ? 'prose-invert' : ''
+                  } prose-pre:p-2 prose-pre:rounded-lg`}>
+                    <ReactMarkdown
                       components={{
-                          // Override standard elements for better chat styling
-                          p: ({children}) => <p className="mb-2 last:mb-0">{children}</p>,
-                          ul: ({children}) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
-                          ol: ({children}) => <ol className="list-decimal pl-4 mb-2">{children}</ol>,
-                          li: ({children}) => <li className="mb-1">{children}</li>,
-                          code: ({children}) => <code className="bg-black/30 px-1 py-0.5 rounded text-xs font-mono text-primary-300">{children}</code>,
+                        p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc pl-4 mb-1.5 text-xs">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal pl-4 mb-1.5 text-xs">{children}</ol>,
+                        li: ({ children }) => <li className="mb-0.5">{children}</li>,
+                        code: ({ children }) => (
+                          <code
+                            className="px-1 py-0.5 rounded text-xs font-mono"
+                            style={{
+                              background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                              color: isDark ? '#79ceff' : '#0f7fff',
+                            }}
+                          >{children}</code>
+                        ),
                       }}
                     >
                       {msg.content}
                     </ReactMarkdown>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-            
+
+            {/* Loading indicator with cat GIF */}
             {isLoading && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center shrink-0">
-                  <Bot size={14} />
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex gap-2.5"
+              >
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                  style={{
+                    background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'}`,
+                  }}
+                >
+                  <Bot size={13} style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)' }} />
                 </div>
-                <div className="bg-black/60 backdrop-blur-md border border-white/5 p-3 rounded-2xl rounded-tl-sm text-sm text-text-secondary">
+                <div
+                  className="px-3.5 py-3 rounded-2xl rounded-tl-sm flex items-center gap-2"
+                  style={{
+                    background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.025)',
+                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'}`,
+                  }}
+                >
+                  <img
+                    src={CAT_GIFS[loadingCat]}
+                    alt=""
+                    className="w-6 h-6 object-contain"
+                  />
                   <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: isDark ? '#79ceff' : '#0f7fff', animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: isDark ? '#79ceff' : '#0f7fff', animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: isDark ? '#79ceff' : '#0f7fff', animationDelay: '300ms' }} />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
-            
-            {/* Inline Suggestions for ongoing chat */}
+
+            {/* Inline suggestions during chat */}
             {messages.length > 0 && activeSuggestions.length > 0 && !isLoading && (
-              <div className="flex flex-wrap gap-2 justify-end mt-2 animate-fade-in">
+              <div className="flex flex-wrap gap-1.5 justify-end mt-2">
                 {activeSuggestions.map((s, i) => (
-                  <button 
-                    key={i} 
-                    onClick={() => handleSubmit(undefined, s)} 
-                    className="text-xs bg-primary-500/10 text-primary-400 hover:bg-primary-500 hover:text-white border border-primary-500/20 px-3 py-1.5 rounded-full transition-all text-right backdrop-blur-md"
+                  <button
+                    key={i}
+                    onClick={() => handleSubmit(undefined, s)}
+                    className="text-[11px] px-2.5 py-1 rounded-full transition-all duration-200"
+                    style={{
+                      background: isDark ? 'rgba(121,206,255,0.08)' : 'rgba(15,127,255,0.06)',
+                      border: `1px solid ${isDark ? 'rgba(121,206,255,0.15)' : 'rgba(15,127,255,0.12)'}`,
+                      color: isDark ? '#79ceff' : '#0f7fff',
+                    }}
                   >
                     {s}
                   </button>
@@ -203,7 +357,13 @@ export const AISearch: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <form onSubmit={(e) => handleSubmit(e)} className="p-4 border-t border-white/10 bg-bg-surface/50 backdrop-blur-md">
+          <form
+            onSubmit={(e) => handleSubmit(e)}
+            className="relative z-20 p-3"
+            style={{
+              borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+            }}
+          >
             <div className="relative">
               <input
                 ref={inputRef}
@@ -211,14 +371,24 @@ export const AISearch: React.FC = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('ai_search.placeholder')}
-                className="w-full pl-4 pr-12 py-3 bg-black/40 border border-white/10 rounded-xl text-sm text-text-primary focus:outline-none focus:border-primary-500 transition-colors placeholder-white/30 backdrop-blur-sm"
+                className="w-full pl-4 pr-11 py-2.5 rounded-xl text-sm text-text-primary placeholder-text-secondary focus:outline-none transition-all duration-200"
+                style={{
+                  background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.025)',
+                  border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+                  color: isDark ? '#e5e5e5' : '#1f2937',
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = isDark ? 'rgba(121,206,255,0.3)' : 'rgba(15,127,255,0.3)')}
+                onBlur={(e) => (e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)')}
               />
-              <button 
+              <button
                 type="submit"
                 disabled={!query.trim() || isLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-primary-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-all duration-200 disabled:opacity-30"
+                style={{ color: isDark ? '#79ceff' : '#0f7fff' }}
+                onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.background = isDark ? 'rgba(121,206,255,0.1)' : 'rgba(15,127,255,0.08)'; }}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
               >
-                <Send size={18} />
+                <Send size={16} />
               </button>
             </div>
           </form>
