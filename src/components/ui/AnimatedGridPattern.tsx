@@ -9,15 +9,17 @@ interface AnimatedGridPatternProps {
 
 export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   className = '',
-  maxOpacity = 0.38,
-  duration = 3.6,
+  maxOpacity = 0.55,
+  duration = 3.4,
 }) => {
   const id = React.useId();
   const [viewportSize, setViewportSize] = React.useState({ width: 1600, height: 900 });
+  const [pointer, setPointer] = React.useState({ x: 800, y: 450 });
 
   React.useEffect(() => {
     const updateSize = () => {
       setViewportSize({ width: window.innerWidth, height: window.innerHeight });
+      setPointer({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
     };
 
     updateSize();
@@ -25,82 +27,84 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  const glows = React.useMemo(() => {
-    const safeWidth = Math.max(viewportSize.width, 900);
-    const safeHeight = Math.max(viewportSize.height, 700);
+  const dots = React.useMemo(() => {
+    const columns = Math.max(10, Math.floor(viewportSize.width / 44));
+    const rows = Math.max(7, Math.floor(viewportSize.height / 44));
 
-    return Array.from({ length: 6 }, (_, i) => ({
-      id: i,
-      x: safeWidth * (0.16 + i * 0.12),
-      y: safeHeight * (0.2 + (i % 3) * 0.2),
-      size: 220 + i * 70,
-      opacity: 0.08 + i * 0.03,
-    }));
+    return Array.from({ length: columns * rows }, (_, i) => {
+      const col = i % columns;
+      const row = Math.floor(i / columns);
+      const x = (col + 0.5) * (viewportSize.width / columns);
+      const y = (row + 0.5) * (viewportSize.height / rows);
+      const base = i % 13 === 0 ? 2.1 : 1.1;
+      const opacity = i % 19 === 0 ? 0.8 : 0.35 + Math.random() * 0.2;
+
+      return { x, y, size: base, opacity };
+    });
   }, [viewportSize.width, viewportSize.height]);
+
+  const sparkleDots = React.useMemo(() => dots.filter((_, i) => i % 19 === 0), [dots]);
+
+  const handlePointerMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setPointer({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+  };
 
   return (
     <svg
       aria-hidden="true"
       className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
-      style={{ maskImage: 'radial-gradient(circle at center, black 30%, transparent 85%)' }}
+      onMouseMove={handlePointerMove}
+      onMouseLeave={() => setPointer({ x: viewportSize.width / 2, y: viewportSize.height / 2 })}
+      style={{ maskImage: 'radial-gradient(circle at center, black 35%, transparent 90%)' }}
     >
       <defs>
-        <radialGradient id={id} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#F5E8FF" stopOpacity="0.95" />
-          <stop offset="45%" stopColor="#C084FC" stopOpacity="0.6" />
+        <radialGradient id={`${id}-glow`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+          <stop offset="45%" stopColor="#C084FC" stopOpacity="0.75" />
           <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
         </radialGradient>
+        <linearGradient id={`${id}-dot`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+          <stop offset="100%" stopColor="#A855F7" stopOpacity="0.8" />
+        </linearGradient>
       </defs>
 
       <rect width="100%" height="100%" fill="transparent" />
 
-      {glows.map((glow, idx) => (
-        <motion.circle
-          key={glow.id}
-          cx={glow.x}
-          cy={glow.y}
-          r={glow.size}
-          fill={`url(#${id})`}
-          initial={{ opacity: 0.02, scale: 0.92 }}
-          animate={{
-            opacity: [0.02, glow.opacity, 0.02],
-            scale: [0.92, 1.05, 0.92],
-          }}
-          transition={{
-            duration: duration + idx * 0.35,
-            repeat: Infinity,
-            delay: idx * 0.2,
-            ease: 'easeInOut',
-          }}
-          style={{ filter: 'blur(45px)' }}
+      <motion.circle
+        cx={pointer.x}
+        cy={pointer.y}
+        r={180}
+        fill={`url(#${id}-glow)`}
+        initial={{ opacity: 0.12, scale: 0.9 }}
+        animate={{ opacity: [0.12, 0.22, 0.12], scale: [0.9, 1.04, 0.9] }}
+        transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ filter: 'blur(80px)' }}
+      />
+
+      {dots.map((dot, index) => (
+        <circle
+          key={`${dot.x}-${dot.y}-${index}`}
+          cx={dot.x}
+          cy={dot.y}
+          r={dot.size}
+          fill={index % 2 === 0 ? `url(#${id}-dot)` : '#C084FC'}
+          opacity={dot.opacity}
         />
       ))}
 
-      {Array.from({ length: 8 }).map((_, idx) => (
-        <motion.rect
-          key={`spark-${idx}`}
-          x={viewportSize.width * (0.12 + idx * 0.1)}
-          y={viewportSize.height * (0.18 + (idx % 3) * 0.18)}
-          width={170 + idx * 16}
-          height={2.2}
-          rx={1.1}
+      {sparkleDots.map((dot, index) => (
+        <motion.circle
+          key={`spark-${dot.x}-${dot.y}-${index}`}
+          cx={dot.x}
+          cy={dot.y}
+          r={2.4}
           fill="#FFFFFF"
-          initial={{ opacity: 0, scaleX: 0.5, scaleY: 0.6 }}
-          animate={{
-            opacity: [0, maxOpacity, 0],
-            scaleX: [0.5, 1, 0.5],
-            scaleY: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: duration + idx * 0.1,
-            repeat: Infinity,
-            delay: idx * 0.18,
-            ease: 'easeInOut',
-          }}
-          style={{
-            transformOrigin: 'center',
-            filter: 'drop-shadow(0 0 8px #FFFFFF) drop-shadow(0 0 12px #C084FC)',
-          }}
+          initial={{ opacity: 0.3, scale: 0.9 }}
+          animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.15, 0.9] }}
+          transition={{ duration: duration + index * 0.12, repeat: Infinity, delay: index * 0.05, ease: 'easeInOut' }}
+          style={{ filter: 'drop-shadow(0 0 6px #FFFFFF) drop-shadow(0 0 10px #C084FC)' }}
         />
       ))}
     </svg>
