@@ -1,4 +1,5 @@
 import React from 'react';
+import { GridMotion } from './ui/GridMotion';
 
 interface Skill {
   name: string;
@@ -6,94 +7,34 @@ interface Skill {
   color: string;
 }
 
-const row1Skills: Skill[] = [
-  { name: 'Agentic AI & LLMs', abbr: 'AI', color: '#8B5CF6' },
-  { name: 'n8n Workflows', abbr: 'N8', color: '#EA580C' },
-  { name: 'Zapier Automations', abbr: 'ZP', color: '#F97316' },
-  { name: 'Cross-Departmental Workflows', abbr: 'CD', color: '#3B82F6' },
-  { name: 'Marketing Strategy', abbr: 'MS', color: '#10B981' },
-  { name: 'Data Analytics & Power BI', abbr: 'DA', color: '#06B6D4' },
+const skills: Skill[] = [
+  { name: 'Agentic AI Workflows', abbr: 'AI', color: '#79CEFF' },
+  { name: 'n8n Orchestration', abbr: 'N8', color: '#FF6B35' },
+  { name: 'Zapier Automation', abbr: 'ZP', color: '#FF4500' },
+  { name: 'Cross-Departmental Pipelines', abbr: 'CD', color: '#3B9EFF' },
+  { name: 'Marketing Strategy', abbr: 'MS', color: '#34D399' },
+  { name: 'Data Analytics & Power BI', abbr: 'BI', color: '#0052AC' },
   { name: 'Banking Operations', abbr: 'BO', color: '#F59E0B' },
-  { name: 'Sales Operations', abbr: 'SO', color: '#EC4899' },
-];
-
-const row2Skills: Skill[] = [
+  { name: 'Sales Operations & CRM', abbr: 'SO', color: '#EC4899' },
   { name: 'Process & SLA Engineering', abbr: 'PO', color: '#10B981' },
-  { name: 'HubSpot & Sales CRM', abbr: 'CRM', color: '#EA580C' },
-  { name: 'Business Intelligence', abbr: 'BI', color: '#F59E0B' },
-  { name: 'Python & Scripting', abbr: 'PY', color: '#8B5CF6' },
-  { name: 'Project Leadership', abbr: 'PM', color: '#3B82F6' },
-  { name: 'SEO & Content Strategy', abbr: 'SE', color: '#06B6D4' },
-  { name: 'Revenue Operations', abbr: 'RO', color: '#EC4899' },
-  { name: 'REST Webhooks & APIs', abbr: 'API', color: '#10B981' },
+  { name: 'HubSpot Ecosystem', abbr: 'HS', color: '#FF7A59' },
+  { name: 'Python Automation', abbr: 'PY', color: '#8B5CF6' },
+  { name: 'REST Webhooks & APIs', abbr: 'API', color: '#06B6D4' },
 ];
-
-const Chip: React.FC<{ skill: Skill }> = ({ skill }) => (
-  <span
-    className="tm-chip"
-    style={{ '--c': skill.color } as React.CSSProperties}
-  >
-    <span className="tm-tile">{skill.abbr}</span>
-    {skill.name}
-  </span>
-);
-
-const Rail: React.FC<{ skills: Skill[]; speed: string; reverse?: boolean }> = ({
-  skills,
-  speed,
-  reverse,
-}) => {
-  const group = (
-    <div
-      className={`tm-group ${reverse ? 'tm-group--rev' : ''}`}
-      style={{ '--speed': speed } as React.CSSProperties}
-    >
-      {skills.map((s, i) => (
-        <Chip key={`a-${i}`} skill={s} />
-      ))}
-    </div>
-  );
-  const groupDupe = (
-    <div
-      className={`tm-group ${reverse ? 'tm-group--rev' : ''}`}
-      style={{ '--speed': speed } as React.CSSProperties}
-      aria-hidden="true"
-    >
-      {skills.map((s, i) => (
-        <Chip key={`b-${i}`} skill={s} />
-      ))}
-    </div>
-  );
-
-  return (
-    <div className="tm-viewport">
-      {group}
-      {groupDupe}
-    </div>
-  );
-};
 
 export const TechMarquee: React.FC = () => {
-  const allSkills = [...row1Skills, ...row2Skills];
-
   return (
-    <section className="tm-section" aria-label="Skills marquee">
-      <ul className="sr-only">
-        {allSkills.map((s) => (
-          <li key={s.name}>{s.name}</li>
-        ))}
-      </ul>
-
-      <div className="tm-inner">
-        <div className="tm-head">
-          <h3 className="tm-title">What I work with</h3>
-        </div>
-
-        <div className="tm-wall">
-          <Rail skills={row1Skills} speed="32s" />
-          <Rail skills={row2Skills} speed="40s" reverse />
-        </div>
+    <section className="relative py-16 contain-layout overflow-hidden" aria-label="What I work with">
+      <div className="container mb-8 text-center">
+        <h3 className="text-2xl font-bold tracking-tight text-text-primary">
+          What I Work With
+        </h3>
+        <p className="text-sm text-text-secondary mt-1">
+          Production-grade tools, platforms, and automation engines
+        </p>
       </div>
+
+      <GridMotion items={skills} />
     </section>
   );
 };
