@@ -13,28 +13,43 @@ interface AnimatedGridPatternProps {
 export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   width = 44,
   height = 44,
-  numSquares = 35,
+  numSquares = 24,
   className = '',
   maxOpacity = 0.45,
-  duration = 3,
+  duration = 2.4,
 }) => {
   const id = React.useId();
+  const [viewportSize, setViewportSize] = React.useState({ width: 1600, height: 900 });
 
-  // Generate random square coordinates for grid pulse
+  React.useEffect(() => {
+    const updateSize = () => {
+      setViewportSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
   const squares = React.useMemo(() => {
+    const safeWidth = Math.max(viewportSize.width, 900);
+    const safeHeight = Math.max(viewportSize.height, 700);
+
     return Array.from({ length: numSquares }, (_, i) => {
-      const side = i % 3 === 0 ? 'left' : i % 3 === 1 ? 'right' : 'center';
+      const side = i % 2 === 0 ? 'left' : 'right';
       const x =
         side === 'left'
-          ? Math.floor(Math.random() * 8) * width
-          : side === 'right'
-            ? Math.floor(Math.random() * 8 + 17) * width
-            : Math.floor(Math.random() * 20) * width;
+          ? Math.random() * safeWidth * 0.24 + safeWidth * 0.04
+          : Math.random() * safeWidth * 0.24 + safeWidth * 0.72;
+      const y = Math.random() * safeHeight * 0.82 + safeHeight * 0.09;
 
       return {
         id: i,
         x,
-        y: Math.floor(Math.random() * 15) * height,
+        y,
         color:
           i % 4 === 0
             ? '#8B5CF6'
@@ -43,15 +58,15 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               : i % 4 === 2
                 ? '#A855F7'
                 : '#F472B6',
-        length: Math.random() * 12 + 12,
+        length: Math.random() * 10 + 16,
       };
     });
-  }, [numSquares, width, height]);
+  }, [numSquares, viewportSize.width, viewportSize.height]);
 
   return (
     <svg
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 h-full w-full fill-gray-400/10 stroke-gray-400/20 [mask-image:radial-gradient(700px_circle_at_center,white,transparent)] ${className}`}
+      className={`pointer-events-none absolute inset-0 h-full w-full fill-gray-400/10 stroke-gray-400/20 [mask-image:linear-gradient(90deg,transparent_0%,white_8%,white_92%,transparent_100%)] ${className}`}
     >
       <defs>
         <pattern
@@ -87,76 +102,56 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
       <svg x={-1} y={-1} className="overflow-visible">
         {squares.map((square, idx) => (
           <g key={`${square.x}-${square.y}-${idx}`}>
-            {/* Glowing Grid Cell Accent */}
-            <motion.rect
-              width={width - 1}
-              height={height - 1}
-              x={square.x + 1}
-              y={square.y + 1}
-              fill={square.color}
-              strokeWidth="0"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: [0, maxOpacity, 0],
-              }}
-              transition={{
-                duration: duration,
-                repeat: Infinity,
-                delay: idx * 0.15,
-                ease: 'easeInOut',
-              }}
-              className="rx-sm"
-              style={{ opacity: 0.15 }}
-            />
-
             {/* Elongated Glitter Grain */}
             <motion.rect
-              x={square.x + width / 2 - square.length / 2}
-              y={square.y + height / 2 - 1.4}
+              x={square.x - square.length / 2}
+              y={square.y - 1.4}
               width={square.length + 6}
               height={3.2}
               rx={1.4}
               fill="#FFFFFF"
-              initial={{ opacity: 0, scaleX: 0.25, scaleY: 0.5 }}
+              initial={{ opacity: 0, scaleX: 0.2, scaleY: 0.5 }}
               animate={{
-                opacity: [0, 0.4, 0],
-                scaleX: [0.25, 1.12, 0.25],
-                scaleY: [0.5, 1.08, 0.5],
+                opacity: [0, 0.42, 0],
+                scaleX: [0.2, 1.08, 0.2],
+                scaleY: [0.5, 1.02, 0.5],
               }}
               transition={{
-                duration: duration * 0.8,
+                duration: duration * 0.85,
                 repeat: Infinity,
-                delay: idx * 0.18,
+                delay: idx * 0.12,
                 ease: 'easeInOut',
               }}
               style={{
                 transformOrigin: 'center',
-                filter: 'drop-shadow(0 0 10px #FFFFFF) drop-shadow(0 0 18px #C084FC)',
+                willChange: 'transform, opacity',
+                filter: 'drop-shadow(0 0 10px #FFFFFF) drop-shadow(0 0 16px #C084FC)',
               }}
             />
 
             <motion.rect
-              x={square.x + width / 2 - square.length / 2}
-              y={square.y + height / 2 - 1}
+              x={square.x - square.length / 2}
+              y={square.y - 1}
               width={square.length}
               height={2}
               rx={1}
               fill="url(#glitterSparkle)"
-              initial={{ opacity: 0, scaleX: 0.25, scaleY: 0.45 }}
+              initial={{ opacity: 0, scaleX: 0.2, scaleY: 0.45 }}
               animate={{
                 opacity: [0, 1, 0],
-                scaleX: [0.25, 1.1, 0.25],
-                scaleY: [0.45, 1.02, 0.45],
+                scaleX: [0.2, 1.05, 0.2],
+                scaleY: [0.45, 1, 0.45],
               }}
               transition={{
-                duration: duration * 0.8,
+                duration: duration * 0.85,
                 repeat: Infinity,
-                delay: idx * 0.18,
+                delay: idx * 0.12,
                 ease: 'easeInOut',
               }}
               style={{
                 transformOrigin: 'center',
-                filter: 'drop-shadow(0 0 12px #C084FC) drop-shadow(0 0 22px #8B5CF6)',
+                willChange: 'transform, opacity',
+                filter: 'drop-shadow(0 0 12px #C084FC) drop-shadow(0 0 20px #8B5CF6)',
               }}
             />
           </g>
