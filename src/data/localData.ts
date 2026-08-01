@@ -173,6 +173,47 @@ export const localData: CMSData = {
     },
     {
       id: 2,
+      slug: "building-24-7-context-aware-sales-support-agents",
+      title: "Building 24/7 Context-Aware Sales & Support Agents: A Business Owner's Guide to Converting After-Hours Leads",
+      date: "Jan 20, 2026",
+      readTime: "5 min read",
+      category: "AI & Automation",
+      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=500&fit=crop",
+      description: "How businesses are using context-aware AI agents to answer complex customer inquiries, inspect past interaction history, and convert after-hours leads into qualified pipeline revenue.",
+      link: "/blog/building-24-7-context-aware-sales-support-agents",
+      content: `<div class="space-y-6">
+        <h2 class="text-2xl font-bold mt-8 mb-4">The After-Hours Lead Leakage Problem</h2>
+        <p>Over 40% of B2B and high-ticket B2C inquiries happen outside standard 9-to-5 business hours. When prospects leave a message on Friday evening and don't hear back until Monday morning, over 70% have already moved on to a competitor.</p>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">How Context Memory Changes the Conversation</h2>
+        <p>Unlike rigid decision trees, context-aware AI agents remember who they are talking to. By querying CRM records and interaction history before replying, the agent greets returning visitors with personalized knowledge, recalling their interest zones and past questions.</p>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">Converting Inquiries into Pipeline Revenue</h2>
+        <p>An agentic support system doesn't just provide static answers—it actively qualifies lead intent, checks team calendar availability, and schedules sales meetings automatically in real time.</p>
+      </div>`,
+      tags: ["24/7 Support", "Lead Conversion", "CRM Intelligence", "AI Agents"]
+    },
+    {
+      id: 3,
+      slug: "automating-multi-channel-content-campaigns",
+      title: "Automating Multi-Channel Content & Social Media Campaigns Without Losing Brand Authenticity",
+      date: "Jan 10, 2026",
+      readTime: "5 min read",
+      category: "Marketing & Growth",
+      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=500&fit=crop",
+      description: "A practical guide to building automated social media generation pipelines and multi-channel campaign triggers that keep your brand visible and engage prospects automatically.",
+      link: "/blog/automating-multi-channel-content-campaigns",
+      content: `<div class="space-y-6">
+        <h2 class="text-2xl font-bold mt-8 mb-4">The Content Consistency Trap</h2>
+        <p>Maintaining an active brand presence across LinkedIn, Twitter, Meta, and email newsletters consumes dozens of manual hours every week. Without automated workflows, marketing teams struggle to maintain consistent posting schedules.</p>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">Building an Automated Campaign Pipeline</h2>
+        <p>Using automated webhook pipelines, core business insights are converted into platform-ready posts, queued for human review or automatic publishing, and tracked for prospect click-through signals.</p>
+      </div>`,
+      tags: ["Content Automation", "Social Media", "Multi-Channel", "Marketing Automation"]
+    },
+    {
+      id: 4,
       slug: "seo-cheat-sheet-2025",
       title: "The Ultimate SEO Cheat Sheet: How to Rank on Google and AI Search in 2026",
       date: "Dec 2, 2025",
@@ -188,7 +229,7 @@ export const localData: CMSData = {
       tags: ["SEO", "AI", "Marketing"]
     },
     {
-      id: 3,
+      id: 5,
       slug: "data-driven-operations",
       title: "Data-Driven Decision Making in Operations",
       date: "Dec 5, 2025",
