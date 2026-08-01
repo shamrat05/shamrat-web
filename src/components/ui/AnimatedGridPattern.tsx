@@ -15,9 +15,21 @@ interface Dot {
 
 interface AnimatedGridPatternProps {
   className?: string;
+  width?: number;
+  height?: number;
+  numSquares?: number;
+  maxOpacity?: number;
+  duration?: number;
 }
 
-export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ className = '' }) => {
+export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
+  className = '',
+  width: _width,
+  height: _height,
+  numSquares: _numSquares,
+  maxOpacity: _maxOpacity,
+  duration: _duration,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const glowRef = useRef<SVGCircleElement>(null);
@@ -45,13 +57,15 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
   });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvasEl = canvasRef.current;
     const glowEl = glowRef.current;
-    if (!canvas) return;
+    if (!canvasEl) return;
 
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const ctx = canvasEl.getContext('2d', { alpha: true });
     if (!ctx) return;
 
+    const canvas = canvasEl;
+    const context = ctx;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let resizeTimer: ReturnType<typeof setTimeout>;
 
@@ -61,8 +75,9 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
     };
 
     function doResize() {
-      const rect = canvas.parentElement?.getBoundingClientRect();
-      if (!rect) return;
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
       const w = rect.width;
       const h = rect.height;
 
@@ -70,7 +85,7 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       sizeRef.current = {
         w,
@@ -85,8 +100,8 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
     function buildDots(w: number, h: number) {
       const p = propsRef.current;
       const step = p.dotRadius + p.dotSpacing;
-      const cols = Math.floor(w / step);
-      const rows = Math.floor(h / step);
+      const cols = Math.max(8, Math.floor(w / step));
+      const rows = Math.max(6, Math.floor(h / step));
       const padX = (w % step) / 2;
       const padY = (h % step) / 2;
       const dots: Dot[] = new Array(rows * cols);
@@ -133,6 +148,8 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
       const len = dots.length;
       const t = frameCount * 0.02;
 
+      if (!ctx) return;
+
       const targetEngagement = Math.min(m.speed / 5, 1);
       engagement.current += (targetEngagement - engagement.current) * 0.06;
       if (engagement.current < 0.001) engagement.current = 0;
@@ -146,19 +163,19 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
         glowEl.style.opacity = String(glowOpacity.current);
       }
 
-      ctx.clearRect(0, 0, w, h);
+      context.clearRect(0, 0, w, h);
 
-      const grad = ctx.createLinearGradient(0, 0, w, h);
+      const grad = context.createLinearGradient(0, 0, w, h);
       grad.addColorStop(0, p.gradientFrom);
       grad.addColorStop(1, p.gradientTo);
-      ctx.fillStyle = grad;
+      context.fillStyle = grad;
 
       const cr = p.cursorRadius;
       const crSq = cr * cr;
       const rad = p.dotRadius / 2;
       const isBulge = p.bulgeOnly;
 
-      ctx.beginPath();
+      context.beginPath();
 
       for (let i = 0; i < len; i++) {
         const d = dots[i];
@@ -204,19 +221,19 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({ classN
         if (p.sparkle) {
           const hash = ((i * 2654435761) ^ (frameCount >> 3)) >>> 0;
           if ((hash % 100) < 3) {
-            ctx.moveTo(drawX + rad * 1.8, drawY);
-            ctx.arc(drawX, drawY, rad * 1.8, 0, TWO_PI);
+            context.moveTo(drawX + rad * 1.8, drawY);
+            context.arc(drawX, drawY, rad * 1.8, 0, TWO_PI);
           } else {
-            ctx.moveTo(drawX + rad, drawY);
-            ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+            context.moveTo(drawX + rad, drawY);
+            context.arc(drawX, drawY, rad, 0, TWO_PI);
           }
         } else {
-          ctx.moveTo(drawX + rad, drawY);
-          ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+          context.moveTo(drawX + rad, drawY);
+          context.arc(drawX, drawY, rad, 0, TWO_PI);
         }
       }
 
-      ctx.fill();
+      context.fill();
       rafRef.current = window.requestAnimationFrame(tick);
     }
 
