@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { useCMS } from '../hooks/useCMS';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight } from 'lucide-react';
-import { Threads } from './ui/Threads';
+import { SplashCursor } from './ui/SplashCursor';
+import { Aurora } from './ui/Aurora';
 import { GradientText } from './ui/GradientText';
 import { TextPressure } from './ui/TextPressure';
 import { Magnet } from './ui/Magnet';
@@ -45,13 +46,11 @@ export const Hero: React.FC = React.memo(() => {
       ref={ref}
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-14"
     >
-      {/* React Bits Threads Moving Light Strings Background */}
-      <Threads
-        numThreads={5}
-        amplitude={0.9}
-        enableMouseInteraction={true}
-        color={['#3B9EFF', '#79CEFF', '#34D399', '#8B5CF6', '#F59E0B']}
-      />
+      {/* React Bits Aurora Ambient Mesh Background */}
+      <Aurora />
+
+      {/* React Bits SplashCursor Interactive Fluid Ripples */}
+      <SplashCursor />
 
       {/* Grain overlay specific to hero */}
       <div className="absolute inset-0 pointer-events-none z-[1]">

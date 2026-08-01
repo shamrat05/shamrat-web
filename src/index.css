@@ -278,6 +278,34 @@
     transform: translateZ(0);
   }
 
+  @keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  will-change: transform;
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  will-change: transform;
+  animation: marquee-right 40s linear infinite;
+}
+
   @keyframes gradient-sweep {
     0% {
       background-position: 0% 50%;
