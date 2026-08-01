@@ -7,25 +7,25 @@ interface Skill {
 }
 
 const row1Skills: Skill[] = [
-  { name: 'Marketing Strategy', abbr: 'MS', color: '#3B82F6' },
-  { name: 'Data Analytics', abbr: 'DA', color: '#10B981' },
-  { name: 'AI & Automation', abbr: 'AI', color: '#8B5CF6' },
-  { name: 'Sales Operations', abbr: 'SO', color: '#F59E0B' },
-  { name: 'CRM Systems', abbr: 'CR', color: '#06B6D4' },
-  { name: 'SEO & SEM', abbr: 'SE', color: '#10B981' },
-  { name: 'Funnel Optimization', abbr: 'FO', color: '#EC4899' },
-  { name: 'React & TypeScript', abbr: 'RT', color: '#3B82F6' },
+  { name: 'Agentic AI & LLMs', abbr: 'AI', color: '#8B5CF6' },
+  { name: 'n8n Workflows', abbr: 'N8', color: '#EA580C' },
+  { name: 'Zapier Automations', abbr: 'ZP', color: '#F97316' },
+  { name: 'Cross-Departmental Workflows', abbr: 'CD', color: '#3B82F6' },
+  { name: 'Marketing Strategy', abbr: 'MS', color: '#10B981' },
+  { name: 'Data Analytics & Power BI', abbr: 'DA', color: '#06B6D4' },
+  { name: 'Banking Operations', abbr: 'BO', color: '#F59E0B' },
+  { name: 'Sales Operations', abbr: 'SO', color: '#EC4899' },
 ];
 
 const row2Skills: Skill[] = [
+  { name: 'Process & SLA Engineering', abbr: 'PO', color: '#10B981' },
+  { name: 'HubSpot & Sales CRM', abbr: 'CRM', color: '#EA580C' },
   { name: 'Business Intelligence', abbr: 'BI', color: '#F59E0B' },
-  { name: 'Project Management', abbr: 'PM', color: '#10B981' },
-  { name: 'Growth Hacking', abbr: 'GH', color: '#EC4899' },
-  { name: 'Python & ML', abbr: 'PY', color: '#8B5CF6' },
-  { name: 'A/B Testing', abbr: 'AB', color: '#06B6D4' },
-  { name: 'Email Marketing', abbr: 'EM', color: '#F97316' },
-  { name: 'Revenue Operations', abbr: 'RO', color: '#3B82F6' },
-  { name: 'PostgreSQL & MongoDB', abbr: 'DB', color: '#10B981' },
+  { name: 'Python & Scripting', abbr: 'PY', color: '#8B5CF6' },
+  { name: 'Project Leadership', abbr: 'PM', color: '#3B82F6' },
+  { name: 'SEO & Content Strategy', abbr: 'SE', color: '#06B6D4' },
+  { name: 'Revenue Operations', abbr: 'RO', color: '#EC4899' },
+  { name: 'REST Webhooks & APIs', abbr: 'API', color: '#10B981' },
 ];
 
 const Chip: React.FC<{ skill: Skill }> = ({ skill }) => (
@@ -78,7 +78,6 @@ export const TechMarquee: React.FC = () => {
 
   return (
     <section className="tm-section" aria-label="Skills marquee">
-      {/* SR-only static list for a11y */}
       <ul className="sr-only">
         {allSkills.map((s) => (
           <li key={s.name}>{s.name}</li>
