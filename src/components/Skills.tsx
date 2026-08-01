@@ -62,6 +62,19 @@ export const Skills: React.FC = React.memo(() => {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const { data } = useCMS();
 
+  const [isDark, setIsDark] = React.useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    return document.documentElement.getAttribute('data-theme') !== 'light';
+  });
+
+  React.useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.getAttribute('data-theme') !== 'light');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
   const getIcon = (iconName?: string) => {
     if (!iconName) return Code;
     const Icon = iconMap[iconName] || Code;
@@ -70,9 +83,9 @@ export const Skills: React.FC = React.memo(() => {
 
   const getLevelColor = (level: string) => {
     switch(level) {
-      case 'expert': return 'bg-primary-500/10 border-primary-500/30 text-primary-500';
-      case 'advanced': return 'bg-primary-400/10 border-primary-400/30 text-primary-400';
-      default: return 'bg-primary-400/5 border-primary-400/20 text-primary-400/80';
+      case 'expert': return isDark ? 'bg-primary-500/10 border-primary-500/30 text-primary-400' : 'bg-primary-500/10 border-primary-500/30 text-primary-600 font-semibold';
+      case 'advanced': return isDark ? 'bg-primary-400/10 border-primary-400/30 text-primary-300' : 'bg-primary-500/10 border-primary-400/30 text-primary-600 font-medium';
+      default: return isDark ? 'bg-primary-400/5 border-primary-400/20 text-primary-400/80' : 'bg-primary-500/5 border-primary-400/20 text-primary-700';
     }
   };
 
@@ -92,10 +105,10 @@ export const Skills: React.FC = React.memo(() => {
       {
         label: 'Skill Level',
         data: data.skills.technical.map(s => getLevelValue(s.level)),
-        backgroundColor: 'rgba(10, 132, 255, 0.2)',
-        borderColor: 'rgba(10, 132, 255, 1)',
+        backgroundColor: isDark ? 'rgba(10, 132, 255, 0.25)' : 'rgba(15, 127, 255, 0.18)',
+        borderColor: isDark ? 'rgba(10, 132, 255, 1)' : 'rgba(15, 127, 255, 1)',
         borderWidth: 2,
-        pointBackgroundColor: 'rgba(10, 132, 255, 1)',
+        pointBackgroundColor: isDark ? 'rgba(10, 132, 255, 1)' : 'rgba(15, 127, 255, 1)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(10, 132, 255, 1)',
@@ -107,15 +120,16 @@ export const Skills: React.FC = React.memo(() => {
     scales: {
       r: {
         angleLines: {
-          color: 'rgba(255, 255, 255, 0.1)',
+          color: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)',
+          color: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
         },
         pointLabels: {
-          color: 'rgba(255, 255, 255, 0.7)',
+          color: isDark ? 'rgba(255, 255, 255, 0.85)' : '#111827',
           font: {
-            size: 12
+            size: 11,
+            weight: 'bold' as const,
           }
         },
         ticks: {
