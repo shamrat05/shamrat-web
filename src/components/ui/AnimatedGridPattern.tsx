@@ -11,12 +11,12 @@ interface AnimatedGridPatternProps {
 }
 
 export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
-  width = 44,
-  height = 44,
-  numSquares = 10,
+  width = 48,
+  height = 48,
+  numSquares = 8,
   className = '',
-  maxOpacity = 0.45,
-  duration = 3.2,
+  maxOpacity = 0.35,
+  duration = 3.8,
 }) => {
   const id = React.useId();
   const [viewportSize, setViewportSize] = React.useState({ width: 1600, height: 900 });
@@ -42,9 +42,9 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
       const side = i % 2 === 0 ? 'left' : 'right';
       const x =
         side === 'left'
-          ? Math.random() * safeWidth * 0.24 + safeWidth * 0.04
-          : Math.random() * safeWidth * 0.24 + safeWidth * 0.72;
-      const y = Math.random() * safeHeight * 0.82 + safeHeight * 0.09;
+          ? Math.random() * safeWidth * 0.22 + safeWidth * 0.05
+          : Math.random() * safeWidth * 0.22 + safeWidth * 0.73;
+      const y = Math.random() * safeHeight * 0.76 + safeHeight * 0.12;
 
       return {
         id: i,
@@ -66,7 +66,7 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   return (
     <svg
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 h-full w-full fill-gray-400/10 stroke-gray-400/20 [mask-image:linear-gradient(90deg,transparent_0%,white_8%,white_92%,transparent_100%)] ${className}`}
+      className={`pointer-events-none absolute inset-0 h-full w-full fill-gray-400/10 stroke-gray-400/20 [mask-image:radial-gradient(1000px_circle_at_center,white,transparent)] ${className}`}
     >
       <defs>
         <pattern
@@ -82,7 +82,7 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="opacity-15"
+            className="opacity-10"
           />
         </pattern>
 
@@ -107,14 +107,14 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               x={square.x - square.length / 2}
               y={square.y - 1.4}
               width={square.length + 6}
-              height={3.2}
-              rx={1.4}
+              height={2.4}
+              rx={1.2}
               fill="#FFFFFF"
-              initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
+              initial={{ opacity: 0, scaleX: 0.7, scaleY: 0.7 }}
               animate={{
-                opacity: [0, 0.35, 0],
-                scaleX: [0.8, 1.04, 0.8],
-                scaleY: [0.8, 1.02, 0.8],
+                opacity: [0, 0.3, 0],
+                scaleX: [0.7, 1.02, 0.7],
+                scaleY: [0.7, 1, 0.7],
               }}
               transition={{
                 duration: duration,
@@ -125,7 +125,7 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               style={{
                 transformOrigin: 'center',
                 willChange: 'transform, opacity',
-                filter: 'drop-shadow(0 0 10px #FFFFFF) drop-shadow(0 0 16px #C084FC)',
+                filter: 'drop-shadow(0 0 8px #FFFFFF) drop-shadow(0 0 12px #C084FC)',
               }}
             />
 
@@ -133,14 +133,14 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               x={square.x - square.length / 2}
               y={square.y - 1}
               width={square.length}
-              height={2}
-              rx={1}
+              height={1.6}
+              rx={0.8}
               fill="url(#glitterSparkle)"
-              initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
+              initial={{ opacity: 0, scaleX: 0.7, scaleY: 0.7 }}
               animate={{
-                opacity: [0, 0.95, 0],
-                scaleX: [0.8, 1.06, 0.8],
-                scaleY: [0.8, 1.04, 0.8],
+                opacity: [0, 0.9, 0],
+                scaleX: [0.7, 1.03, 0.7],
+                scaleY: [0.7, 1, 0.7],
               }}
               transition={{
                 duration: duration,
@@ -151,7 +151,7 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               style={{
                 transformOrigin: 'center',
                 willChange: 'transform, opacity',
-                filter: 'drop-shadow(0 0 12px #C084FC) drop-shadow(0 0 20px #8B5CF6)',
+                filter: 'drop-shadow(0 0 10px #C084FC) drop-shadow(0 0 16px #8B5CF6)',
               }}
             />
           </g>
