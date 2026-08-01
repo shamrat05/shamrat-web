@@ -19,20 +19,20 @@ const generateSitemap = () => {
 
   const staticRoutes = [
     { path: '', priority: '1.0', changefreq: 'daily' },
-    { path: '/blog', priority: '0.8', changefreq: 'daily' },
-    { path: '/portfolio', priority: '0.8', changefreq: 'weekly' },
+    { path: '/blog', priority: '0.9', changefreq: 'daily' },
+    { path: '/portfolio', priority: '0.9', changefreq: 'weekly' },
     { path: '/resume', priority: '0.8', changefreq: 'weekly' },
   ];
 
   const projectRoutes = localData.projects.map((project) => ({
     path: `/portfolio/${project.slug}`,
-    priority: '0.6',
+    priority: '0.7',
     changefreq: 'monthly',
   }));
 
   const blogRoutes = localData.posts.map((post) => ({
     path: `/blog/${post.slug}`,
-    priority: '0.6',
+    priority: '0.7',
     changefreq: 'monthly',
   }));
 
