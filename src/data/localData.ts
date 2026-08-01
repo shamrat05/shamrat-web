@@ -9,8 +9,8 @@ export const localData: CMSData = {
   },
   about: {
     description: [
-      "I'm Md. Shamrat Hossain (also known as Samrat Hossain) — a results-driven professional who bridges operational discipline, marketing strategy, and next-generation AI automation. My career follows a natural evolution: starting in high-volume operations, expanding into data-backed marketing strategy, and culminating in designing production-grade agentic workflows and automated business pipelines.",
-      "From overseeing complex banking operations across 551+ outlets in 62 districts of Bangladesh to executing enterprise sales & marketing engines, my focus is cross-departmental collaboration. By connecting Sales, Finance, Operations, and Marketing through intelligent automated pipelines, I help businesses eliminate repetitive friction, cut human error, and save hundreds of operational hours monthly."
+      "I am Md. Shamrat Hossain, a results-driven professional specializing in operational architecture, sales and marketing strategy, and agentic AI automation. My career spans high-volume operations management, data-backed growth strategies, and production-grade automated business pipelines.",
+      "Having managed banking operations across 551+ outlets in 62 districts of Bangladesh and executed enterprise sales initiatives, my focus is cross-departmental efficiency. By connecting Sales, Finance, Operations, and Marketing through intelligent workflows, I help organizations eliminate manual friction, reduce operational risk, and scale business performance."
     ],
     stats: [
       { value: "551+", label: "Outlets Managed" },

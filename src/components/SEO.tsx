@@ -144,7 +144,7 @@ export const SEO: React.FC<SEOProps> = ({
         "name": "Who is Md. Shamrat Hossain (Samrat Hossain)?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Md. Shamrat Hossain (also known as Samrat Hossain) is an Operations, Marketing, and AI Automation Specialist in Bangladesh. His career spans managing high-volume banking operations (551+ outlets), driving marketing strategy, and deploying production AI agentic workflows (n8n, Zapier)."
+          "text": "Md. Shamrat Hossain is an Operations, Sales & Marketing, and Agentic AI Automation Specialist based in Bangladesh. His experience spans high-volume banking operations (551+ outlets across 62 districts), growth marketing, and enterprise business process automation."
         }
       },
       {

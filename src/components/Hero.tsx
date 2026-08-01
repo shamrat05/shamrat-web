@@ -100,7 +100,7 @@ export const Hero: React.FC = React.memo(() => {
               : 'bg-[#33691e]/[0.06] border-[#33691e]/[0.12] text-[#33691e]'
           }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--tertiary)] animate-pulse" />
-            Available for opportunities
+            Available for Strategic Projects
           </span>
         </motion.div>
 
