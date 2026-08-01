@@ -15,7 +15,7 @@ export const localData: CMSData = {
     stats: [
       { value: "551+", label: "Outlets Managed" },
       { value: "62", label: "Districts Covered" },
-      { value: "Agentic AI", label: "Process Automation" },
+      { value: "100+", label: "AI Workflows Automated" },
       { value: "40%+", label: "Efficiency Gained" }
     ]
   },
