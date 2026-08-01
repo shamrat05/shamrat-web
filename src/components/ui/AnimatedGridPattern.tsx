@@ -13,7 +13,7 @@ interface AnimatedGridPatternProps {
 export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   width = 44,
   height = 44,
-  numSquares = 12,
+  numSquares = 10,
   className = '',
   maxOpacity = 0.45,
   duration = 3.2,
@@ -112,14 +112,14 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               fill="#FFFFFF"
               initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
               animate={{
-                opacity: [0, 0.25, 0],
-                scaleX: [0.8, 1, 0.8],
-                scaleY: [0.8, 1, 0.8],
+                opacity: [0, 0.35, 0],
+                scaleX: [0.8, 1.04, 0.8],
+                scaleY: [0.8, 1.02, 0.8],
               }}
               transition={{
                 duration: duration,
                 repeat: Infinity,
-                delay: idx * 0.3,
+                delay: idx * 0.4,
                 ease: 'easeOut',
               }}
               style={{
@@ -138,14 +138,14 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               fill="url(#glitterSparkle)"
               initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
               animate={{
-                opacity: [0, 0.9, 0],
-                scaleX: [0.8, 1, 0.8],
-                scaleY: [0.8, 1, 0.8],
+                opacity: [0, 0.95, 0],
+                scaleX: [0.8, 1.06, 0.8],
+                scaleY: [0.8, 1.04, 0.8],
               }}
               transition={{
                 duration: duration,
                 repeat: Infinity,
-                delay: idx * 0.3,
+                delay: idx * 0.4,
                 ease: 'easeOut',
               }}
               style={{
