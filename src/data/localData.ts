@@ -31,114 +31,135 @@ export const localData: CMSData = {
   projects: [
     {
       id: 1,
-      slug: "cross-departmental-ai-automation",
-      title: "Cross-Departmental Agentic Workflow Engine",
-      category: "operations",
+      slug: "24-7-agentic-support-conversion-engine",
+      title: "24/7 Autonomous Agentic Support & Lead Conversion Engine",
+      category: "ai-automation",
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
-      description: "Designed and deployed autonomous agentic workflows connecting Sales CRM, Operations tracking, and Finance webhooks to automate lead-to-fulfillment handoffs.",
-      tags: ["Agentic AI", "Process Automation", "Cross-Departmental", "Workflow Engineering"],
-      link: "/portfolio/cross-departmental-ai-automation",
-      technologies: ["Agentic AI", "OpenAI API", "Webhooks", "HubSpot", "Google Sheets API", "n8n/Zapier"],
-      challenge: "Manual handoffs between Sales, Operations, and Finance caused 48-hour delays and human data entry errors.",
-      solution: "Implemented an agentic pipeline with human-in-the-loop approval triggers.",
-      results: ["70% reduction in processing time", "Zero data entry errors", "Saved 120+ hours/month"]
+      description: "Deployed a context-aware AI agent operating 24/7 that checks interaction history, personalizes responses based on interest zones, qualifies prospects, and drives revenue growth.",
+      tags: ["Agentic AI", "24/7 Support", "Lead Conversion", "Context History", "CRM Sync"],
+      link: "/portfolio/24-7-agentic-support-conversion-engine",
+      technologies: ["Agentic AI", "OpenAI API", "HubSpot CRM", "n8n", "Zapier", "REST Webhooks"],
+      challenge: "After-hours inquiries experienced 24+ hour response delays, resulting in lost qualified prospects.",
+      solution: "Engineered an autonomous support agent that retrieves customer history, customizes responses around buyer interest zones, and books sales appointments automatically.",
+      results: ["24/7 instant response coverage", "3.2x increase in lead conversion", "Saved 140+ support hours/month"]
     },
     {
       id: 2,
-      slug: "digital-marketing-strategy",
-      title: "Digital Marketing Strategy & Campaign",
-      category: "marketing",
+      slug: "automated-content-campaign-engine",
+      title: "Automated Social Media Content & Multi-Channel Campaign Engine",
+      category: "ai-automation",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-      description: "Developed comprehensive digital marketing strategy for metal industry products.",
-      tags: ["Digital Marketing", "Market Research", "Strategy Development"],
-      link: "/portfolio/digital-marketing-strategy",
-      technologies: ["Google Analytics", "Facebook Ads", "SEMrush"],
-      challenge: "Establishing digital presence in a traditional market.",
-      solution: "Implemented multi-channel approach with targeted campaigns.",
-      results: ["45% increase in traffic", "2x lead generation"]
+      description: "Built an automated content pipeline that generates market-aligned social media content, runs targeted auto-campaigns, and tracks prospect engagement across channels.",
+      tags: ["Content Automation", "Social Media", "Auto Campaigns", "Lead Tracking"],
+      link: "/portfolio/automated-content-campaign-engine",
+      technologies: ["n8n", "OpenAI API", "Meta Graph API", "LinkedIn API", "Google Analytics"],
+      challenge: "Maintaining consistent multi-channel marketing required hours of daily manual effort.",
+      solution: "Implemented an automated pipeline that generates trend-aligned content drafts, schedules posts across platforms, and tracks prospect click-through behavior.",
+      results: ["5x increase in content output", "Automated multi-channel distribution", "40% higher campaign engagement"]
     },
     {
       id: 3,
-      slug: "email-marketing-automation",
-      title: "Email Marketing Automation",
-      category: "marketing",
-      image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop",
-      description: "Designed and implemented automated email marketing campaigns using HubSpot.",
-      tags: ["Email Marketing", "HubSpot", "Marketing Automation"],
-      link: "/portfolio/email-marketing-automation"
+      slug: "cross-departmental-ai-automation",
+      title: "Cross-Departmental Business Process & Operations Automation",
+      category: "operations",
+      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop",
+      description: "Automated end-to-end handoffs between Sales, Operations, and Finance to ensure business operates smoothly with zero manual data entry bottlenecks.",
+      tags: ["Process Automation", "n8n", "Zapier", "Workflow Engineering", "SLA Optimization"],
+      link: "/portfolio/cross-departmental-ai-automation",
+      technologies: ["n8n", "Zapier", "Webhooks", "HubSpot", "Google Sheets API"],
+      challenge: "Manual handoffs between Sales, Operations, and Finance caused 48-hour delays and data entry errors.",
+      solution: "Implemented an agentic pipeline with human-in-the-loop approval triggers.",
+      results: ["70% reduction in fulfillment SLA time", "Zero human data entry errors", "Saved 120+ hours/month"]
     },
     {
       id: 4,
       slug: "customer-journey-analytics",
-      title: "Customer Journey Analytics",
+      title: "Context-Aware Customer Journey & History Intelligence",
       category: "analytics",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      description: "Analyzed customer touchpoints and service delivery across banking outlets.",
-      tags: ["Customer Analytics", "Journey Mapping", "UX Research"],
+      description: "Integrated real-time interaction history tracking into customer communications, allowing AI agents and sales teams to personalize dialog based on past interest zones.",
+      tags: ["Customer History", "Personalization", "Data Analytics", "CRM Intelligence"],
       link: "/portfolio/customer-journey-analytics"
     },
     {
       id: 5,
-      slug: "banking-operations-optimization",
-      title: "Banking Operations Process Optimization",
-      category: "operations",
-      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop",
-      description: "Led initiative to optimize operational workflows across 62 districts.",
-      tags: ["Process Improvement", "Automation", "Stakeholder Management"],
-      link: "/portfolio/banking-operations-optimization"
+      slug: "digital-marketing-strategy",
+      title: "Digital Marketing Strategy & Lead Acquisition Campaign",
+      category: "marketing",
+      image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop",
+      description: "Developed comprehensive multi-channel digital marketing strategy for metal industry products.",
+      tags: ["Digital Marketing", "Market Research", "Lead Generation"],
+      link: "/portfolio/digital-marketing-strategy"
     },
     {
       id: 6,
       slug: "banking-analytics-dashboard",
-      title: "Banking Operations Analytics Dashboard",
-      category: "analytics",
+      title: "Banking Operations Analytics & Executive Decision Support",
+      category: "operations",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-      description: "Comprehensive Power BI dashboard analyzing performance metrics across 551+ banking outlets.",
-      tags: ["Power BI", "Data Analytics", "Dashboard Design"],
+      description: "Comprehensive Power BI dashboard analyzing performance metrics and operational efficiency across 551+ banking outlets.",
+      tags: ["Power BI", "Operations", "Decision Support", "Data Analytics"],
       link: "/portfolio/banking-analytics-dashboard"
     }
   ],
   posts: [
     {
       id: 1,
-      slug: "practical-ai-agentic-automation-n8n-zapier",
-      title: "Beyond the Hype: How to Build Sustainable Agentic AI Workflows for Business Operations",
+      slug: "how-we-automate-business-operations-agentic-ai",
+      title: "How We Automate Business Operations with Agentic AI: 24/7 Lead Conversion, Context-Aware Personalization & Automated Campaigns",
       date: "Feb 1, 2026",
-      readTime: "6 min read",
+      readTime: "7 min read",
       category: "AI & Automation",
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=400&fit=crop",
-      description: "A practical, no-fluff operational guide to automating cross-departmental collaboration between Sales, Operations, and Finance without breaking business workflows.",
-      link: "/blog/practical-ai-agentic-automation-n8n-zapier",
+      description: "A comprehensive, practical guide on building autonomous agentic AI workflows that operate 24/7, inspect customer interaction history, run personalized campaigns, and drive business revenue.",
+      link: "/blog/how-we-automate-business-operations-agentic-ai",
       content: `<div class="space-y-6">
-        <h2 class="text-2xl font-bold mt-8 mb-4">Introduction: Why Most Business Automations Fail in Production</h2>
-        <p>In 2026, artificial intelligence is no longer just about generating text or answering questions in a chat window. The real competitive advantage lies in <strong>Agentic Automation</strong>—autonomous workflows that execute multi-step tasks across different departments.</p>
-        <p>However, many businesses jump into AI automation with generic prompts and fragile setups, leading to broken data pipelines and frustrated teams. Having built workflows that connect Sales, Operations, and Finance, here is our battle-tested blueprint for creating sustainable, high-ROI automations.</p>
+        <h2 class="text-2xl font-bold mt-8 mb-4">Introduction: Beyond Static Chatbots and Manual Friction</h2>
+        <p>Most business owners have experienced generic chatbots that fail to understand customer context and annoy prospects instead of helping them. Real business automation is about building an <strong>Agentic Business System</strong> that operates 24/7, checks past customer interaction history, runs automated marketing campaigns, and drives revenue growth without manual intervention.</p>
+        
+        <h2 class="text-2xl font-bold mt-8 mb-4">System Architecture: How Context-Aware Business Automation Works</h2>
+        <p>Below is the architectural blueprint connecting customer touchpoints, interaction memory, automated marketing, and executive decision-support analytics:</p>
 
-        <h2 class="text-2xl font-bold mt-8 mb-4">1. The 3-Step Framework Before Automating Any Process</h2>
-        <p>Before implementing any automation pipeline, map your existing manual processes:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Identify the Friction Point:</strong> Where do team members spend hours manually copying data between CRM, email, and spreadsheets?</li>
-          <li><strong>Define the Single Source of Truth:</strong> Decide which system owns customer records vs transactional data.</li>
-          <li><strong>Establish Human-in-the-Loop Safeguards:</strong> High-stakes actions (such as sending invoices or updating bank balances) should trigger approval notifications rather than running 100% blind.</li>
-        </ul>
+        <pre class="bg-bg-surface p-6 rounded-xl font-mono text-xs md:text-sm text-primary-400 overflow-x-auto border border-white/10 leading-relaxed">
+┌─────────────────────────┐       ┌──────────────────────────────┐
+│  Prospect / Customer    │ ────► │  Omnichannel Touchpoint      │
+│  (Website / WhatsApp)   │       │  (24/7 Agentic AI Support)   │
+└─────────────────────────┘       └──────────────┬───────────────┘
+                                                 │
+                                                 ▼
+┌─────────────────────────┐       ┌──────────────────────────────┐
+│  CRM History & Memory   │ ◄───► │  Context-Aware Engine        │
+│  (Past Interest Zones)  │       │  (Evaluates Preferences)     │
+└─────────────────────────┘       └──────────────┬───────────────┘
+                                                 │
+                                                 ▼
+┌─────────────────────────┐       ┌──────────────────────────────┐
+│  Automated Campaigns    │ ◄───► │  Autonomous Action Engine    │
+│  & Social Content Gen   │       │  (Schedules, Converts, Syncs)│
+└─────────────────────────┘       └──────────────┬───────────────┘
+                                                 │
+                                                 ▼
+                                  ┌──────────────────────────────┐
+                                  │  Executive Decision Support  │
+                                  │  (Analytics & Revenue Metrics)│
+                                  └──────────────────────────────┘
+        </pre>
 
-        <h2 class="text-2xl font-bold mt-8 mb-4">2. Building Cross-Departmental Collaboration Workflows</h2>
-        <p>Agentic workflows connect fragmented teams seamlessly:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Sales to Operations Handoff:</strong> When a deal is marked "Closed-Won" in CRM, an automated webhook creates the onboarding ticket, notifies the account manager, and generates a client workspace automatically.</li>
-          <li><strong>Finance & Billing Sync:</strong> Extract line items from signed contracts, update accounting systems, and ping the Finance team for validation.</li>
-        </ul>
+        <h2 class="text-2xl font-bold mt-8 mb-4">1. 24/7 Instant Support & Autonomous Revenue Conversion</h2>
+        <p>High-intent prospects do not wait 24 hours for an email reply. An autonomous AI support agent operates around the clock, answering technical questions, qualifying lead intent, and guiding prospects into booking sales calls or completing orders instantly.</p>
 
-        <h2 class="text-2xl font-bold mt-8 mb-4">3. Measuring Real ROI: Time Saved vs Error Reduction</h2>
-        <p>To evaluate if an automation is successful, track two core metrics:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Direct Hours Reclaimed:</strong> Measure team hours saved per week on repetitive data transfer.</li>
-          <li><strong>SLA Velocity:</strong> Track how fast a customer request moves from initial contact to completed fulfillment.</li>
-        </ul>
+        <h2 class="text-2xl font-bold mt-8 mb-4">2. Context-Aware Personalization & Customer History Lookup</h2>
+        <p>Generic responses kill sales. When a customer returns to interact with our system, the AI agent inspects their prior conversation history, previous purchase inquiries, and specific interest zones. If a client previously expressed interest in operations optimization, all subsequent messaging highlights operational SLA gains and process efficiency.</p>
 
-        <p class="mt-8 text-lg font-semibold">Sustainable automation isn't about replacing human judgment—it's about removing busywork so teams can focus on high-value strategy.</p>
+        <h2 class="text-2xl font-bold mt-8 mb-4">3. Automated Content Generation & Multi-Channel Campaigns</h2>
+        <p>Maintaining brand visibility requires consistent content. We build automated pipelines that generate market-aligned social media content, schedule multi-channel distribution, and run targeted follow-up campaigns automatically based on prospect engagement signals.</p>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">4. Executive Decision Support & Operational Insights</h2>
+        <p>Automation isn't just execution—it is intelligence. Every lead interaction, conversion milestone, and operational bottleneck flows into clean executive dashboards. Business owners gain clear, data-backed insights to make confident strategic decisions.</p>
+
+        <p class="mt-8 text-lg font-semibold">By combining operational rigor, sales strategy, and agentic AI pipelines, businesses eliminate manual bottlenecks and operate smoothly 24 hours a day, 7 days a week.</p>
       </div>`,
-      tags: ["Agentic AI", "AI Automation", "Operations", "Business Efficiency"]
+      tags: ["Agentic AI", "AI Automation", "24/7 Support", "Lead Conversion", "Business Efficiency", "Decision Support"]
     },
     {
       id: 2,
@@ -152,7 +173,7 @@ export const localData: CMSData = {
       link: "/blog/seo-cheat-sheet-2025",
       content: `<div class="space-y-6">
         <h2 class="text-2xl font-bold mt-8 mb-4">Introduction</h2>
-        <p>Search Engine Optimization continues to evolve rapidly in 2026. With AI-powered search engines like ChatGPT, Google's AI Overviews, and voice assistants becoming mainstream, your SEO strategy must adapt. This cheat sheet covers everything you need to rank on both traditional and AI search results.</p>
+        <p>Search Engine Optimization continues to evolve rapidly in 2026. With AI-powered search engines like ChatGPT, Google's AI Overviews, and voice assistants becoming mainstream, your SEO strategy must adapt.</p>
       </div>`,
       tags: ["SEO", "AI", "Marketing"]
     },
@@ -168,7 +189,7 @@ export const localData: CMSData = {
       link: "/blog/data-driven-operations",
       content: `<div class="space-y-6">
         <h2 class="text-2xl font-bold mt-8 mb-4">The Power of Data in Operations</h2>
-        <p>In today's complex business environment, making informed decisions based on solid analytics is essential. Having managed operations across 551+ banking outlets, I've seen firsthand how data transforms operational efficiency.</p>
+        <p>In today's complex business environment, making informed decisions based on solid analytics is essential.</p>
       </div>`,
       tags: ["Data Analytics", "Operations", "Business Intelligence"]
     }
@@ -179,8 +200,8 @@ export const localData: CMSData = {
       title: "Sales Lead & AI Automation Consultant",
       company: "LevelAxis Technologies",
       date: "Jan 2026 – Present",
-      description: "Leading enterprise sales and designing cross-departmental AI automation workflows. Spearheading client acquisition, building software integration strategies, and streamlining sales-to-operations handoffs to eliminate manual data overhead.",
-      tags: ["Agentic AI", "Sales Leadership", "Business Process Automation", "Cross-Departmental Collaboration"]
+      description: "Leading enterprise sales and designing 24/7 cross-departmental AI automation workflows. Building context-aware lead conversion agents, automated marketing campaign pipelines, and streamlining sales-to-operations handoffs to maximize business efficiency and revenue growth.",
+      tags: ["Agentic AI", "24/7 Support", "Lead Conversion", "Sales Leadership", "Business Process Automation"]
     },
     {
       id: 2,
@@ -201,18 +222,18 @@ export const localData: CMSData = {
   ],
   skills: {
     technical: [
-      { name: 'Agentic AI & Business Automation', level: 'expert', icon: 'Settings' },
-      { name: 'Process & Workflow Engineering', level: 'expert', icon: 'Code' },
-      { name: 'Advanced Excel / Google Sheets', level: 'expert', icon: 'FileSpreadsheet' },
-      { name: 'Power BI Dashboarding', level: 'advanced', icon: 'BarChart' },
-      { name: 'Data Analysis & Reporting', level: 'expert', icon: 'Database' },
-      { name: 'CRM Systems & Sales Automation', level: 'advanced', icon: 'Users' },
-      { name: 'Python, VBA, JavaScript', level: 'advanced', icon: 'Code' },
+      { name: '24/7 Agentic AI & Support Agents', level: 'expert', icon: 'Settings' },
+      { name: 'Lead Conversion & Auto Campaigns', level: 'expert', icon: 'Target' },
+      { name: 'Context-Aware History Intelligence', level: 'expert', icon: 'Users' },
+      { name: 'Automated Social Media Content Gen', level: 'advanced', icon: 'MessageSquare' },
+      { name: 'Process & SLA Engineering', level: 'expert', icon: 'Code' },
+      { name: 'Power BI Dashboarding & Analytics', level: 'advanced', icon: 'BarChart' },
+      { name: 'Python, VBA, REST Webhooks', level: 'advanced', icon: 'Code' },
     ],
     professional: [
-      { name: 'Cross-Departmental Collaboration', level: 'expert', icon: 'Crosshair' },
-      { name: 'Process & SLA Optimization', level: 'expert', icon: 'Target' },
-      { name: 'Sales & Marketing Leadership', level: 'advanced', icon: 'Users' },
+      { name: 'Cross-Departmental Efficiency', level: 'expert', icon: 'Crosshair' },
+      { name: 'Data-Backed Decision Support', level: 'expert', icon: 'Target' },
+      { name: 'Sales & Revenue Growth Strategy', level: 'advanced', icon: 'Users' },
       { name: 'Customer & Stakeholder Relations', level: 'expert', icon: 'Handshake' },
       { name: 'Project Management', level: 'advanced', icon: 'ClipboardList' },
       { name: 'Strategic Business Execution', level: 'expert', icon: 'MessageSquare' },
