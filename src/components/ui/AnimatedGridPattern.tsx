@@ -13,10 +13,10 @@ interface AnimatedGridPatternProps {
 export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   width = 44,
   height = 44,
-  numSquares = 24,
+  numSquares = 12,
   className = '',
   maxOpacity = 0.45,
-  duration = 2.4,
+  duration = 3.2,
 }) => {
   const id = React.useId();
   const [viewportSize, setViewportSize] = React.useState({ width: 1600, height: 900 });
@@ -110,17 +110,17 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               height={3.2}
               rx={1.4}
               fill="#FFFFFF"
-              initial={{ opacity: 0, scaleX: 0.2, scaleY: 0.5 }}
+              initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
               animate={{
-                opacity: [0, 0.42, 0],
-                scaleX: [0.2, 1.08, 0.2],
-                scaleY: [0.5, 1.02, 0.5],
+                opacity: [0, 0.25, 0],
+                scaleX: [0.8, 1, 0.8],
+                scaleY: [0.8, 1, 0.8],
               }}
               transition={{
-                duration: duration * 0.85,
+                duration: duration,
                 repeat: Infinity,
-                delay: idx * 0.12,
-                ease: 'easeInOut',
+                delay: idx * 0.3,
+                ease: 'easeOut',
               }}
               style={{
                 transformOrigin: 'center',
@@ -136,17 +136,17 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               height={2}
               rx={1}
               fill="url(#glitterSparkle)"
-              initial={{ opacity: 0, scaleX: 0.2, scaleY: 0.45 }}
+              initial={{ opacity: 0, scaleX: 0.8, scaleY: 0.8 }}
               animate={{
-                opacity: [0, 1, 0],
-                scaleX: [0.2, 1.05, 0.2],
-                scaleY: [0.45, 1, 0.45],
+                opacity: [0, 0.9, 0],
+                scaleX: [0.8, 1, 0.8],
+                scaleY: [0.8, 1, 0.8],
               }}
               transition={{
-                duration: duration * 0.85,
+                duration: duration,
                 repeat: Infinity,
-                delay: idx * 0.12,
-                ease: 'easeInOut',
+                delay: idx * 0.3,
+                ease: 'easeOut',
               }}
               style={{
                 transformOrigin: 'center',
