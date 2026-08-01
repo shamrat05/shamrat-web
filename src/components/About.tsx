@@ -17,7 +17,7 @@ export const About: React.FC = React.memo(() => {
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-12">
           <h2 className="section-title">About Me</h2>
-          <p className="section-subtitle">Passionate about creating impact through strategic thinking and data-driven solutions.</p>
+          <p className="section-subtitle">Bridging operational discipline, sales & marketing strategy, and agentic AI automation.</p>
         </div>
         
         <div className="max-w-[900px] mx-auto text-center mb-16 text-lg leading-relaxed text-text-secondary flex flex-col items-center">

@@ -112,30 +112,31 @@ export const Hero: React.FC = React.memo(() => {
         {/* Alias - SEO only, visually hidden */}
         <p className="sr-only">{t('hero.alias')}</p>
 
-        {/* Role */}
+        {/* Role Progression Badges */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={mounted ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1.2, ease: [0, 0, 0.2, 1] }}
-          className="mb-6 flex flex-wrap items-center justify-center gap-2 text-sm sm:text-base font-semibold"
+          className="mb-6 flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-semibold"
         >
-          <span className="px-3 py-1 rounded-md bg-white/[0.05] border border-white/10 text-text-secondary">Operations</span>
-          <span className="text-primary-500">➔</span>
-          <span className="px-3 py-1 rounded-md bg-white/[0.05] border border-white/10 text-text-secondary">Marketing</span>
-          <span className="text-primary-500">➔</span>
-          <span className="px-3.5 py-1 rounded-md bg-primary-500/10 border border-primary-500/30 text-primary-400 font-bold">AI & Agentic Automations</span>
+          <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-text-secondary">Operations</span>
+          <span className="text-primary-500 font-bold">➔</span>
+          <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-text-secondary">Sales & Marketing</span>
+          <span className="text-primary-500 font-bold">➔</span>
+          <span className="px-3.5 py-1 rounded-full bg-primary-500/10 border border-primary-500/30 text-primary-400 font-bold">Agentic AI & Automation</span>
         </motion.div>
 
+        {/* Main Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={mounted ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1.3, ease: [0, 0, 0.2, 1] }}
-          className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-8"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-8 max-w-4xl mx-auto"
         >
           <span className="text-[var(--foreground)]">Automating </span>
-          <span className="bg-gradient-to-r from-[#3B9EFF] to-[#79ceff] bg-clip-text text-transparent">cross-departmental workflows</span>
-          <span className="text-[var(--foreground)]"> with </span>
-          <span className="bg-gradient-to-r from-[#1bb767] to-[#34D399] bg-clip-text text-transparent">n8n, Zapier & Agentic AI</span>
+          <span className="bg-gradient-to-r from-[#3B9EFF] to-[#79ceff] bg-clip-text text-transparent">business processes</span>
+          <span className="text-[var(--foreground)]"> & driving </span>
+          <span className="bg-gradient-to-r from-[#1bb767] to-[#34D399] bg-clip-text text-transparent">cross-departmental efficiency</span>
         </motion.p>
 
         {/* Description */}
