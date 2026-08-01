@@ -22,20 +22,30 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
 
   // Generate random square coordinates for grid pulse
   const squares = React.useMemo(() => {
-    return Array.from({ length: numSquares }, (_, i) => ({
-      id: i,
-      x: Math.floor(Math.random() * 25) * width,
-      y: Math.floor(Math.random() * 15) * height,
-      color:
-        i % 4 === 0
-          ? '#8B5CF6'
-          : i % 4 === 1
-            ? '#C084FC'
-            : i % 4 === 2
-              ? '#A855F7'
-              : '#F472B6',
-      length: Math.random() * 5 + 4,
-    }));
+    return Array.from({ length: numSquares }, (_, i) => {
+      const side = i % 3 === 0 ? 'left' : i % 3 === 1 ? 'right' : 'center';
+      const x =
+        side === 'left'
+          ? Math.floor(Math.random() * 8) * width
+          : side === 'right'
+            ? Math.floor(Math.random() * 8 + 17) * width
+            : Math.floor(Math.random() * 20) * width;
+
+      return {
+        id: i,
+        x,
+        y: Math.floor(Math.random() * 15) * height,
+        color:
+          i % 4 === 0
+            ? '#8B5CF6'
+            : i % 4 === 1
+              ? '#C084FC'
+              : i % 4 === 2
+                ? '#A855F7'
+                : '#F472B6',
+        length: Math.random() * 12 + 12,
+      };
+    });
   }, [numSquares, width, height]);
 
   return (
@@ -101,16 +111,16 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
             {/* Elongated Glitter Grain */}
             <motion.rect
               x={square.x + width / 2 - square.length / 2}
-              y={square.y + height / 2 - 1}
-              width={square.length}
-              height={1.8}
-              rx={0.9}
-              fill="url(#glitterSparkle)"
-              initial={{ opacity: 0, scaleX: 0.35, scaleY: 0.6 }}
+              y={square.y + height / 2 - 1.4}
+              width={square.length + 6}
+              height={3.2}
+              rx={1.4}
+              fill="#FFFFFF"
+              initial={{ opacity: 0, scaleX: 0.25, scaleY: 0.5 }}
               animate={{
-                opacity: [0, 0.95, 0],
-                scaleX: [0.35, 1.05, 0.35],
-                scaleY: [0.6, 1, 0.6],
+                opacity: [0, 0.28, 0],
+                scaleX: [0.25, 1.08, 0.25],
+                scaleY: [0.5, 1.05, 0.5],
               }}
               transition={{
                 duration: duration * 0.8,
@@ -120,7 +130,32 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
               }}
               style={{
                 transformOrigin: 'center',
-                filter: 'drop-shadow(0 0 7px #C084FC)',
+                filter: 'drop-shadow(0 0 8px #FFFFFF)',
+              }}
+            />
+
+            <motion.rect
+              x={square.x + width / 2 - square.length / 2}
+              y={square.y + height / 2 - 1}
+              width={square.length}
+              height={2}
+              rx={1}
+              fill="url(#glitterSparkle)"
+              initial={{ opacity: 0, scaleX: 0.25, scaleY: 0.45 }}
+              animate={{
+                opacity: [0, 0.95, 0],
+                scaleX: [0.25, 1.06, 0.25],
+                scaleY: [0.45, 1, 0.45],
+              }}
+              transition={{
+                duration: duration * 0.8,
+                repeat: Infinity,
+                delay: idx * 0.18,
+                ease: 'easeInOut',
+              }}
+              style={{
+                transformOrigin: 'center',
+                filter: 'drop-shadow(0 0 10px #C084FC)',
               }}
             />
           </g>
