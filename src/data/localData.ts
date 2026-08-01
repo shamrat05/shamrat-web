@@ -3,20 +3,20 @@ import type { CMSData } from '../types/cms';
 export const localData: CMSData = {
   hero: {
     name: "Shamrat Hossain",
-    title: "Marketing & Operations Professional",
-    description: "Results-driven marketing and operations professional with proven expertise in data analytics, stakeholder coordination, and strategic business execution in Bangladesh.",
+    title: "Operations ➔ Marketing ➔ AI & Agentic Automations",
+    description: "Proven operational leader & marketing strategist specializing in AI workflow automation (n8n, Zapier, Agentic AI). I bridge cross-departmental silos, eliminate manual bottlenecks, and drive measurable business efficiency.",
     image: "/images/shamrat-profile.jpg"
   },
   about: {
     description: [
-      "I'm Md. Shamrat Hossain, a dedicated marketing and operations professional with a strong foundation in business analytics and strategic planning. I have successfully completed my MBA in Marketing and bring hands-on experience in digital operations and stakeholder management.",
-      "My professional journey spans managing complex banking operations across 551+ outlets in 62 districts of Bangladesh to developing marketing strategies for industrial companies. I excel at turning data into actionable insights and building meaningful relationships that drive business growth."
+      "I'm Md. Shamrat Hossain (also known as Samrat Hossain) — a results-driven professional who bridges operational discipline, marketing strategy, and next-generation AI automation. My career follows a natural evolution: starting in high-volume operations, expanding into data-backed marketing strategy, and culminating in designing production-grade AI agentic workflows using n8n, Zapier, and custom webhooks.",
+      "From overseeing complex banking operations across 551+ outlets in 62 districts of Bangladesh to executing enterprise sales & marketing engines, my focus is cross-departmental collaboration. By connecting Sales, Finance, Operations, and Marketing through intelligent automated pipelines, I help businesses eliminate repetitive friction, cut human error, and save hundreds of operational hours monthly."
     ],
     stats: [
       { value: "551+", label: "Outlets Managed" },
       { value: "62", label: "Districts Covered" },
-      { value: "100%", label: "Client Satisfaction" },
-      { value: "5+", label: "Certifications" }
+      { value: "n8n & Zapier", label: "AI Workflows" },
+      { value: "40%+", label: "Time Saved" }
     ]
   },
   contact: {
@@ -31,6 +31,20 @@ export const localData: CMSData = {
   projects: [
     {
       id: 1,
+      slug: "cross-departmental-ai-automation",
+      title: "Cross-Departmental AI & Agentic Workflow Engine",
+      category: "operations",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
+      description: "Designed and deployed autonomous n8n and Zapier agentic workflows connecting Sales CRM, Operations tracking, and Finance webhooks to automate lead-to-fulfillment handoffs.",
+      tags: ["n8n", "Zapier", "Agentic AI", "Process Automation"],
+      link: "/portfolio/cross-departmental-ai-automation",
+      technologies: ["n8n", "Zapier", "OpenAI API", "Webhooks", "HubSpot", "Google Sheets API"],
+      challenge: "Manual handoffs between Sales, Operations, and Finance caused 48-hour delays and human data entry errors.",
+      solution: "Implemented an agentic n8n pipeline with human-in-the-loop approval triggers.",
+      results: ["70% reduction in processing time", "Zero data entry errors", "Saved 120+ hours/month"]
+    },
+    {
+      id: 2,
       slug: "digital-marketing-strategy",
       title: "Digital Marketing Strategy & Campaign",
       category: "marketing",
@@ -44,17 +58,17 @@ export const localData: CMSData = {
       results: ["45% increase in traffic", "2x lead generation"]
     },
     {
-      id: 2,
+      id: 3,
       slug: "email-marketing-automation",
       title: "Email Marketing Automation",
       category: "marketing",
       image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=400&fit=crop",
-      description: "Designed and implemented automated email marketing campaigns using HubSpot.",
-      tags: ["Email Marketing", "HubSpot", "Marketing Automation"],
+      description: "Designed and implemented automated email marketing campaigns using HubSpot and Zapier.",
+      tags: ["Email Marketing", "HubSpot", "Zapier", "Marketing Automation"],
       link: "/portfolio/email-marketing-automation"
     },
     {
-      id: 3,
+      id: 4,
       slug: "customer-journey-analytics",
       title: "Customer Journey Analytics",
       category: "analytics",
@@ -64,7 +78,7 @@ export const localData: CMSData = {
       link: "/portfolio/customer-journey-analytics"
     },
     {
-      id: 4,
+      id: 5,
       slug: "banking-operations-optimization",
       title: "Banking Operations Process Optimization",
       category: "operations",
@@ -72,16 +86,6 @@ export const localData: CMSData = {
       description: "Led initiative to optimize operational workflows across 62 districts.",
       tags: ["Process Improvement", "Automation", "Stakeholder Management"],
       link: "/portfolio/banking-operations-optimization"
-    },
-    {
-      id: 5,
-      slug: "cross-functional-team-coordination",
-      title: "Cross-Functional Team Coordination",
-      category: "operations",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
-      description: "Led coordination between field teams, outlet owners, and bank stakeholders.",
-      tags: ["Team Leadership", "Stakeholder Management", "Issue Resolution"],
-      link: "/portfolio/cross-functional-team-coordination"
     },
     {
       id: 6,
@@ -97,26 +101,74 @@ export const localData: CMSData = {
   posts: [
     {
       id: 1,
+      slug: "practical-ai-agentic-automation-n8n-zapier",
+      title: "Beyond the Hype: How to Build Sustainable AI & Agentic Workflows with n8n and Zapier",
+      date: "Feb 1, 2026",
+      readTime: "6 min read",
+      category: "AI & Automation",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=400&fit=crop",
+      description: "A practical, no-fluff operational guide to automating cross-departmental collaboration between Sales, Operations, and Finance without breaking business workflows.",
+      link: "/blog/practical-ai-agentic-automation-n8n-zapier",
+      content: `<div class="space-y-6">
+        <h2 class="text-2xl font-bold mt-8 mb-4">Introduction: Why Most AI Automations Fail in Production</h2>
+        <p>In 2026, artificial intelligence is no longer just about generating text or answering questions in a chat window. The real competitive advantage lies in <strong>Agentic Automation</strong>—autonomous workflows that execute multi-step tasks across different departments.</p>
+        <p>However, many businesses jump into AI automation with generic prompts and fragile setups, leading to broken data pipelines and frustrated teams. Having built workflows that connect Sales, Operations, and Finance, here is our battle-tested blueprint for creating sustainable, high-ROI automations using n8n, Zapier, and custom webhooks.</p>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">1. The 3-Step Framework Before Writing Any Code or Workflow</h2>
+        <p>Before touching n8n or Zapier, map your existing manual processes:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li><strong>Identify the Friction Point:</strong> Where do team members spend hours manually copying data between CRM, email, and spreadsheets?</li>
+          <li><strong>Define the Single Source of Truth:</strong> Decide which system owns customer records vs transactional data.</li>
+          <li><strong>Establish Human-in-the-Loop Safeguards:</strong> High-stakes actions (such as sending invoices or updating bank balances) should trigger a slack/email approval button rather than running 100% blind.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">2. Building Cross-Departmental Collaboration Workflows with n8n</h2>
+        <p>n8n is exceptional for complex, multi-node workflows because it supports self-hosting, privacy compliance, and granular error-handling:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li><strong>Sales to Operations Handoff:</strong> When a deal is marked "Closed-Won" in HubSpot, an n8n webhook creates the onboarding ticket in Jira, notifies the account manager, and generates a Google Drive client folder automatically.</li>
+          <li><strong>Finance & Billing Sync:</strong> Automatically extract line items from signed contracts using structured LLM parsing, update QuickBooks/Xero, and ping the Finance team for validation.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">3. When to Use Zapier vs n8n vs Custom Code</h2>
+        <p>Choosing the right tool saves operational costs:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li><strong>Zapier:</strong> Best for rapid 2-step integrations, SaaS app connectors, and quick prototypes.</li>
+          <li><strong>n8n:</strong> Best for complex logic, multi-branch conditional loops, JSON transformations, and cost-effective scaling.</li>
+          <li><strong>Custom Webhooks / Python:</strong> Best for heavy mathematical calculations, proprietary data formats, and direct database queries.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">4. Measuring Real ROI: Time Saved vs Error Reduction</h2>
+        <p>To evaluate if an automation is successful, track two core metrics:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li><strong>Direct Hours Reclaimed:</strong> Measure team hours saved per week on repetitive data transfer.</li>
+          <li><strong>SLA Velocity:</strong> Track how fast a customer request moves from initial contact to completed fulfillment.</li>
+        </ul>
+
+        <p class="mt-8 text-lg font-semibold">Sustainable automation isn't about replacing human judgment—it's about removing busywork so teams can focus on high-value strategy.</p>
+      </div>`,
+      tags: ["n8n", "Zapier", "Agentic AI", "AI Automation", "Operations"]
+    },
+    {
+      id: 2,
       slug: "seo-cheat-sheet-2025",
-      title: "The Ultimate SEO Cheat Sheet: How to Rank on Google and AI Search in 2025",
+      title: "The Ultimate SEO Cheat Sheet: How to Rank on Google and AI Search in 2026",
       date: "Dec 2, 2025",
       readTime: "4 min read",
       category: "SEO & Marketing",
       image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&h=400&fit=crop",
-      description: "A comprehensive guide to SEO best practices for 2025, covering technical SEO, content optimization, and strategies for appearing in AI search results.",
+      description: "A comprehensive guide to SEO best practices for 2026, covering technical SEO, content optimization, and strategies for appearing in AI search results.",
       link: "/blog/seo-cheat-sheet-2025",
       content: `<div class="space-y-6">
         <h2 class="text-2xl font-bold mt-8 mb-4">Introduction</h2>
-        <p>Search Engine Optimization continues to evolve rapidly in 2025. With AI-powered search engines like ChatGPT, Google's AI Overviews, and voice assistants becoming mainstream, your SEO strategy must adapt. This cheat sheet covers everything you need to rank on both traditional and AI search results.</p>
+        <p>Search Engine Optimization continues to evolve rapidly in 2026. With AI-powered search engines like ChatGPT, Google's AI Overviews, and voice assistants becoming mainstream, your SEO strategy must adapt. This cheat sheet covers everything you need to rank on both traditional and AI search results.</p>
 
         <h2 class="text-2xl font-bold mt-8 mb-4">1. Technical SEO Fundamentals</h2>
         <p><strong>Core Web Vitals:</strong> Google prioritizes user experience metrics. Focus on:</p>
         <ul class="list-disc pl-6 space-y-2">
           <li>LCP (Largest Contentful Paint): Keep under 2.5 seconds</li>
-          <li>FID (First Input Delay): Aim for under 100ms</li>
+          <li>FID / INP: Aim for under 100ms</li>
           <li>CLS (Cumulative Layout Shift): Maintain below 0.1</li>
         </ul>
-        <p class="mt-4"><strong>Site Structure:</strong> Implement clean URL structures, mobile-first indexing, and XML sitemaps. Ensure fast loading times (target: under 3 seconds on mobile).</p>
 
         <h2 class="text-2xl font-bold mt-8 mb-4">2. Content Strategy for AI Search</h2>
         <p>AI search engines prioritize:</p>
@@ -124,56 +176,12 @@ export const localData: CMSData = {
           <li><strong>E-E-A-T:</strong> Experience, Expertise, Authoritativeness, Trustworthiness</li>
           <li><strong>FACTS:</strong> Factual accuracy, with citations and sources</li>
           <li><strong>Originality:</strong> Unique insights, not just regurgitated content</li>
-          <li><strong>Depth:</strong> Comprehensive coverage (2,000-3,000+ words for competitive topics)</li>
         </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">3. On-Page Optimization</h2>
-        <p>Optimize each page element for both search engines and AI:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Title tags: Keep 50-60 characters, include primary keyword</li>
-          <li>Meta descriptions: 150-160 characters with call-to-action</li>
-          <li>Header tags: Use H1 (once), H2, H3 hierarchically</li>
-          <li>Image alt text: Descriptive, includes keywords naturally</li>
-          <li>Internal linking: Link related pages with descriptive anchor text</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">4. Backlink Strategy</h2>
-        <p>Quality over quantity:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Focus on relevance: Links from industry-related sites matter more</li>
-          <li>Earn mentions: Create link-worthy content</li>
-          <li>Guest posting: Contribute to reputable publications</li>
-          <li>Broken link building: Find and replace broken links in your niche</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">5. AI Search Optimization</h2>
-        <p>New tactics for ChatGPT search and Google's AI Overviews:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Optimize for snippets: Structure content with clear answers upfront</li>
-          <li>FAQ sections: AI loves structured Q&A content</li>
-          <li>Schema markup: Use structured data for rich results</li>
-          <li>Author authority: Build author bio and credentials</li>
-          <li>Source attribution: Cite sources clearly for transparency</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">Quick Checklist</h2>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>✓ Mobile-responsive design</li>
-          <li>✓ Page speed under 3 seconds</li>
-          <li>✓ Unique, original content (2000+ words)</li>
-          <li>✓ Internal linking strategy</li>
-          <li>✓ Schema markup implementation</li>
-          <li>✓ High-quality backlinks</li>
-          <li>✓ Regular content updates</li>
-          <li>✓ Clear author authority</li>
-        </ul>
-
-        <p class="mt-8 text-lg font-semibold">Start implementing these strategies today and watch your rankings improve!</p>
       </div>`,
       tags: ["SEO", "AI", "Marketing"]
     },
     {
-      id: 2,
+      id: 3,
       slug: "data-driven-operations",
       title: "Data-Driven Decision Making in Operations",
       date: "Dec 5, 2025",
@@ -184,171 +192,27 @@ export const localData: CMSData = {
       link: "/blog/data-driven-operations",
       content: `<div class="space-y-6">
         <h2 class="text-2xl font-bold mt-8 mb-4">The Power of Data in Operations</h2>
-        <p>In today's complex business environment, the ability to make informed decisions based on solid analytics is no longer optional—it's essential. Having managed operations across 551+ banking outlets, I've seen firsthand how data transforms operational efficiency and drives bottom-line results.</p>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">1. Key Performance Indicators (KPIs)</h2>
-        <p>First, establish the right metrics:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Financial KPIs:</strong> Revenue per outlet, operational costs, ROI</li>
-          <li><strong>Operational KPIs:</strong> Processing time, transaction volume, system uptime</li>
-          <li><strong>Customer KPIs:</strong> Satisfaction scores, complaint resolution time, retention rate</li>
-          <li><strong>Team KPIs:</strong> Productivity metrics, training completion, compliance adherence</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">2. Data Collection & Integration</h2>
-        <p>Implement systems to capture data automatically:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>POS systems for transaction tracking</li>
-          <li>CRM platforms for customer interactions</li>
-          <li>Time tracking for resource allocation</li>
-          <li>Centralized dashboards for real-time visibility</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">3. Real-World Impact: 551+ Outlets Case Study</h2>
-        <p>When we implemented Power BI dashboards across all outlets, we discovered:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Geographic performance variation: Outlets in 5 districts were underperforming by 30%</li>
-          <li>Time-based patterns: Peak transaction times helped with staffing optimization</li>
-          <li>Customer segmentation: Identified high-value customers for targeted services</li>
-          <li>Operational bottlenecks: Reduced processing time by 25% through workflow optimization</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">4. Predictive Analytics</h2>
-        <p>Move beyond historical analysis to predictive insights:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Forecast seasonal trends and adjust inventory accordingly</li>
-          <li>Predict customer churn before it happens</li>
-          <li>Identify risk areas before they become critical</li>
-          <li>Optimize staffing levels based on demand forecasts</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">5. Implementation Best Practices</h2>
-        <p><strong>Start Small:</strong> Don't try to track everything. Focus on 5-7 critical KPIs first.</p>
-        <p><strong>Visualize Clearly:</strong> Use dashboards that tell a story. Red/yellow/green indicators help quick decision-making.</p>
-        <p><strong>Automate Reporting:</strong> Save hours on manual reporting with automated data pipelines.</p>
-        <p><strong>Train Your Team:</strong> Data is only valuable if people understand and use it.</p>
-        <p><strong>Act on Insights:</strong> The biggest mistake is analyzing but not acting. Every insight should lead to action.</p>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">Tools That Work</h2>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Power BI:</strong> Best for large-scale operations</li>
-          <li><strong>Google Analytics:</strong> Essential for web and customer data</li>
-          <li><strong>Excel/Google Sheets:</strong> Quick analysis for operational teams</li>
-          <li><strong>Tableau:</strong> Advanced visualization for complex datasets</li>
-        </ul>
-
-        <p class="mt-8 text-lg font-semibold">Remember: Data drives decisions, but insight drives results. The difference between good and great operations is acting on what your data reveals.</p>
+        <p>In today's complex business environment, making informed decisions based on solid analytics is essential. Having managed operations across 551+ banking outlets, I've seen firsthand how data transforms operational efficiency.</p>
       </div>`,
       tags: ["Data Analytics", "Operations", "Business Intelligence"]
-    },
-    {
-      id: 3,
-      slug: "future-digital-banking-bangladesh",
-      title: "The Future of Digital Banking in Bangladesh",
-      date: "Dec 8, 2025",
-      readTime: "7 min read",
-      category: "Digital Transformation",
-      image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&h=400&fit=crop",
-      description: "Exploring how digital transformation is reshaping the banking landscape in Bangladesh, and what it means for traditional banking operations and customer experience.",
-      link: "/blog/future-digital-banking-bangladesh",
-      content: `<div class="space-y-6">
-        <h2 class="text-2xl font-bold mt-8 mb-4">The Digital Banking Revolution</h2>
-        <p>Digital transformation is revolutionizing the banking sector worldwide, and Bangladesh stands at a critical inflection point. With over 170 million people and a growing tech-savvy population, Bangladesh has enormous potential for digital banking adoption. The question isn't if digital banking will dominate—it's how fast it will happen.</p>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">1. Mobile Banking Adoption</h2>
-        <p>Mobile banking has become the gateway to financial inclusion in Bangladesh:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Existing Leaders:</strong> bKash, Nagad, and Rocket have transformed remittance and micro-payment markets</li>
-          <li><strong>Bank Integration:</strong> Traditional banks launching mobile apps with enhanced features</li>
-          <li><strong>Agent Banking:</strong> Over 4,000 agent banking outlets expanding access beyond branches</li>
-          <li><strong>Penetration Growth:</strong> Expected to reach 80%+ in urban areas by 2026</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">2. AI and Automation</h2>
-        <p>Artificial intelligence is reshaping customer service and operations:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Chatbots:</strong> 24/7 customer service in Bengali language</li>
-          <li><strong>Fraud Detection:</strong> AI models identifying suspicious transactions in real-time</li>
-          <li><strong>Credit Scoring:</strong> Alternative data sources improving access for underserved populations</li>
-          <li><strong>Personalization:</strong> AI-driven product recommendations and personalized offers</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">3. Blockchain & FinTech</h2>
-        <p>Emerging technologies creating new opportunities:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li><strong>Cryptocurrencies:</strong> While controversial, blockchain technology offers innovation potential</li>
-          <li><strong>Smart Contracts:</strong> Automating complex banking processes</li>
-          <li><strong>Decentralized Finance:</strong> Creating alternative financial services</li>
-          <li><strong>Interoperability:</strong> Standards allowing seamless payments across platforms</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">4. Open Banking & APIs</h2>
-        <p>The shift toward open banking ecosystems:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Third-party developers building services on bank APIs</li>
-          <li>Fintech startups offering specialized financial services</li>
-          <li>Integration between banks, retailers, and service providers</li>
-          <li>Reduced barriers to entry for new financial services</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">5. Regulatory Framework</h2>
-        <p>Bangladesh Bank is proactively shaping digital banking:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Digital Only Bank licenses enabling new entrants</li>
-          <li>Updated Know Your Customer (KYC) guidelines for digital onboarding</li>
-          <li>Cybersecurity and data protection standards</li>
-          <li>Consumer protection frameworks for digital transactions</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">6. Challenges & Opportunities</h2>
-        <p><strong>Challenges:</strong></p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Digital literacy gaps in rural areas</li>
-          <li>Cybersecurity threats and data breaches</li>
-          <li>Infrastructure limitations in remote regions</li>
-          <li>Regulatory uncertainty for new technologies</li>
-        </ul>
-        <p class="mt-4"><strong>Opportunities:</strong></p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Financial inclusion for 1.5 billion unbanked adults</li>
-          <li>New revenue streams through digital services</li>
-          <li>Cost reduction through automation</li>
-          <li>Competitive advantages for early adopters</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">What This Means for Operations</h2>
-        <p>As operations professionals managing banking networks, digital transformation requires:</p>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Rapid adaptation to new technologies</li>
-          <li>Staff training and upskilling programs</li>
-          <li>Process redesign for digital workflows</li>
-          <li>Change management across distributed teams</li>
-        </ul>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4">The Bottom Line</h2>
-        <p>Digital banking in Bangladesh isn't a future possibility—it's happening now. Banks that embrace this transformation will capture new markets, reduce costs, and improve customer experiences. Those that resist will struggle to compete. The question isn't whether to go digital, but how quickly you can adapt.</p>
-
-        <p class="mt-8 text-lg font-semibold">The future of banking is digital, customer-centric, and data-driven. Are you ready?</p>
-      </div>`,
-      tags: ["Digital Banking", "FinTech", "Digital Transformation"]
     }
   ],
   experience: [
     {
       id: 1,
-      title: "Sales Lead",
+      title: "Sales Lead & AI Automation Consultant",
       company: "LevelAxis Technologies",
-      date: "Jan 1, 2026 – Present",
-      description: "Leading the Sales Team of this Software company, driving revenue growth and client acquisition. Spearheading strategic sales initiatives, building enterprise relationships, and scaling the sales operations to meet aggressive growth targets.",
-      tags: ["Sales Leadership", "Team Management", "Client Acquisition", "Revenue Growth"]
+      date: "Jan 2026 – Present",
+      description: "Leading enterprise sales and designing cross-departmental AI automation workflows (n8n, Zapier, Agentic AI). Spearheading client acquisition, building software integration strategies, and streamlining sales-to-operations handoffs to eliminate manual data overhead.",
+      tags: ["n8n", "Zapier", "Agentic AI", "Sales Leadership", "Cross-Departmental Collaboration"]
     },
     {
       id: 2,
       title: "Officer – Smart Banking Operations",
       company: "DOER Services PLC",
       date: "Nov 2024 – Aug 2025",
-      description: "Managed daily operations for 551+ agent banking outlets across 62 districts as liaison between field teams, outlet owners, and Agrani Bank stakeholders. Addressed compliance and ownership-related issues while monitoring outlet performance and preparing monthly Bangladesh Bank Transaction Reports.",
-      tags: ["Operations Management", "Stakeholder Coordination", "Data Analysis", "Compliance"]
+      description: "Managed daily operations for 551+ agent banking outlets across 62 districts as liaison between field teams, outlet owners, and Agrani Bank stakeholders. Overseeing SLA compliance, process optimization, and preparing monthly Bangladesh Bank performance reports.",
+      tags: ["Operations Management", "Process Optimization", "Stakeholder Coordination", "Data Analysis"]
     },
     {
       id: 3,
@@ -361,26 +225,27 @@ export const localData: CMSData = {
   ],
   skills: {
     technical: [
+      { name: 'n8n & Zapier Automation', level: 'expert', icon: 'Settings' },
+      { name: 'Agentic AI & LLM Workflows', level: 'advanced', icon: 'Code' },
       { name: 'Advanced Excel / Google Sheets', level: 'expert', icon: 'FileSpreadsheet' },
       { name: 'Power BI Dashboarding', level: 'advanced', icon: 'BarChart' },
       { name: 'Data Analysis & Reporting', level: 'expert', icon: 'Database' },
-      { name: 'CRM Systems', level: 'intermediate', icon: 'Users' },
-      { name: 'Business Automation', level: 'intermediate', icon: 'Settings' },
+      { name: 'CRM Systems & HubSpot', level: 'advanced', icon: 'Users' },
       { name: 'Python, VBA, JavaScript', level: 'advanced', icon: 'Code' },
     ],
     professional: [
-      { name: 'Strategic Thinking', level: 'expert', icon: 'Target' },
+      { name: 'Cross-Departmental Automation', level: 'expert', icon: 'Crosshair' },
+      { name: 'Process & SLA Optimization', level: 'expert', icon: 'Target' },
       { name: 'Team Leadership', level: 'advanced', icon: 'Users' },
-      { name: 'Customer Relations', level: 'expert', icon: 'Handshake' },
+      { name: 'Customer & Stakeholder Relations', level: 'expert', icon: 'Handshake' },
       { name: 'Project Management', level: 'advanced', icon: 'ClipboardList' },
-      { name: 'Communication', level: 'expert', icon: 'MessageSquare' },
-      { name: 'Stakeholder Coordination', level: 'expert', icon: 'Crosshair' },
+      { name: 'Strategic Execution', level: 'expert', icon: 'MessageSquare' },
     ]
   },
   certifications: [
-    { title: 'Email Marketing Certification', issuer: 'HubSpot Academy', icon: 'Award' },
-    { title: 'Advanced MS Office Certificate', issuer: 'Udemy', icon: 'Laptop' },
-    { title: 'Professional English Communication', issuer: 'Udemy', icon: 'MessageCircle' },
+    { title: 'Email & Marketing Automation Certificate', issuer: 'HubSpot Academy', icon: 'Award' },
+    { title: 'Advanced MS Office & Data Certificate', issuer: 'Udemy', icon: 'Laptop' },
+    { title: 'Professional Business Communication', issuer: 'Udemy', icon: 'MessageCircle' },
     { title: 'Best Presenter Award', issuer: 'Research on "The Future of E-Commerce in Bangladesh"', icon: 'Trophy' },
   ]
 };

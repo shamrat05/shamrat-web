@@ -62,12 +62,11 @@ export const SEO: React.FC<SEOProps> = ({
     "Md Samrat Hossain",
     "Shamrat Hossain Bangladesh",
     "Samrat Hossain Bangladesh",
-    "Shamrat Bangladesh",
-    "Samrat Bangladesh",
-    "Marketing Professional Bangladesh",
-    "Operations Expert Bangladesh",
-    "Data Analytics Specialist",
-    "Digital Strategy Bangladesh"
+    "n8n Automation Bangladesh",
+    "Zapier AI Workflows",
+    "Agentic AI Specialist Bangladesh",
+    "Cross Departmental Automation",
+    "Marketing Operations AI Specialist"
   ];
 
   const keywordList = [
@@ -104,7 +103,7 @@ export const SEO: React.FC<SEOProps> = ({
     },
     "description": localData.hero.description,
     "sameAs": sameAs,
-    "jobTitle": "Marketing & Operations Professional | Data Analytics Expert",
+    "jobTitle": "Operations ➔ Marketing ➔ AI & Agentic Automation Specialist",
     "worksFor": {
       "@type": "Organization",
       "name": "DOER Services PLC",
@@ -119,14 +118,14 @@ export const SEO: React.FC<SEOProps> = ({
       }
     },
     "knowsAbout": [
-      "Marketing Strategy",
-      "Data Analytics",
-      "Banking Operations",
-      "Business Development",
-      "Process Optimization",
-      "Power BI",
-      "Digital Marketing",
-      "CRM Systems"
+      "n8n Workflow Automation",
+      "Zapier Integration",
+      "Agentic AI & LLM Tools",
+      "Cross-Departmental Collaboration",
+      "Banking Operations & SLA Management",
+      "Marketing Strategy & Analytics",
+      "Power BI & Data Visualization",
+      "Process Engineering"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -145,15 +144,23 @@ export const SEO: React.FC<SEOProps> = ({
         "name": "Who is Md. Shamrat Hossain (Samrat Hossain)?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Md. Shamrat Hossain (also known as Samrat Hossain) is a results-driven Marketing & Operations Professional and Data Analytics Expert in Bangladesh, specializing in strategic business execution and process optimization."
+          "text": "Md. Shamrat Hossain (also known as Samrat Hossain) is an Operations, Marketing, and AI Automation Specialist in Bangladesh. His career spans managing high-volume banking operations (551+ outlets), driving marketing strategy, and deploying production AI agentic workflows (n8n, Zapier)."
         }
       },
       {
         "@type": "Question",
-        "name": "What are the core skills of Md. Shamrat Hossain?",
+        "name": "How does Md. Shamrat Hossain help businesses optimize operations?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Md. Shamrat Hossain specializes in Data Analytics (Power BI, Python, Excel), Marketing Strategy, Banking Operations management (overseeing 551+ outlets across 62 districts), CRM systems, and AI automation."
+          "text": "He builds cross-departmental AI automations using n8n, Zapier, and Agentic AI workflows to connect Sales, Finance, Marketing, and Operations. This eliminates manual data transfers, reduces human error, and reclaims 100+ operational hours monthly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What tools and frameworks does Md. Shamrat Hossain use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "He leverages n8n, Zapier, OpenAI / LLM APIs, Power BI, Python, HubSpot CRM, Google Sheets API, and custom REST webhooks."
         }
       },
       {

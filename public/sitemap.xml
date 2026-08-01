@@ -58,6 +58,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://shamrat.vercel.app/portfolio/cross-departmental-ai-automation</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://shamrat.vercel.app/portfolio/digital-marketing-strategy</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -82,13 +88,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://shamrat.vercel.app/portfolio/cross-functional-team-coordination</loc>
+    <loc>https://shamrat.vercel.app/portfolio/banking-analytics-dashboard</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://shamrat.vercel.app/portfolio/banking-analytics-dashboard</loc>
+    <loc>https://shamrat.vercel.app/blog/practical-ai-agentic-automation-n8n-zapier</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -101,12 +107,6 @@
   </url>
   <url>
     <loc>https://shamrat.vercel.app/blog/data-driven-operations</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://shamrat.vercel.app/blog/future-digital-banking-bangladesh</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
