@@ -28,16 +28,16 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
   }, []);
 
   const dots = React.useMemo(() => {
-    const columns = Math.max(10, Math.floor(viewportSize.width / 44));
-    const rows = Math.max(7, Math.floor(viewportSize.height / 44));
+    const columns = Math.max(12, Math.floor(viewportSize.width / 36));
+    const rows = Math.max(8, Math.floor(viewportSize.height / 36));
 
     return Array.from({ length: columns * rows }, (_, i) => {
       const col = i % columns;
       const row = Math.floor(i / columns);
       const x = (col + 0.5) * (viewportSize.width / columns);
       const y = (row + 0.5) * (viewportSize.height / rows);
-      const base = i % 13 === 0 ? 2.1 : 1.1;
-      const opacity = i % 19 === 0 ? 0.8 : 0.35 + Math.random() * 0.2;
+      const base = i % 17 === 0 ? 2.2 : i % 11 === 0 ? 1.45 : 0.95;
+      const opacity = i % 19 === 0 ? 0.9 : 0.25 + Math.random() * 0.25;
 
       return { x, y, size: base, opacity };
     });
@@ -75,22 +75,32 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
       <motion.circle
         cx={pointer.x}
         cy={pointer.y}
-        r={180}
+        r={220}
         fill={`url(#${id}-glow)`}
-        initial={{ opacity: 0.12, scale: 0.9 }}
-        animate={{ opacity: [0.12, 0.22, 0.12], scale: [0.9, 1.04, 0.9] }}
-        transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ filter: 'blur(80px)' }}
+        initial={{ opacity: 0.1, scale: 0.92 }}
+        animate={{ opacity: [0.1, 0.24, 0.1], scale: [0.92, 1.08, 0.92] }}
+        transition={{ duration: duration + 0.4, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ filter: 'blur(90px)' }}
       />
 
       {dots.map((dot, index) => (
-        <circle
+        <motion.circle
           key={`${dot.x}-${dot.y}-${index}`}
           cx={dot.x}
           cy={dot.y}
           r={dot.size}
           fill={index % 2 === 0 ? `url(#${id}-dot)` : '#C084FC'}
-          opacity={dot.opacity}
+          initial={{ opacity: dot.opacity * 0.7, scale: 0.92 }}
+          animate={{
+            opacity: [dot.opacity * 0.7, dot.opacity, dot.opacity * 0.7],
+            scale: [0.92, 1.04, 0.92],
+          }}
+          transition={{
+            duration: duration + (index % 5) * 0.2,
+            repeat: Infinity,
+            delay: (index % 7) * 0.07,
+            ease: 'easeInOut',
+          }}
         />
       ))}
 
@@ -99,12 +109,12 @@ export const AnimatedGridPattern: React.FC<AnimatedGridPatternProps> = ({
           key={`spark-${dot.x}-${dot.y}-${index}`}
           cx={dot.x}
           cy={dot.y}
-          r={2.4}
+          r={2.7}
           fill="#FFFFFF"
-          initial={{ opacity: 0.3, scale: 0.9 }}
-          animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.15, 0.9] }}
-          transition={{ duration: duration + index * 0.12, repeat: Infinity, delay: index * 0.05, ease: 'easeInOut' }}
-          style={{ filter: 'drop-shadow(0 0 6px #FFFFFF) drop-shadow(0 0 10px #C084FC)' }}
+          initial={{ opacity: 0.35, scale: 0.9 }}
+          animate={{ opacity: [0.35, 1, 0.35], scale: [0.9, 1.18, 0.9] }}
+          transition={{ duration: duration + index * 0.08, repeat: Infinity, delay: index * 0.04, ease: 'easeInOut' }}
+          style={{ filter: 'drop-shadow(0 0 8px #FFFFFF) drop-shadow(0 0 12px #C084FC)' }}
         />
       ))}
     </svg>
