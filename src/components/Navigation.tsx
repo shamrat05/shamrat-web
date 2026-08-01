@@ -223,12 +223,12 @@ export const Navigation: React.FC = React.memo(() => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 origin-top ${
-          isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+        className={`md:hidden overflow-y-auto transition-all duration-300 origin-top ${
+          isOpen ? 'max-h-[85vh] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
-        <div className={`backdrop-blur-xl border-b px-4 py-3 flex flex-col gap-0.5 ${
-          isDark ? 'bg-[#020202]/95 border-white/[0.08]' : 'bg-[#FAFAFA]/95 border-black/[0.08]'
+        <div className={`backdrop-blur-xl border-b px-4 py-4 pb-6 flex flex-col gap-1 shadow-2xl ${
+          isDark ? 'bg-[#020202]/98 border-white/[0.08]' : 'bg-[#FAFAFA]/98 border-black/[0.08]'
         }`}>
           {navItems.map((item) => (
             <button
@@ -248,7 +248,7 @@ export const Navigation: React.FC = React.memo(() => {
             href="https://calendly.com/shamrat"
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-center py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${
+            className={`text-center py-3 px-4 rounded-lg text-sm font-semibold transition-all shadow-md mt-1 ${
               isDark ? 'bg-white text-[#020202] hover:bg-white/90' : 'bg-[#020202] text-white hover:bg-[#020202]/90'
             }`}
           >
