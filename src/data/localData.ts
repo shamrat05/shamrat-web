@@ -48,7 +48,7 @@ export const localData: CMSData = {
       slug: "automated-content-campaign-engine",
       title: "Automated Social Media Content & Multi-Channel Campaign Engine",
       category: "ai-automation",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=500&fit=crop",
+      image: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&h=500&fit=crop",
       description: "Built an automated content pipeline that generates market-aligned social media content, runs targeted auto-campaigns, and tracks prospect engagement across channels.",
       tags: ["Content Automation", "Social Media", "Auto Campaigns", "Lead Tracking"],
       link: "/portfolio/automated-content-campaign-engine",
@@ -106,7 +106,7 @@ export const localData: CMSData = {
       slug: "banking-analytics-dashboard",
       title: "Banking Operations Analytics & Executive Decision Support",
       category: "operations",
-      image: "https://images.unsplash.com/photo-1556742049-0a67d9834169?w=800&h=500&fit=crop",
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&h=500&fit=crop",
       description: "Comprehensive Power BI dashboard analyzing performance metrics and operational efficiency across 551+ banking outlets.",
       tags: ["Power BI", "Operations", "Decision Support", "Data Analytics"],
       link: "/portfolio/banking-analytics-dashboard"
