@@ -76,18 +76,19 @@ const PortfolioPage: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex justify-start gap-3 md:gap-4 mb-12 flex-wrap">
+        <div className="flex justify-start gap-2.5 md:gap-4 mb-12 flex-wrap">
           {[
             { id: 'all', label: 'All Projects' },
             { id: 'ai-automation', label: 'AI & Automation' },
             { id: 'analytics', label: 'Analytics' },
             { id: 'marketing', label: 'Marketing' },
-            { id: 'operations', label: 'Operations' }
+            { id: 'operations', label: 'Operations' },
+            { id: 'strategy-growth', label: 'Strategy & Growth' }
           ].map((cat) => (
             <button
               key={cat.id}
               onClick={() => setFilter(cat.id)}
-              className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 border
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 border
                 ${filter === cat.id 
                   ? 'bg-primary-500 text-white shadow-[0_4px_15px_rgba(10,132,255,0.3)] border-primary-500' 
                   : 'bg-white/5 border border-white/10 text-text-secondary hover:bg-primary-500 hover:text-white hover:border-primary-500 hover:-translate-y-1 hover:shadow-[0_4px_15px_rgba(10,132,255,0.3)]'
