@@ -64,7 +64,7 @@ export const Projects: React.FC = React.memo(() => {
     <section 
       id="featured-projects" 
       ref={ref}
-      className="py-32 bg-bg-page"
+      className="py-32 bg-bg-page contain-layout"
     >
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-16">

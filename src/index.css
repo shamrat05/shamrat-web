@@ -228,20 +228,7 @@
     @apply relative overflow-hidden rounded-xl transition-all duration-300;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    contain: layout style;
-  }
-
-  /* Grain overlay for cards - use filter: url(#grain-filter) */
-  .card-glass::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    filter: url(#grain-filter);
-    opacity: 0.03;
-    mix-blend-mode: soft-light;
-    pointer-events: none;
-    z-index: 1;
+    contain: layout style paint;
   }
 
   @media (hover: hover) {
@@ -383,23 +370,17 @@
   }
 
   .glass-panel {
-    /* Apple Vision Pro "Deep" Glassmorphism */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    backdrop-filter: blur(50px) saturate(150%);
-    -webkit-backdrop-filter: blur(50px) saturate(150%);
+    /* Optimized Glassmorphism */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
 
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
 
     box-shadow:
       0 4px 24px -1px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-      0 20px 40px rgba(0, 0, 0, 0.1);
-    /* Deeper shadow */
-
-    /* Performance optimization */
-    transform: translateZ(0);
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   }
 
   .grain-overlay {
@@ -408,8 +389,7 @@
     z-index: -1;
     pointer-events: none;
     object-fit: cover;
-    mix-blend-mode: overlay;
-    opacity: 0.3;
+    opacity: 0.04;
   }
 
   .noise-overlay {
@@ -418,26 +398,22 @@
     z-index: -1;
     pointer-events: none;
     object-fit: cover;
-    mix-blend-mode: color-dodge;
-    opacity: 0.2;
+    opacity: 0.03;
   }
 
   /* Mobile optimization for glass panels */
   @media (max-width: 768px) {
     .glass-panel {
-      backdrop-filter: blur(20px) saturate(120%);
-      -webkit-backdrop-filter: blur(20px) saturate(120%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
   }
 
   [data-theme="light"] .glass-panel {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%);
-    backdrop-filter: blur(60px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow:
-      0 20px 50px rgba(0, 0, 0, 0.08),
-      0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   }
 
   /* Legacy marquee classes removed — now using .tm-* prefixed classes */

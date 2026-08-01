@@ -6,6 +6,7 @@ export const CursorFollower: React.FC = () => {
   const mouse = useRef({ x: -100, y: -100 });
   const pos = useRef({ x: -100, y: -100 });
   const rafId = useRef<number>(0);
+  const isMoving = useRef(false);
   const [isTouch, setIsTouch] = useState(true);
 
   useEffect(() => {
@@ -16,27 +17,39 @@ export const CursorFollower: React.FC = () => {
   useEffect(() => {
     if (isTouch) return;
 
+    const animate = () => {
+      const dx = mouse.current.x - pos.current.x;
+      const dy = mouse.current.y - pos.current.y;
+
+      pos.current.x += dx * 0.18;
+      pos.current.y += dy * 0.18;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
+      }
+
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        rafId.current = requestAnimationFrame(animate);
+      } else {
+        isMoving.current = false;
+      }
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
 
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
-    };
 
-    const animate = () => {
-      pos.current.x += (mouse.current.x - pos.current.x) * 0.12;
-      pos.current.y += (mouse.current.y - pos.current.y) * 0.12;
-
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`;
+      if (!isMoving.current) {
+        isMoving.current = true;
+        rafId.current = requestAnimationFrame(animate);
       }
-      rafId.current = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    rafId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -59,12 +72,10 @@ export const CursorFollower: React.FC = () => {
           width: 8,
           height: 8,
           borderRadius: '50%',
-          background: 'rgba(255,255,255,0.9)',
-          mixBlendMode: 'difference',
+          background: 'rgba(121, 206, 255, 0.9)',
+          boxShadow: '0 0 10px rgba(121, 206, 255, 0.5)',
           pointerEvents: 'none',
           zIndex: 99999,
-          willChange: 'transform',
-          transition: 'width 0.2s, height 0.2s, top 0.2s, left 0.2s',
         }}
       />
       {/* Outer ring - smooth lerp */}
@@ -78,11 +89,9 @@ export const CursorFollower: React.FC = () => {
           width: 40,
           height: 40,
           borderRadius: '50%',
-          border: '1px solid rgba(255,255,255,0.35)',
+          border: '1px solid rgba(121, 206, 255, 0.4)',
           pointerEvents: 'none',
           zIndex: 99998,
-          willChange: 'transform',
-          transition: 'width 0.3s, height 0.3s, top 0.3s, left 0.3s, border-color 0.3s',
         }}
       />
     </>

@@ -5,21 +5,22 @@ import { useTranslation } from 'react-i18next';
 import { ArrowUpRight } from 'lucide-react';
 
 const CharacterReveal = ({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) => {
+  const words = text.split(' ');
   return (
     <span className={`inline-block ${className || ''}`} aria-label={text}>
-      {text.split('').map((char, i) => (
+      {words.map((word, i) => (
         <motion.span
           key={i}
-          className="inline-block"
-          initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          className="inline-block mr-[0.25em]"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.5,
-            delay: delay + i * 0.03,
-            ease: [0, 0, 0.2, 1],
+            duration: 0.6,
+            delay: delay + i * 0.12,
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
-          {char === ' ' ? '\u00A0' : char}
+          {word}
         </motion.span>
       ))}
     </span>

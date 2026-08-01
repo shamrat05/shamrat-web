@@ -90,8 +90,8 @@ export const Navigation: React.FC = React.memo(() => {
           : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <div className="md:container h-full">
-        <div className="flex items-center justify-between h-full px-4 md:px-0">
+      <div className="container h-full">
+        <div className="flex items-center justify-between h-full">
           {/* Logo + Profile */}
           <button
             onClick={() => handleNavClick('home', '/')}

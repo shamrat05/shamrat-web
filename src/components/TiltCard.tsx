@@ -84,11 +84,16 @@ export const TiltCard: React.FC<TiltCardProps> = ({ children, className = '' }) 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
-      style={{ rotateY, rotateX, transformStyle: 'preserve-3d', willChange: 'transform' }}
-      className={`relative transition-all duration-200 ease-linear ${className}`}
+      style={{
+        rotateY: hover ? rotateY : 0,
+        rotateX: hover ? rotateX : 0,
+        transformStyle: hover ? 'preserve-3d' : 'flat',
+        willChange: hover ? 'transform' : 'auto',
+      }}
+      className={`relative transition-all duration-200 ease-out ${className}`}
     >
       <div
-        style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}
+        style={{ transform: hover ? 'translateZ(15px)' : 'none' }}
         className="h-full"
       >
         {children}

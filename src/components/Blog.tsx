@@ -74,7 +74,7 @@ export const Blog: React.FC = React.memo(() => {
         <img
           src="/grain_bg.png"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-[0.06] pointer-events-none z-10"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none z-10"
         />
 
         {/* Image */}
@@ -132,7 +132,7 @@ export const Blog: React.FC = React.memo(() => {
     <section
       id="blog"
       ref={ref}
-      className="py-32 bg-bg-surface"
+      className="py-32 bg-bg-surface contain-layout"
     >
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-16">

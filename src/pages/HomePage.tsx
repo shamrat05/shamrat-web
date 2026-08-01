@@ -3,6 +3,8 @@ import { Hero } from '../components/Hero';
 import { SectionLoader } from '../components/SectionLoader';
 import { SEO } from '../components/SEO';
 
+import { SectionDivider } from '../components/SectionDivider';
+
 const About = lazy(() => import('../components/About').then(module => ({ default: module.About })));
 const Skills = lazy(() => import('../components/Skills').then(module => ({ default: module.Skills })));
 const Experience = lazy(() => import('../components/Experience').then(module => ({ default: module.Experience })));
@@ -82,12 +84,18 @@ const HomePage: React.FC<HomePageProps> = ({ section }) => {
         />
       )}
       <Hero />
+      <SectionDivider />
       <Suspense fallback={<SectionLoader />}>
         <About />
+        <SectionDivider />
         <Experience />
+        <SectionDivider />
         <Skills />
+        <SectionDivider />
         <Projects />
+        <SectionDivider />
         <Blog />
+        <SectionDivider />
         <Contact />
       </Suspense>
     </>

@@ -12,7 +12,7 @@ export const About: React.FC = React.memo(() => {
     <section 
       id="about" 
       ref={ref}
-      className="py-32 bg-bg-surface"
+      className="py-32 bg-bg-surface contain-layout"
     >
       <div className={`container transition-opacity duration-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="text-center mb-12">

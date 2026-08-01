@@ -33,24 +33,15 @@ export const BackgroundEffect: React.FC = () => {
         }}
       />
 
-      {/* Grain texture overlay */}
+      {/* Subtle ambient noise pattern overlay */}
       <img
         src="/grain_bg.png"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-[0.12]"
-        style={{ transform: 'translateZ(0)' }}
-      />
-
-      {/* Noise texture overlay */}
-      <img
-        src="/noise.png"
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.04]"
-        style={{ transform: 'translateZ(0)', mixBlendMode: 'color-dodge' }}
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none"
       />
 
       {/* Subtle ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px]" style={{ background: isDark ? 'rgba(121,206,255,0.02)' : 'rgba(15,127,255,0.02)' }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px]" style={{ background: isDark ? 'rgba(121,206,255,0.025)' : 'rgba(15,127,255,0.025)' }} />
     </div>
   );
 };

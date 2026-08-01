@@ -57,9 +57,8 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       <div
         style={{
           opacity: isVisible ? 1 : 0,
-          transform: isVisible ? 'translateY(0)' : 'translateY(75px)',
-          transition: `opacity 0.5s ease-out ${delay}ms, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
-          willChange: 'opacity, transform',
+          transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+          transition: `opacity 0.4s ease-out ${delay}ms, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
         }}
       >
         {children}
